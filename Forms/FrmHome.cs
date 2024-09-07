@@ -9,12 +9,12 @@ using static MurliAnveshan.Classes.Enums;
 
 namespace MurliAnveshan
 {
-    public partial class MainForm : Form
+    public partial class FrmHome : Form
     {
         AvyaktMurliSearchEngine engine;
 
 
-        public MainForm()
+        public FrmHome()
         {
             InitializeComponent();
 

@@ -117,6 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="mMenu.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAGxJREFUWEft
+        07ENgDAUA9G/JH0WgQFgaGiuQnbndH7SlZGlKJmq+lvXfeyMGW+dz7szZjx1KBkznrq2ZMxUeerhJGPG
+        U18nGTOeOpSMGU9dWzJmqjz1cJIx46mvk4wZTx1Kxoynri0ZM1WFmQ/pmVRfVFa8YwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="mHistory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vgAADr4B6kKxwAAAAv9JREFUWEflVyGMVDEQXYFAIBEIBAKBOIFAIMgWgUAcbP+GS06QgEAgEAjECQQJ
+        EoFAIBAIxCWcuLC//04gVpxAIE4gEAjECQTiBAKBgPem8/9uu+3fv7dASHhJk21nOm/+dGba7f13MNY9
+        NHZ0Sad/F2bgbpui+tm31TdTlDd0uRu4AZsfYfNWv6j2TbFzUUUCzE8bMz6m0xmYobvSL9wPOiBOwIaK
+        usGT+s0yBuVlFQlgfBs6n+QrI0fg/Ir/aiXn72tvzqp4FjRg1l6f0KkARtZxfhs+EuWKuTU+riIByPca
+        AjpyvbrAdbPmTvWtO6hlMgaVlU0pkFzCbN0LXeoMGmaksP8DHeRHxJHD/LGqz6ImF0WGCd6raCGY1dFJ
+        sVW4MiC31dv4eAJAYbMhX7JUQP48JMcxwDEVp8HEAvnHZcl9rkzI/SjXVfxn4ZM0JpeobqlKd7SeVwKM
+        HEL9PSLeROIdSg/IlV5ccjWwca/rcZjh6Bz0vwbkrABWwrB6KjLrbqp6CHi5WyvrkpSUfsHchPS1jtwJ
+        yQ/rL5aSbM9+d8ANOhWIQ7WxFidoHLpNE2qGrVZVZT6EBEZ02nz99Mg5gXXpG4FuW7NJQTeNdaodbXJx
+        NIYjJzB/ktBpbTbJ5mYGu2diAUJ4NzauBOJESg6nP+eaTZNT0VG3gqGMScQInIgjJOWnF1AKaHL3Ra9w
+        73WpG+DEy2milnFHtyQBp/WOyVxyLMHU2XENXgeXSjzopKpnIcdDfTxMdGmCfrHzTEKIx4QuBZBmYt27
+        mJgD5Pvx2yAHyZ1UgjZvNT4kMhmcbTZIYFU5OnyYQU7DmSgQ0+3WJ6G7qqLlQWJ84Zf4rRejeVza8p4u
+        ZcGbkUmXu2sCMApzHwyKXFuehpDXpZq7hOahq0Mxgic46l+XFwOO5DyNYGzzty53giYsj/No5AQ3S2ny
+        K3wYN1TUQFo4bj0k4wP+MdFlQbLnLwr5Ej4m6Eh0jqiGsEPiP5+Kfj/oSJzJdIB9gOWL8Wqh+//fQa/3
+        C6lDkch34Xs6AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="mDocViewer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vgAADr4B6kKxwAAAApZJREFUWEfVVi1sVEEQPoFAIBAIRAWiAoFEIMgtAlFReO9daIIgAYFAVCAQCMQl
+        yAoEAlFR2aSIC3f7rqLiBAJRUYGoqEAgEBUVFRUI+HY6t2/23ezeNX15gS/5cne7Mzuz87fX+Sdg8uH9
+        bmEH3aKcNMbcbprV4Q02kQYUjkxR/mme9g2bSENXboR9NpGGotgU/xMHUDBninITXNCBXvlBUb4U6VLZ
+        6AGbmA+zZm+abPdWcxxc56MXg+tZ/aAYL2ggBYSsj0H0ux7GGLt5eegixuoezilyzkyu8NJiuEgRwvgv
+        U4yXWJUiB+c/yWEGmVNw2xSjpyyWhjSQIowcm97wNqthhNtnWDvRZKfE/tbciGiKKrPRa1aZvh9B2nDr
+        7zD4tR5RrO+xmg4pHCPd9PnkKskj1zDyU+xNzKMvy3QY4ORMPloPHMzKnLdnAcEfXjBCyAxYnEIv1ven
+        jtWBGnhSyaFGYqnAq7WCMO26m8QoC+q8wNi5vFzlZRXQPfCy6BBevhyCiK3tXONlFUjVppctxvd4OQTl
+        DDkymX0RpcjxeUT8ob4lNSBaG142NppdfqsDdcLoexZ3h372e6niAqBX/dkRlwjgBRJ0t2ZxdAEiUq0f
+        xdLgOsHLoWt4eRZToRRx61Pfhqhm/D4Ue/he5ZdSOjveX/L2LIRQkjINpmcfklPh/rErUHwG05EGk/J2
+        eEjhFOkgOXAel3fhBN4GXV4Sut+iHUObipLG+kH0jOf2HW7t+92FHo7t4XM/1C23WS0EPaG5fQuh/mK0
+        K6wawP+pYQfdb5cS6FROiDS2AkzQO/VacaOct9sBjXrREfQdrylvtwO8Ga9kFFzN8FZ76Bbjj94BdA8v
+        twc3wGC8T500Z4S3hE7nL8IcYIzqwi7EAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <metadata name="NavigationTransition.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 4</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>31</value>
+  </metadata>
 </root>

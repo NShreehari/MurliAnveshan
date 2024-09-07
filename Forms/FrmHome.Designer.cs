@@ -1,6 +1,6 @@
 ﻿namespace MurliAnveshan
 {
-    partial class MainForm
+    partial class FrmHome
     {
         /// <summary>
         /// Required designer variable.
@@ -54,7 +54,8 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(597, 23);
+            this.btnSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnSearch.Location = new System.Drawing.Point(651, 23);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(4);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(100, 28);
@@ -65,18 +66,20 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.txtSearch.Font = new System.Drawing.Font("Bookman Old Style", 16F, System.Drawing.FontStyle.Bold);
             this.txtSearch.ForeColor = System.Drawing.Color.Navy;
-            this.txtSearch.Location = new System.Drawing.Point(340, 20);
+            this.txtSearch.Location = new System.Drawing.Point(303, 20);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(236, 33);
+            this.txtSearch.Size = new System.Drawing.Size(338, 33);
             this.txtSearch.TabIndex = 1;
             // 
             // lblSearch
             // 
+            this.lblSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblSearch.AutoSize = true;
-            this.lblSearch.Location = new System.Drawing.Point(248, 29);
+            this.lblSearch.Location = new System.Drawing.Point(204, 29);
             this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSearch.Name = "lblSearch";
             this.lblSearch.Size = new System.Drawing.Size(90, 16);
@@ -85,6 +88,7 @@
             // 
             // btnBuildIndex
             // 
+            this.btnBuildIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBuildIndex.Location = new System.Drawing.Point(800, 79);
             this.btnBuildIndex.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuildIndex.Name = "btnBuildIndex";
@@ -109,6 +113,7 @@
             // 
             // btnClear
             // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClear.Location = new System.Drawing.Point(832, 127);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
@@ -121,6 +126,7 @@
             // 
             // grbAvyakthMurliCategory
             // 
+            this.grbAvyakthMurliCategory.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbDrills);
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthTitles);
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthAll);
@@ -165,6 +171,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox2.Controls.Add(this.rdbAvyakthMurlis);
             this.groupBox2.Controls.Add(this.rdbSakarMurlis);
             this.groupBox2.Location = new System.Drawing.Point(303, 62);
@@ -198,6 +205,7 @@
             // 
             // grbSakarMurliCategory
             // 
+            this.grbSakarMurliCategory.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.grbSakarMurliCategory.Controls.Add(this.rdbSlogans);
             this.grbSakarMurliCategory.Controls.Add(this.rdbBlessings);
             this.grbSakarMurliCategory.Controls.Add(this.rdbSakarQuestionAnswers);
@@ -262,7 +270,7 @@
             this.rdbDharnaPoints.Text = "DharnaPoints";
             this.rdbDharnaPoints.UseVisualStyleBackColor = true;
             // 
-            // MainForm
+            // FrmHome
             // 
             this.AcceptButton = this.btnSearch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -280,9 +288,10 @@
             this.Controls.Add(this.grbSakarMurliCategory);
             this.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Navy;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "MainForm";
-            this.Text = "Main Form";
+            this.Name = "FrmHome";
+            this.Text = "Home";
             this.grbAvyakthMurliCategory.ResumeLayout(false);
             this.grbAvyakthMurliCategory.PerformLayout();
             this.groupBox2.ResumeLayout(false);
