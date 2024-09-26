@@ -1,35 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using SelfControls.Controls;
 
 namespace MurliAnveshan
 {
     public partial class FrmDocViewer : Form
     {
+        MainForm mainFormInstance;
+
+        private readonly string hindiAVMurlisPDFPath;
+
         public FrmDocViewer()
         {
             InitializeComponent();
+
+            hindiAVMurlisPDFPath = ConfigurationManager.ConnectionStrings["HindiAVMurlisPDFPath"].ConnectionString;
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
+        public FrmDocViewer(MainForm mainFormInstance) : this()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                Filter = "Word Documents|*.docx",
-                Title = "Select a Word Document"
-            };
+            this.mainFormInstance = mainFormInstance;
+        }
 
-            // Show the dialog and check if the user selected a file
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                
-            }
+        public FrmDocViewer(MainForm mainFormInstance, ResultDetails resultDetails) : this(mainFormInstance)
+        {
+            LoadThePDF(resultDetails);
+        }
+
+        public void LoadThePDF(ResultDetails resultDetails)
+        {
+            string fileNameWithoutExtenstion = resultDetails.FileName.Split('.').FirstOrDefault();
+            string fileName = fileNameWithoutExtenstion + ".pdf";
+            pdfViewer1.LoadPdf(Path.Combine(hindiAVMurlisPDFPath, fileName), fileName, resultDetails.ContentDate);
         }
     }
 }

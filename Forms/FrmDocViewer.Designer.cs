@@ -28,63 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.pdfViewer1 = new MurliAnveshan.Controls.PDFViewer();
             this.SuspendLayout();
             // 
-            // textBox1
+            // pdfViewer1
             // 
-            this.textBox1.Location = new System.Drawing.Point(201, 21);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(293, 23);
-            this.textBox1.TabIndex = 0;
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.Location = new System.Drawing.Point(523, 19);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(100, 32);
-            this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "Load";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-            // 
-            // elementHost1
-            // 
-            this.elementHost1.Location = new System.Drawing.Point(16, 60);
-            this.elementHost1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(771, 427);
-            this.elementHost1.TabIndex = 3;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = null;
+            this.pdfViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pdfViewer1.Location = new System.Drawing.Point(0, 0);
+            this.pdfViewer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pdfViewer1.Name = "pdfViewer1";
+            this.pdfViewer1.Size = new System.Drawing.Size(800, 500);
+            this.pdfViewer1.TabIndex = 0;
             // 
             // FrmDocViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 500);
-            this.Controls.Add(this.elementHost1);
-            this.Controls.Add(this.btnLoad);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.pdfViewer1);
             this.Font = new System.Drawing.Font("Bookman Old Style", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.Navy;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmDocViewer";
             this.Text = "DocViewer";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
+        private Controls.PDFViewer pdfViewer1;
     }
 }

@@ -32,17 +32,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ParentNavigationControl = new System.Windows.Forms.Panel();
             this.BottomNavigationControl = new System.Windows.Forms.FlowLayoutPanel();
-            this.mSettings = new System.Windows.Forms.Button();
             this.mLogout = new System.Windows.Forms.Button();
             this.NavigationControl = new System.Windows.Forms.FlowLayoutPanel();
+            this.mBookmarks = new System.Windows.Forms.Button();
+            this.mAbout = new System.Windows.Forms.Button();
+            this.NavigationTransition = new System.Windows.Forms.Timer(this.components);
+            this.mSettings = new System.Windows.Forms.Button();
             this.mMenu = new System.Windows.Forms.Button();
             this.mHome = new System.Windows.Forms.Button();
             this.mFavorites = new System.Windows.Forms.Button();
-            this.mBookmarks = new System.Windows.Forms.Button();
             this.mHistory = new System.Windows.Forms.Button();
             this.mDocViewer = new System.Windows.Forms.Button();
-            this.mAbout = new System.Windows.Forms.Button();
-            this.NavigationTransition = new System.Windows.Forms.Timer(this.components);
             this.ParentNavigationControl.SuspendLayout();
             this.BottomNavigationControl.SuspendLayout();
             this.NavigationControl.SuspendLayout();
@@ -70,23 +70,6 @@
             this.BottomNavigationControl.Size = new System.Drawing.Size(200, 100);
             this.BottomNavigationControl.TabIndex = 4;
             // 
-            // mSettings
-            // 
-            this.mSettings.Enabled = false;
-            this.mSettings.FlatAppearance.BorderSize = 0;
-            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.Location = new System.Drawing.Point(3, 3);
-            this.mSettings.Name = "mSettings";
-            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mSettings.Size = new System.Drawing.Size(194, 36);
-            this.mSettings.TabIndex = 8;
-            this.mSettings.Text = "           Settings";
-            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.UseVisualStyleBackColor = true;
-            // 
             // mLogout
             // 
             this.mLogout.FlatAppearance.BorderSize = 0;
@@ -102,6 +85,7 @@
             this.mLogout.Text = "           LogOut";
             this.mLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mLogout.UseVisualStyleBackColor = true;
+            this.mLogout.Visible = false;
             // 
             // NavigationControl
             // 
@@ -119,6 +103,66 @@
             this.NavigationControl.Name = "NavigationControl";
             this.NavigationControl.Size = new System.Drawing.Size(200, 537);
             this.NavigationControl.TabIndex = 3;
+            // 
+            // mBookmarks
+            // 
+            this.mBookmarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mBookmarks.FlatAppearance.BorderSize = 0;
+            this.mBookmarks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mBookmarks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mBookmarks.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mBookmarks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mBookmarks.Location = new System.Drawing.Point(3, 137);
+            this.mBookmarks.Name = "mBookmarks";
+            this.mBookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mBookmarks.Size = new System.Drawing.Size(194, 36);
+            this.mBookmarks.TabIndex = 2;
+            this.mBookmarks.Text = "           Bookmarks";
+            this.mBookmarks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mBookmarks.UseVisualStyleBackColor = true;
+            this.mBookmarks.Visible = false;
+            // 
+            // mAbout
+            // 
+            this.mAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mAbout.FlatAppearance.BorderSize = 0;
+            this.mAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mAbout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mAbout.Location = new System.Drawing.Point(3, 263);
+            this.mAbout.Name = "mAbout";
+            this.mAbout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mAbout.Size = new System.Drawing.Size(194, 36);
+            this.mAbout.TabIndex = 4;
+            this.mAbout.Text = "           About";
+            this.mAbout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mAbout.UseVisualStyleBackColor = true;
+            this.mAbout.Visible = false;
+            // 
+            // NavigationTransition
+            // 
+            this.NavigationTransition.Interval = 5;
+            this.NavigationTransition.Tick += new System.EventHandler(this.NavigationTransitionTimer_Tick);
+            // 
+            // mSettings
+            // 
+            this.mSettings.FlatAppearance.BorderSize = 0;
+            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mSettings.Image = global::MurliAnveshan.Properties.Resources.Settings;
+            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.Location = new System.Drawing.Point(3, 3);
+            this.mSettings.Name = "mSettings";
+            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mSettings.Size = new System.Drawing.Size(194, 36);
+            this.mSettings.TabIndex = 8;
+            this.mSettings.Text = "           Settings";
+            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.UseVisualStyleBackColor = true;
             // 
             // mMenu
             // 
@@ -144,6 +188,7 @@
             this.mHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mHome.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mHome.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.mHome.Image = global::MurliAnveshan.Properties.Resources.House_041;
             this.mHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mHome.Location = new System.Drawing.Point(3, 53);
             this.mHome.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
@@ -164,6 +209,7 @@
             this.mFavorites.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mFavorites.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mFavorites.ForeColor = System.Drawing.Color.Black;
+            this.mFavorites.Image = global::MurliAnveshan.Properties.Resources.Star1;
             this.mFavorites.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mFavorites.Location = new System.Drawing.Point(3, 95);
             this.mFavorites.Name = "mFavorites";
@@ -174,24 +220,6 @@
             this.mFavorites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mFavorites.UseVisualStyleBackColor = true;
             // 
-            // mBookmarks
-            // 
-            this.mBookmarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mBookmarks.FlatAppearance.BorderSize = 0;
-            this.mBookmarks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mBookmarks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mBookmarks.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mBookmarks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mBookmarks.Location = new System.Drawing.Point(3, 137);
-            this.mBookmarks.Name = "mBookmarks";
-            this.mBookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mBookmarks.Size = new System.Drawing.Size(194, 36);
-            this.mBookmarks.TabIndex = 2;
-            this.mBookmarks.Text = "           Bookmarks";
-            this.mBookmarks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mBookmarks.UseVisualStyleBackColor = true;
-            // 
             // mHistory
             // 
             this.mHistory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -201,7 +229,7 @@
             this.mHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mHistory.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mHistory.ForeColor = System.Drawing.Color.Black;
-            this.mHistory.Image = ((System.Drawing.Image)(resources.GetObject("mHistory.Image")));
+            this.mHistory.Image = global::MurliAnveshan.Properties.Resources.Tab_History;
             this.mHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mHistory.Location = new System.Drawing.Point(3, 179);
             this.mHistory.Name = "mHistory";
@@ -220,7 +248,7 @@
             this.mDocViewer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.mDocViewer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mDocViewer.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mDocViewer.Image = ((System.Drawing.Image)(resources.GetObject("mDocViewer.Image")));
+            this.mDocViewer.Image = global::MurliAnveshan.Properties.Resources.File_Format_PDF;
             this.mDocViewer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mDocViewer.Location = new System.Drawing.Point(3, 221);
             this.mDocViewer.Name = "mDocViewer";
@@ -231,29 +259,6 @@
             this.mDocViewer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mDocViewer.UseVisualStyleBackColor = true;
             // 
-            // mAbout
-            // 
-            this.mAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mAbout.FlatAppearance.BorderSize = 0;
-            this.mAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mAbout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mAbout.Location = new System.Drawing.Point(3, 263);
-            this.mAbout.Name = "mAbout";
-            this.mAbout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mAbout.Size = new System.Drawing.Size(194, 36);
-            this.mAbout.TabIndex = 4;
-            this.mAbout.Text = "           About";
-            this.mAbout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mAbout.UseVisualStyleBackColor = true;
-            // 
-            // NavigationTransition
-            // 
-            this.NavigationTransition.Interval = 5;
-            this.NavigationTransition.Tick += new System.EventHandler(this.NavigationTransitionTimer_Tick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,7 +267,7 @@
             this.Controls.Add(this.ParentNavigationControl);
             this.IsMdiContainer = true;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Murli Anveshan";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm2_Load);
             this.ParentNavigationControl.ResumeLayout(false);

@@ -13,6 +13,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,11 +54,23 @@
     <Reference Include="Lucene.Net.Sandbox, Version=4.0.0.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
       <HintPath>packages\Lucene.Net.Sandbox.4.8.0-beta00016\lib\net45\Lucene.Net.Sandbox.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialSkin">
+      <HintPath>Controls\MaterialSkin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Extensions.Configuration.Abstractions.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Extensions.Primitives.1.1.1\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2739.15, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2739.15\lib\net462\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2739.15, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2739.15\lib\net462\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2739.15, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2739.15\lib\net462\Microsoft.Web.WebView2.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -68,6 +82,12 @@
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
     </Reference>
+    <Reference Include="SelfControls">
+      <HintPath>Controls\SelfControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Compression.Base.26.2.14\lib\net462\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.DocIO.Base, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\FileFormats\23.1.36\Assemblies\4.6\Syncfusion.DocIO.Base.dll</HintPath>
@@ -76,7 +96,39 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\FileFormats\23.1.36\Assemblies\4.6\Syncfusion.DocIO.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Base, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Grid.Base.26.2.14\lib\net462\Syncfusion.Grid.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Windows, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Grid.Windows.26.2.14\lib\net462\Syncfusion.Grid.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Licensing.26.2.14\lib\net462\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Pdf.WinForms.26.2.14\lib\net462\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PdfToImageConverter.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\lib\net462\Syncfusion.PdfToImageConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.PdfViewer.Windows, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.PdfViewer.Windows.26.2.14\lib\net462\Syncfusion.PdfViewer.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Shared.Base.26.2.14\lib\net462\Syncfusion.Shared.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Windows, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Shared.Windows.26.2.14\lib\net462\Syncfusion.Shared.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SpellChecker.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.SpellChecker.Base.26.2.14\lib\net462\Syncfusion.SpellChecker.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Base, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Tools.Base.26.2.14\lib\net462\Syncfusion.Tools.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Windows, Version=26.2462.14.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>packages\Syncfusion.Tools.Windows.26.2.14\lib\net462\Syncfusion.Tools.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -210,6 +262,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -231,38 +284,115 @@
   <ItemGroup>
     <Compile Include="Classes\AvyaktMurliSearchEngine.cs" />
     <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\mdiProperties.cs" />
     <Compile Include="Classes\MurliDetails.cs" />
     <Compile Include="Classes\MurliSearchEngineBase.cs" />
-    <Compile Include="FrmDocViewer.cs">
+    <Compile Include="Controls\PageNavigator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PageNavigator.Designer.cs">
+      <DependentUpon>PageNavigator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PDFViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PDFViewer.Designer.cs">
+      <DependentUpon>PDFViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PDFViewerControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmDocViewer.Designer.cs">
+    <Compile Include="Controls\PDFViewerControl.Designer.cs">
+      <DependentUpon>PDFViewerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmAbout.Designer.cs">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmBookmarks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmBookmarks.Designer.cs">
+      <DependentUpon>FrmBookmarks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmDocViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmDocViewer.Designer.cs">
       <DependentUpon>FrmDocViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\FrmFavorites.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\FrmFavorites.Designer.cs">
+      <DependentUpon>FrmFavorites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmHistry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmHistry.Designer.cs">
+      <DependentUpon>FrmHistry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmHome.Designer.cs">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSettings.Designer.cs">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmDocViewer.resx">
+    <EmbeddedResource Include="Controls\PageNavigator.resx">
+      <DependentUpon>PageNavigator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PDFViewer.resx">
+      <DependentUpon>PDFViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PDFViewerControl.resx">
+      <DependentUpon>PDFViewerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmAbout.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmBookmarks.resx">
+      <DependentUpon>FrmBookmarks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmDocViewer.resx">
       <DependentUpon>FrmDocViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\FrmFavorites.resx">
+      <DependentUpon>FrmFavorites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmHistry.resx">
+      <DependentUpon>FrmHistry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmHome.resx">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSettings.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Indexes\Hindi\Avyakt Murli Index\segments.gen" />
     <None Include="Indexes\Hindi\Avyakt Murli Index\segments_4" />
     <None Include="Indexes\Hindi\Avyakt Murli Index\_1.cfe" />
@@ -274,6 +404,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -286,6 +421,56 @@
   <ItemGroup>
     <Analyzer Include="packages\Lucene.Net.4.8.0-beta00016\analyzers\dotnet\cs\Lucene.Net.CodeAnalysis.CSharp.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Controls\SelfControls.dll" />
+    <Content Include="Resources\Images\BlackFavorites.png" />
+    <Content Include="Resources\Images\Close.png" />
+    <Content Include="Resources\Images\Collapse.png" />
+    <Content Include="Resources\Images\EmptyStar.png" />
+    <Content Include="Resources\Images\Expand.png" />
+    <Content Include="Resources\Images\Favorites.png" />
+    <Content Include="Resources\Images\FilledStar.png" />
+    <Content Include="Resources\Images\History.png" />
+    <Content Include="Resources\Images\House.png" />
+    <None Include="Resources\Images\Icons\House-04.png" />
+    <None Include="Resources\Images\Icons\Star.png" />
+    <None Include="Resources\Images\Icons\Tab-History.png" />
+    <None Include="Resources\Images\Icons\File-Format-PDF.png" />
+    <None Include="Resources\Images\Icons\Settings.png" />
+    <None Include="Resources\Images\Icons\Speaker - 01 24.png" />
+    <None Include="Resources\Images\Icons\Volume-Speaker 24.png" />
+    <None Include="Resources\Images\Icons\Video-Record-02 24.png" />
+    <None Include="Resources\Images\Icons\Video-Record-03 24.png" />
+    <None Include="Resources\Images\Icons\Video-Record-01 24.png" />
+    <None Include="Resources\Images\Icons\File-Format-PDF 24.png" />
+    <None Include="Resources\Images\Icons\Zoom-In 24.png" />
+    <None Include="Resources\Images\Icons\Zoom out  24.png" />
+    <None Include="Resources\Images\Icons\File HTML 24.png" />
+    <None Include="Resources\Images\Icons\Folder-Open.png" />
+    <None Include="Resources\Images\Icons\Print - 01.png" />
+    <None Include="Resources\Images\Icons\Copy.png" />
+    <Content Include="Resources\Images\Menu.png" />
+    <Content Include="Resources\Images\Menu21.png" />
+    <Content Include="Resources\Images\Pin.png" />
+    <Content Include="Resources\Images\QR-Code - 02 %282%29.png" />
+    <Content Include="Resources\Images\QR-Code - 02 %283%29.png" />
+    <Content Include="Resources\Images\QR-Code - 02 %284%29.png" />
+    <Content Include="Resources\Images\QR-Code - 02.png" />
+    <Content Include="Resources\Images\Settings.png" />
+    <Content Include="Resources\Images\Unpin.png" />
+    <Content Include="Resources\Images\WhiteHouse.png" />
+    <None Include="Resources\QR-Code - 02.png" />
+    <None Include="Resources\QR-Code - 02 %283%29.png" />
+    <None Include="Resources\QR-Code - 02 %284%29.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Microsoft.Web.WebView2.1.0.2739.15\build\Microsoft.Web.WebView2.targets" Condition="Exists('packages\Microsoft.Web.WebView2.1.0.2739.15\build\Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Web.WebView2.1.0.2739.15\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Web.WebView2.1.0.2739.15\build\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets'))" />
+  </Target>
+  <Import Project="packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets" Condition="Exists('packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets')" />
 </Project>

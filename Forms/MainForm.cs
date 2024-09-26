@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 using MurliAnveshan.Classes;
 
+using SelfControls.Controls;
+
 namespace MurliAnveshan
 {
     public partial class MainForm : Form
@@ -22,6 +24,8 @@ namespace MurliAnveshan
         private bool _isNavigationControlExpanded;
 
         System.Windows.Forms.Button activeMenu;
+
+        MainForm mainFormInstance;
 
         FrmHome frmHome;
 
@@ -68,6 +72,9 @@ namespace MurliAnveshan
             _isNavigationControlExpanded = true;
 
             mdiProp();
+
+            mainFormInstance = this;
+
         }
 
 
@@ -83,7 +90,8 @@ namespace MurliAnveshan
 
         private void OnFavorites_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            LoadFaviorites();
+            ToggleMenuHighilightion();
         }
 
         private void OnBookmarks_Click(object sender, EventArgs e)
@@ -94,8 +102,71 @@ namespace MurliAnveshan
 
         private void OnDocViewer_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            LoadDocViewer(mainFormInstance);
+
+            ToggleMenuHighilightion();
         }
+
+
+        public void LoadDocViewer(MainForm mainFormInstance)
+        {
+            previouslyActiveMenu = activeMenu;
+            activeMenu = mDocViewer;
+
+            if (frmDocViewer == null)
+            {
+                frmDocViewer = new FrmDocViewer(mainFormInstance);
+                frmDocViewer.MdiParent = this;
+                frmDocViewer.Dock = DockStyle.Fill;
+
+                frmDocViewer.Show();
+            }
+            else
+            {
+                frmDocViewer.Activate();
+            }
+        }
+
+        public void LoadDocViewer(MainForm mainFormInstance, ResultDetails resultDetails)
+        {
+            previouslyActiveMenu = activeMenu;
+            activeMenu = mDocViewer;
+
+            if (frmDocViewer == null)
+            {
+                frmDocViewer = new FrmDocViewer(mainFormInstance, resultDetails);
+                frmDocViewer.MdiParent = this;
+                frmDocViewer.Dock = DockStyle.Fill;
+
+                frmDocViewer.Show();
+            }
+            else
+            {
+                //TODO: Identify the Clicked Card. If New One Load otherwise Activate
+                frmDocViewer.LoadThePDF(resultDetails);
+                frmDocViewer.Activate();
+            }
+        }
+
+        private void LoadFaviorites()
+        {
+            previouslyActiveMenu = activeMenu;
+            activeMenu = mFavorites;
+
+            if (frmFavorites == null)
+            {
+                frmFavorites = new FrmFavorites();
+                frmFavorites.MdiParent = this;
+                frmFavorites.Dock = DockStyle.Fill;
+
+                frmFavorites.Show();
+            }
+            else
+            {
+                frmFavorites.Activate();
+            }
+        }
+
 
         private void OnHistory_Click(object sender, EventArgs e)
         {
@@ -188,7 +259,7 @@ namespace MurliAnveshan
 
             if (frmHome == null)
             {
-                frmHome = new FrmHome();
+                frmHome = new FrmHome(mainFormInstance);
                 frmHome.MdiParent = this;
                 frmHome.Dock = DockStyle.Fill;
 
