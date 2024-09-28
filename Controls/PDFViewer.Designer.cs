@@ -30,30 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PDFViewer));
             this.ribbonControlAdv1 = new Syncfusion.Windows.Forms.Tools.RibbonControlAdv();
-            this.FileToolStripTab = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
-            this.tsStdItems = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
-            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.HomeToolStripTab = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
             this.toolStripEx3 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.ViewToolStripTab = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
-            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
-            this.ZoomInToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.ZoomOutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.ZoomLevelToolStripComboBox = new Syncfusion.Windows.Forms.Tools.ToolStripComboBoxEx();
-            this.FitToPageToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.FitToWidthToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.FullScreenToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.QRCodesToolStripTab = new Syncfusion.Windows.Forms.Tools.ToolStripTabItem();
             this.tsKannadaQRCodes = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.KannadaAudioTsb = new System.Windows.Forms.ToolStripButton();
@@ -74,17 +55,33 @@
             this.TabControl = new SelfControls.Controls.CustomTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.ZoomInToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.ZoomOutToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.ZoomLevelToolStripComboBox = new Syncfusion.Windows.Forms.Tools.ToolStripComboBoxEx();
+            this.FitToPageToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.FitToWidthToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.FullScreenToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.tsStdItems = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControlAdv1)).BeginInit();
             this.ribbonControlAdv1.SuspendLayout();
-            this.FileToolStripTab.Panel.SuspendLayout();
-            this.tsStdItems.SuspendLayout();
+            this.HomeToolStripTab.Panel.SuspendLayout();
             this.toolStripEx3.SuspendLayout();
-            this.ViewToolStripTab.Panel.SuspendLayout();
-            this.toolStripEx1.SuspendLayout();
             this.QRCodesToolStripTab.Panel.SuspendLayout();
             this.tsKannadaQRCodes.SuspendLayout();
             this.tsHindiQRCodes.SuspendLayout();
             this.tsEnglishQRCodes.SuspendLayout();
+            this.toolStripEx1.SuspendLayout();
+            this.tsStdItems.SuspendLayout();
             this.SuspendLayout();
             // 
             // ribbonControlAdv1
@@ -92,8 +89,7 @@
             this.ribbonControlAdv1.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ribbonControlAdv1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Top;
             this.ribbonControlAdv1.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ribbonControlAdv1.Header.AddMainItem(FileToolStripTab);
-            this.ribbonControlAdv1.Header.AddMainItem(ViewToolStripTab);
+            this.ribbonControlAdv1.Header.AddMainItem(HomeToolStripTab);
             this.ribbonControlAdv1.Header.AddMainItem(QRCodesToolStripTab);
             this.ribbonControlAdv1.LauncherStyle = Syncfusion.Windows.Forms.Tools.LauncherStyle.Office12;
             this.ribbonControlAdv1.Location = new System.Drawing.Point(0, 0);
@@ -124,136 +120,24 @@
             this.ribbonControlAdv1.ThemeStyle.MoreCommandsStyle.PropertyGridViewBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(171)))), ((int)(((byte)(171)))));
             this.ribbonControlAdv1.TitleColor = System.Drawing.Color.Navy;
             // 
-            // FileToolStripTab
+            // HomeToolStripTab
             // 
-            this.FileToolStripTab.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FileToolStripTab.Name = "FileToolStripTab";
+            this.HomeToolStripTab.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HomeToolStripTab.Name = "HomeToolStripTab";
             // 
             // ribbonControlAdv1.ribbonPanel1
             // 
-            this.FileToolStripTab.Panel.Controls.Add(this.tsStdItems);
-            this.FileToolStripTab.Panel.Controls.Add(this.toolStripEx3);
-            this.FileToolStripTab.Panel.Name = "ribbonPanel1";
-            this.FileToolStripTab.Panel.ScrollPosition = 0;
-            this.FileToolStripTab.Panel.TabIndex = 2;
-            this.FileToolStripTab.Panel.Text = "&File";
-            this.FileToolStripTab.Position = 0;
-            this.FileToolStripTab.Size = new System.Drawing.Size(45, 25);
-            this.FileToolStripTab.Tag = "1";
-            this.FileToolStripTab.Text = "&File";
-            // 
-            // tsStdItems
-            // 
-            this.tsStdItems.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsStdItems.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsStdItems.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.tsStdItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsStdItems.Image = null;
-            this.tsStdItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripButton,
-            this.openToolStripButton,
-            this.saveToolStripButton,
-            this.printToolStripButton,
-            this.toolStripSeparator,
-            this.cutToolStripButton,
-            this.copyToolStripButton,
-            this.pasteToolStripButton,
-            this.toolStripSeparator1,
-            this.helpToolStripButton});
-            this.tsStdItems.Location = new System.Drawing.Point(0, 1);
-            this.tsStdItems.Name = "tsStdItems";
-            this.tsStdItems.Office12Mode = false;
-            this.tsStdItems.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.tsStdItems.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tsStdItems.Size = new System.Drawing.Size(90, 44);
-            this.tsStdItems.TabIndex = 0;
-            // 
-            // newToolStripButton
-            // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(23, 41);
-            this.newToolStripButton.Text = "&New";
-            this.newToolStripButton.Visible = false;
-            // 
-            // openToolStripButton
-            // 
-            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Folder_Open;
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.openToolStripButton.Text = "&Open";
-            // 
-            // saveToolStripButton
-            // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(23, 41);
-            this.saveToolStripButton.Text = "&Save";
-            this.saveToolStripButton.Visible = false;
-            // 
-            // printToolStripButton
-            // 
-            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Print___01;
-            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton.Name = "printToolStripButton";
-            this.printToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.printToolStripButton.Text = "&Print";
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 30);
-            // 
-            // cutToolStripButton
-            // 
-            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
-            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.cutToolStripButton.Text = "C&ut";
-            this.cutToolStripButton.Visible = false;
-            // 
-            // copyToolStripButton
-            // 
-            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Copy;
-            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.copyToolStripButton.Text = "&Copy";
-            // 
-            // pasteToolStripButton
-            // 
-            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
-            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.pasteToolStripButton.Text = "&Paste";
-            this.pasteToolStripButton.Visible = false;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
-            // 
-            // helpToolStripButton
-            // 
-            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
-            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.helpToolStripButton.Name = "helpToolStripButton";
-            this.helpToolStripButton.Size = new System.Drawing.Size(23, 20);
-            this.helpToolStripButton.Text = "He&lp";
-            this.helpToolStripButton.Visible = false;
+            this.HomeToolStripTab.Panel.Controls.Add(this.tsStdItems);
+            this.HomeToolStripTab.Panel.Controls.Add(this.toolStripEx1);
+            this.HomeToolStripTab.Panel.Controls.Add(this.toolStripEx3);
+            this.HomeToolStripTab.Panel.Name = "ribbonPanel1";
+            this.HomeToolStripTab.Panel.ScrollPosition = 0;
+            this.HomeToolStripTab.Panel.TabIndex = 2;
+            this.HomeToolStripTab.Panel.Text = "&Home";
+            this.HomeToolStripTab.Position = 0;
+            this.HomeToolStripTab.Size = new System.Drawing.Size(57, 25);
+            this.HomeToolStripTab.Tag = "1";
+            this.HomeToolStripTab.Text = "&Home";
             // 
             // toolStripEx3
             // 
@@ -266,10 +150,11 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3});
-            this.toolStripEx3.Location = new System.Drawing.Point(18, 1);
+            this.toolStripEx3.Location = new System.Drawing.Point(335, 1);
             this.toolStripEx3.Name = "toolStripEx3";
             this.toolStripEx3.Office12Mode = false;
             this.toolStripEx3.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripEx3.ShowItemToolTips = true;
             this.toolStripEx3.Size = new System.Drawing.Size(76, 44);
             this.toolStripEx3.TabIndex = 1;
             // 
@@ -300,107 +185,6 @@
             this.toolStripButton3.Size = new System.Drawing.Size(23, 27);
             this.toolStripButton3.Text = "toolStripButton3";
             // 
-            // ViewToolStripTab
-            // 
-            this.ViewToolStripTab.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ViewToolStripTab.Name = "ViewToolStripTab";
-            // 
-            // ribbonControlAdv1.ribbonPanel2
-            // 
-            this.ViewToolStripTab.Panel.Controls.Add(this.toolStripEx1);
-            this.ViewToolStripTab.Panel.Name = "ribbonPanel2";
-            this.ViewToolStripTab.Panel.ScrollPosition = 0;
-            this.ViewToolStripTab.Panel.TabIndex = 3;
-            this.ViewToolStripTab.Panel.Text = "View";
-            this.ViewToolStripTab.Position = 1;
-            this.ViewToolStripTab.Size = new System.Drawing.Size(52, 25);
-            this.ViewToolStripTab.Tag = "2";
-            this.ViewToolStripTab.Text = "View";
-            // 
-            // toolStripEx1
-            // 
-            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripEx1.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripEx1.Image = null;
-            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ZoomInToolStripButton,
-            this.ZoomOutToolStripButton,
-            this.ZoomLevelToolStripComboBox,
-            this.FitToPageToolStripButton,
-            this.FitToWidthToolStripButton,
-            this.FullScreenToolStripButton});
-            this.toolStripEx1.Location = new System.Drawing.Point(0, 1);
-            this.toolStripEx1.Name = "toolStripEx1";
-            this.toolStripEx1.Office12Mode = false;
-            this.toolStripEx1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.toolStripEx1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripEx1.Size = new System.Drawing.Size(247, 44);
-            this.toolStripEx1.TabIndex = 0;
-            // 
-            // ZoomInToolStripButton
-            // 
-            this.ZoomInToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ZoomInToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Zoom_In_24;
-            this.ZoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ZoomInToolStripButton.Name = "ZoomInToolStripButton";
-            this.ZoomInToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.ZoomInToolStripButton.Text = "ZoomIn";
-            this.ZoomInToolStripButton.ToolTipText = "ZoomIn";
-            // 
-            // ZoomOutToolStripButton
-            // 
-            this.ZoomOutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ZoomOutToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Zoom_out__24;
-            this.ZoomOutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ZoomOutToolStripButton.Name = "ZoomOutToolStripButton";
-            this.ZoomOutToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.ZoomOutToolStripButton.Text = "tsbZoomOut";
-            // 
-            // ZoomLevelToolStripComboBox
-            // 
-            this.ZoomLevelToolStripComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.ZoomLevelToolStripComboBox.Items.AddRange(new object[] {
-            "100%",
-            "90%",
-            "80%",
-            "70%",
-            "60%",
-            "50%",
-            "40%"});
-            this.ZoomLevelToolStripComboBox.MaxLength = 32767;
-            this.ZoomLevelToolStripComboBox.Name = "ZoomLevelToolStripComboBox";
-            this.ZoomLevelToolStripComboBox.Size = new System.Drawing.Size(121, 30);
-            this.ZoomLevelToolStripComboBox.Style = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
-            // 
-            // FitToPageToolStripButton
-            // 
-            this.FitToPageToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FitToPageToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FitToPageToolStripButton.Image")));
-            this.FitToPageToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FitToPageToolStripButton.Name = "FitToPageToolStripButton";
-            this.FitToPageToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.FitToPageToolStripButton.Text = "FitPage";
-            // 
-            // FitToWidthToolStripButton
-            // 
-            this.FitToWidthToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FitToWidthToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FitToWidthToolStripButton.Image")));
-            this.FitToWidthToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FitToWidthToolStripButton.Name = "FitToWidthToolStripButton";
-            this.FitToWidthToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.FitToWidthToolStripButton.Text = "FitWidth";
-            // 
-            // FullScreenToolStripButton
-            // 
-            this.FullScreenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.FullScreenToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FullScreenToolStripButton.Image")));
-            this.FullScreenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.FullScreenToolStripButton.Name = "FullScreenToolStripButton";
-            this.FullScreenToolStripButton.Size = new System.Drawing.Size(23, 27);
-            this.FullScreenToolStripButton.Text = "FullScreen";
-            // 
             // QRCodesToolStripTab
             // 
             this.QRCodesToolStripTab.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -417,11 +201,11 @@
             this.QRCodesToolStripTab.Panel.ScrollPosition = 0;
             this.QRCodesToolStripTab.Panel.ShowLauncher = false;
             this.QRCodesToolStripTab.Panel.TabIndex = 4;
-            this.QRCodesToolStripTab.Panel.Text = "QR Codes";
-            this.QRCodesToolStripTab.Position = 2;
+            this.QRCodesToolStripTab.Panel.Text = "&QR Codes";
+            this.QRCodesToolStripTab.Position = 1;
             this.QRCodesToolStripTab.Size = new System.Drawing.Size(77, 25);
             this.QRCodesToolStripTab.Tag = "3";
-            this.QRCodesToolStripTab.Text = "QR Codes";
+            this.QRCodesToolStripTab.Text = "&QR Codes";
             // 
             // tsKannadaQRCodes
             // 
@@ -441,6 +225,7 @@
             this.tsKannadaQRCodes.Office12Mode = false;
             this.tsKannadaQRCodes.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tsKannadaQRCodes.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsKannadaQRCodes.ShowItemToolTips = true;
             this.tsKannadaQRCodes.Size = new System.Drawing.Size(239, 44);
             this.tsKannadaQRCodes.TabIndex = 3;
             this.tsKannadaQRCodes.Text = "ಕನ್ನಡ";
@@ -494,6 +279,7 @@
             this.tsHindiQRCodes.Office12Mode = false;
             this.tsHindiQRCodes.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tsHindiQRCodes.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsHindiQRCodes.ShowItemToolTips = true;
             this.tsHindiQRCodes.Size = new System.Drawing.Size(239, 44);
             this.tsHindiQRCodes.TabIndex = 1;
             this.tsHindiQRCodes.Text = "Hindi";
@@ -547,6 +333,7 @@
             this.tsEnglishQRCodes.Office12Mode = false;
             this.tsEnglishQRCodes.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tsEnglishQRCodes.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsEnglishQRCodes.ShowItemToolTips = true;
             this.tsEnglishQRCodes.Size = new System.Drawing.Size(239, 44);
             this.tsEnglishQRCodes.TabIndex = 0;
             this.tsEnglishQRCodes.Text = "English";
@@ -635,6 +422,200 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // toolStripEx1
+            // 
+            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripEx1.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ZoomInToolStripButton,
+            this.ZoomOutToolStripButton,
+            this.ZoomLevelToolStripComboBox,
+            this.FitToPageToolStripButton,
+            this.FitToWidthToolStripButton,
+            this.FullScreenToolStripButton});
+            this.toolStripEx1.Location = new System.Drawing.Point(86, 1);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.toolStripEx1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripEx1.ShowItemToolTips = true;
+            this.toolStripEx1.Size = new System.Drawing.Size(247, 44);
+            this.toolStripEx1.TabIndex = 2;
+            // 
+            // ZoomInToolStripButton
+            // 
+            this.ZoomInToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ZoomInToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Zoom_In_24;
+            this.ZoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ZoomInToolStripButton.Name = "ZoomInToolStripButton";
+            this.ZoomInToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.ZoomInToolStripButton.Text = "Zoom In";
+            this.ZoomInToolStripButton.ToolTipText = "Zoom In";
+            // 
+            // ZoomOutToolStripButton
+            // 
+            this.ZoomOutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ZoomOutToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Zoom_out__24;
+            this.ZoomOutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ZoomOutToolStripButton.Name = "ZoomOutToolStripButton";
+            this.ZoomOutToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.ZoomOutToolStripButton.Text = "Zoom Out";
+            this.ZoomOutToolStripButton.ToolTipText = "Zoom Out";
+            // 
+            // ZoomLevelToolStripComboBox
+            // 
+            this.ZoomLevelToolStripComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.ZoomLevelToolStripComboBox.Items.AddRange(new object[] {
+            "100%",
+            "90%",
+            "80%",
+            "70%",
+            "60%",
+            "50%",
+            "40%"});
+            this.ZoomLevelToolStripComboBox.MaxLength = 32767;
+            this.ZoomLevelToolStripComboBox.Name = "ZoomLevelToolStripComboBox";
+            this.ZoomLevelToolStripComboBox.Size = new System.Drawing.Size(121, 30);
+            this.ZoomLevelToolStripComboBox.Style = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
+            // 
+            // FitToPageToolStripButton
+            // 
+            this.FitToPageToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FitToPageToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FitToPageToolStripButton.Image")));
+            this.FitToPageToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FitToPageToolStripButton.Name = "FitToPageToolStripButton";
+            this.FitToPageToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.FitToPageToolStripButton.Text = "Fit Page";
+            // 
+            // FitToWidthToolStripButton
+            // 
+            this.FitToWidthToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FitToWidthToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FitToWidthToolStripButton.Image")));
+            this.FitToWidthToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FitToWidthToolStripButton.Name = "FitToWidthToolStripButton";
+            this.FitToWidthToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.FitToWidthToolStripButton.Text = "Fit Width";
+            // 
+            // FullScreenToolStripButton
+            // 
+            this.FullScreenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FullScreenToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("FullScreenToolStripButton.Image")));
+            this.FullScreenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FullScreenToolStripButton.Name = "FullScreenToolStripButton";
+            this.FullScreenToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.FullScreenToolStripButton.Text = "Full Screen";
+            // 
+            // tsStdItems
+            // 
+            this.tsStdItems.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsStdItems.Font = new System.Drawing.Font("Bookman Old Style", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsStdItems.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.tsStdItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsStdItems.Image = null;
+            this.tsStdItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripButton,
+            this.openToolStripButton,
+            this.saveToolStripButton,
+            this.printToolStripButton,
+            this.toolStripSeparator,
+            this.cutToolStripButton,
+            this.copyToolStripButton,
+            this.pasteToolStripButton,
+            this.helpToolStripButton});
+            this.tsStdItems.Location = new System.Drawing.Point(0, 1);
+            this.tsStdItems.Name = "tsStdItems";
+            this.tsStdItems.Office12Mode = false;
+            this.tsStdItems.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.tsStdItems.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsStdItems.ShowItemToolTips = true;
+            this.tsStdItems.Size = new System.Drawing.Size(84, 44);
+            this.tsStdItems.TabIndex = 3;
+            // 
+            // newToolStripButton
+            // 
+            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
+            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripButton.Name = "newToolStripButton";
+            this.newToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.newToolStripButton.Text = "&New";
+            this.newToolStripButton.Visible = false;
+            // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.openToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Folder_Open;
+            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.openToolStripButton.Text = "&Open";
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Visible = false;
+            // 
+            // printToolStripButton
+            // 
+            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.printToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Print___01;
+            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton.Name = "printToolStripButton";
+            this.printToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.printToolStripButton.Text = "&Print";
+            // 
+            // toolStripSeparator
+            // 
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(6, 30);
+            // 
+            // cutToolStripButton
+            // 
+            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
+            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutToolStripButton.Name = "cutToolStripButton";
+            this.cutToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.cutToolStripButton.Text = "C&ut";
+            this.cutToolStripButton.Visible = false;
+            // 
+            // copyToolStripButton
+            // 
+            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyToolStripButton.Image = global::MurliAnveshan.Properties.Resources.Copy;
+            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyToolStripButton.Name = "copyToolStripButton";
+            this.copyToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.copyToolStripButton.Text = "&Copy";
+            // 
+            // pasteToolStripButton
+            // 
+            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
+            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pasteToolStripButton.Name = "pasteToolStripButton";
+            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.pasteToolStripButton.Text = "&Paste";
+            this.pasteToolStripButton.Visible = false;
+            // 
+            // helpToolStripButton
+            // 
+            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
+            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpToolStripButton.Name = "helpToolStripButton";
+            this.helpToolStripButton.Size = new System.Drawing.Size(23, 27);
+            this.helpToolStripButton.Text = "He&lp";
+            this.helpToolStripButton.Visible = false;
+            // 
             // PDFViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,16 +628,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControlAdv1)).EndInit();
             this.ribbonControlAdv1.ResumeLayout(false);
             this.ribbonControlAdv1.PerformLayout();
-            this.FileToolStripTab.Panel.ResumeLayout(false);
-            this.FileToolStripTab.Panel.PerformLayout();
-            this.tsStdItems.ResumeLayout(false);
-            this.tsStdItems.PerformLayout();
+            this.HomeToolStripTab.Panel.ResumeLayout(false);
+            this.HomeToolStripTab.Panel.PerformLayout();
             this.toolStripEx3.ResumeLayout(false);
             this.toolStripEx3.PerformLayout();
-            this.ViewToolStripTab.Panel.ResumeLayout(false);
-            this.ViewToolStripTab.Panel.PerformLayout();
-            this.toolStripEx1.ResumeLayout(false);
-            this.toolStripEx1.PerformLayout();
             this.QRCodesToolStripTab.Panel.ResumeLayout(false);
             this.QRCodesToolStripTab.Panel.PerformLayout();
             this.tsKannadaQRCodes.ResumeLayout(false);
@@ -665,6 +640,10 @@
             this.tsHindiQRCodes.PerformLayout();
             this.tsEnglishQRCodes.ResumeLayout(false);
             this.tsEnglishQRCodes.PerformLayout();
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
+            this.tsStdItems.ResumeLayout(false);
+            this.tsStdItems.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -674,19 +653,7 @@
         private Syncfusion.Windows.Forms.Tools.RibbonControlAdv ribbonControlAdv1;
         private Syncfusion.Windows.Forms.Tools.ToolStripTabItem QRCodesToolStripTab;
         private Syncfusion.Windows.Forms.Tools.ToolStripEx tsEnglishQRCodes;
-        private Syncfusion.Windows.Forms.Tools.ToolStripTabItem FileToolStripTab;
-        private Syncfusion.Windows.Forms.Tools.ToolStripEx tsStdItems;
-        private System.Windows.Forms.ToolStripButton newToolStripButton;
-        private System.Windows.Forms.ToolStripButton openToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveToolStripButton;
-        private System.Windows.Forms.ToolStripButton printToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
-        private System.Windows.Forms.ToolStripButton copyToolStripButton;
-        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton helpToolStripButton;
-        private Syncfusion.Windows.Forms.Tools.ToolStripTabItem ViewToolStripTab;
+        private Syncfusion.Windows.Forms.Tools.ToolStripTabItem HomeToolStripTab;
         private System.Windows.Forms.ToolStripButton EnglishAudioTsb;
         private System.Windows.Forms.ToolStripButton EnglishVideoTsb;
         private System.Windows.Forms.ToolStripButton EnglishPDFTsb;
@@ -696,19 +663,12 @@
         private System.Windows.Forms.ToolStripButton HindiVideoTsb;
         private System.Windows.Forms.ToolStripButton HindiPDFTsb;
         private System.Windows.Forms.ToolStripButton HindiHtmlTsb;
-        private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
         private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx2;
         private Syncfusion.Windows.Forms.Tools.ToolStripEx tsKannadaQRCodes;
         private System.Windows.Forms.ToolStripButton KannadaAudioTsb;
         private System.Windows.Forms.ToolStripButton KannadaVideoTsb;
         private System.Windows.Forms.ToolStripButton KannadaPDFTsb;
         private System.Windows.Forms.ToolStripButton KannadaHtmlTsb;
-        private Syncfusion.Windows.Forms.Tools.ToolStripComboBoxEx ZoomLevelToolStripComboBox;
-        private System.Windows.Forms.ToolStripButton ZoomInToolStripButton;
-        private System.Windows.Forms.ToolStripButton ZoomOutToolStripButton;
-        private System.Windows.Forms.ToolStripButton FitToPageToolStripButton;
-        private System.Windows.Forms.ToolStripButton FitToWidthToolStripButton;
-        private System.Windows.Forms.ToolStripButton FullScreenToolStripButton;
         private SelfControls.Controls.CustomTabControl TabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -716,5 +676,22 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private Syncfusion.Windows.Forms.Tools.ToolStripEx tsStdItems;
+        private System.Windows.Forms.ToolStripButton newToolStripButton;
+        private System.Windows.Forms.ToolStripButton openToolStripButton;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripButton printToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
+        private System.Windows.Forms.ToolStripButton copyToolStripButton;
+        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
+        private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
+        private System.Windows.Forms.ToolStripButton ZoomInToolStripButton;
+        private System.Windows.Forms.ToolStripButton ZoomOutToolStripButton;
+        private Syncfusion.Windows.Forms.Tools.ToolStripComboBoxEx ZoomLevelToolStripComboBox;
+        private System.Windows.Forms.ToolStripButton FitToPageToolStripButton;
+        private System.Windows.Forms.ToolStripButton FitToWidthToolStripButton;
+        private System.Windows.Forms.ToolStripButton FullScreenToolStripButton;
     }
 }
