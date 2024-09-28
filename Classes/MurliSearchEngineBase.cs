@@ -48,7 +48,8 @@ namespace MurliAnveshan.Classes
         public abstract bool AddMurliDetailsToIndex(IEnumerable<AvyaktMurliDetails> murliDetails);
 
         public abstract bool BuildIndex();
-        public abstract IEnumerable<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation);
+
+        public abstract IEnumerable<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1, int pageSize = 10);
 
         #endregion Public Methods
     }

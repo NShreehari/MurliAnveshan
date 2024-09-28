@@ -28,9 +28,8 @@ namespace MurliAnveshan.Classes
 
         public string FileName { get; set; }
         public string MurliDate { get; set; }
-
-        public List<string> MurliLines { get; set; }
         public string MurliTitle { get; set; }
+        public List<string> MurliLines { get; set; }
         public string SearchTerm { get; set; }
 
         #endregion Public Properties

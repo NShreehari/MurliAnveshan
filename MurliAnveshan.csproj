@@ -293,6 +293,12 @@
     <Compile Include="Controls\PageNavigator.Designer.cs">
       <DependentUpon>PageNavigator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PaginationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PaginationControl.Designer.cs">
+      <DependentUpon>PaginationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PDFViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>

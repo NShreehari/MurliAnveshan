@@ -148,7 +148,7 @@
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 197);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 353);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 317);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // txtSearch
@@ -183,6 +183,7 @@
             this.txtSearch.ShortcutsEnabled = true;
             this.txtSearch.Size = new System.Drawing.Size(350, 40);
             this.txtSearch.TabIndex = 0;
+            this.txtSearch.TabStop = false;
             this.txtSearch.Text = "युक्तियाँ";
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtSearch.TrailingIcon = null;
@@ -208,7 +209,7 @@
             this.btnSearch.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnSearch.UseAccentColor = false;
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // btnClear
             // 
@@ -232,7 +233,7 @@
             this.btnClear.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
             this.btnClear.UseAccentColor = false;
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // groupBox1
             // 
@@ -359,7 +360,7 @@
             this.btnBuildIndex.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnBuildIndex.UseAccentColor = false;
             this.btnBuildIndex.UseVisualStyleBackColor = true;
-            this.btnBuildIndex.Click += new System.EventHandler(this.btnBuildIndex_Click);
+            this.btnBuildIndex.Click += new System.EventHandler(this.BtnBuildIndex_Click);
             // 
             // FrmHome
             // 

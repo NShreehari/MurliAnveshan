@@ -14,11 +14,11 @@ namespace MurliAnveshan
 {
     public partial class FrmHome : Form
     {
-        AvyaktMurliSearchEngine engine;
+        private readonly AvyaktMurliSearchEngine engine;
 
         private string searchTerm;
 
-        MainForm mainFormInstance;
+        readonly MainForm mainFormInstance;
 
         public FrmHome(MainForm mainFormInstance)
         {
@@ -38,7 +38,7 @@ namespace MurliAnveshan
 
 
 
-        private void btnBuildIndex_Click(object sender, EventArgs e)
+        private void BtnBuildIndex_Click(object sender, EventArgs e)
         {
             if (engine.BuildIndex())
             {
@@ -51,7 +51,7 @@ namespace MurliAnveshan
         }
 
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void BtnSearch_Click(object sender, EventArgs e)
         {
             //Validate for NULL & Empty
 
@@ -102,14 +102,17 @@ namespace MurliAnveshan
 
             foreach (var item in results)
             {
-                resultCard = new SelfControls.Controls.ResultCard4();
-                resultCard.Width = flowLayoutPanel1.Width - 20;
-                resultCard.Left = 10;
+                resultCard = new SelfControls.Controls.ResultCard4
+                {
+                    Width = flowLayoutPanel1.Width - 20,
+                    Left = 10,
+                    Title = item.MurliTitle,
+                    ContentDate = item.MurliDate,
+                    FileName = item.FileName
+                };
                 resultCard.Click += new System.EventHandler(OnResultCardClick);
 
-                resultCard.Title = item.MurliTitle;
-                resultCard.ContentDate = item.MurliDate;
-                resultCard.FileName = item.FileName;
+
                 //resultCard.Count = 10;
 
                 string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
@@ -198,7 +201,7 @@ namespace MurliAnveshan
         //    richTextBox.DeselectAll();
         //}
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void BtnClear_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.Controls.Clear();
         }
