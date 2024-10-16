@@ -1,4 +1,6 @@
-﻿namespace MurliAnveshan
+﻿using MurliAnveshan.Controls;
+
+namespace MurliAnveshan
 {
     partial class FrmHome
     {
@@ -47,6 +49,7 @@
             this.rdbAvyakthDrills = new MaterialSkin.Controls.MaterialRadioButton();
             this.rdbAvyakthTitles = new MaterialSkin.Controls.MaterialRadioButton();
             this.btnBuildIndex = new MaterialSkin.Controls.MaterialButton();
+            this.paginationControl = new PaginationControl();
             this.grbSakarMurliCategory.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grbAvyakthMurliCategory.SuspendLayout();
@@ -148,7 +151,7 @@
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 197);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 317);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 308);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // txtSearch
@@ -362,6 +365,16 @@
             this.btnBuildIndex.UseVisualStyleBackColor = true;
             this.btnBuildIndex.Click += new System.EventHandler(this.BtnBuildIndex_Click);
             // 
+            // paginationControl
+            // 
+            this.paginationControl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.paginationControl.Location = new System.Drawing.Point(307, 512);
+            this.paginationControl.Name = "paginationControl";
+            this.paginationControl.Size = new System.Drawing.Size(443, 45);
+            this.paginationControl.TabIndex = 16;
+            //this.paginationControl.TargetPanel = this.flowLayoutPanel1;
+            this.paginationControl.Text = "R";
+            // 
             // FrmHome
             // 
             this.AcceptButton = this.btnSearch;
@@ -369,6 +382,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClear;
             this.ClientSize = new System.Drawing.Size(945, 559);
+            this.Controls.Add(this.paginationControl);
             this.Controls.Add(this.btnBuildIndex);
             this.Controls.Add(this.grbAvyakthMurliCategory);
             this.Controls.Add(this.groupBox1);
@@ -410,6 +424,7 @@
         private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthDrills;
         private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthTitles;
         private MaterialSkin.Controls.MaterialButton btnBuildIndex;
+        private PaginationControl paginationControl;
     }
 }
 

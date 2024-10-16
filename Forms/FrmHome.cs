@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,7 +7,6 @@ using SelfControls.Controls;
 using MurliAnveshan.Classes;
 
 using static MurliAnveshan.Classes.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MurliAnveshan
 {
@@ -33,10 +31,17 @@ namespace MurliAnveshan
 
             ShowGrbAvyakthMurliCategory();
 
+
+            paginationControl.PreviousClicked += PaginationControl_PreviousClicked;
+            paginationControl.NextClicked += PaginationControl_NextClicked;
+            paginationControl.PageClicked += PaginationControl_PageClicked;
+            paginationControl.LastClicked += PaginationControl_LastClicked;
+
+            // Optionally set the TargetPanel for pagination
+            //paginationControl.TargetPanel = flowLayoutPanel1;
+
             txtSearch.Focus();
         }
-
-
 
         private void BtnBuildIndex_Click(object sender, EventArgs e)
         {
@@ -51,19 +56,29 @@ namespace MurliAnveshan
         }
 
 
+        int pageSize = 10;
+
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             //Validate for NULL & Empty
 
+            ExecuteSearch();
+        }
+
+        private void ExecuteSearch(int currentPage = 1)
+        {
             SearchLocation searchLocation = rdbAvyakthAll.Checked ? SearchLocation.All : SearchLocation.TitleOnly;
             searchTerm = txtSearch.Text;
-            var results = engine.SearchIndex(searchTerm, searchLocation);
+            var results = engine.SearchIndex(searchTerm, searchLocation, currentPage);
 
-            if (results.Count() > 0)
+            this.paginationControl.PageSize = engine.pageSize;
+            this.paginationControl.UpdatePagination(results.Results.Count());
+
+            if (results.Results.Count() > 0)
             {
                 //AddResultsToRichTextBox(results);
 
-                AddResultsToCard(results);
+                AddResultsToCard(results.Results);
 
                 //HighlightSearchTerm(richTextBox1, searchTerm);
             }
@@ -97,7 +112,6 @@ namespace MurliAnveshan
 
         private void AddResultsToCard(System.Collections.Generic.IEnumerable<MurliDetailsBase> results)
         {
-            
             SelfControls.Controls.ResultCard4 resultCard;
 
             foreach (var item in results)
@@ -112,9 +126,6 @@ namespace MurliAnveshan
                 };
                 resultCard.Click += new System.EventHandler(OnResultCardClick);
 
-
-                //resultCard.Count = 10;
-
                 string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
 
                 if (combinedMurliLines.Length > 0)
@@ -126,8 +137,8 @@ namespace MurliAnveshan
 
                     //Removes Last ">"
                     //combinedMurliLines.Remove(combinedMurliLines.LastIndexOf(">"), 1);
-                    
-                    
+
+
                     //    var wordCount = combinedMurliLines
                     //.Split(new[] { ' ', '.', ',', ';', ':', '!', '?', '।' }, StringSplitOptions.RemoveEmptyEntries)
                     //.Count(w => w.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
@@ -235,6 +246,33 @@ namespace MurliAnveshan
         private void FrmHome_Load(object sender, EventArgs e)
         {
             txtSearch.Focus();
+        }
+
+        private void PaginationControl_PreviousClicked(object sender, int pageNumber)
+        {
+            flowLayoutPanel1.Controls.Clear();
+
+            ExecuteSearch(pageNumber);
+        }
+
+        private void PaginationControl_NextClicked(object sender, int pageNumber)
+        {
+            flowLayoutPanel1.Controls.Clear();
+
+            ExecuteSearch(pageNumber);
+        }
+
+        private void PaginationControl_PageClicked(object sender, int pageNumber)
+        {
+            flowLayoutPanel1.Controls.Clear();
+
+            ExecuteSearch(pageNumber);
+        }
+
+        private void PaginationControl_LastClicked(object sender, int pageNumber)
+        {
+            flowLayoutPanel1.Controls.Clear();
+            ExecuteSearch(pageNumber);
         }
     }
 }

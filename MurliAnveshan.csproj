@@ -287,14 +287,9 @@
     <Compile Include="Classes\mdiProperties.cs" />
     <Compile Include="Classes\MurliDetails.cs" />
     <Compile Include="Classes\MurliSearchEngineBase.cs" />
-    <Compile Include="Controls\PageNavigator.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PageNavigator.Designer.cs">
-      <DependentUpon>PageNavigator.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Classes\PagedResults.cs" />
     <Compile Include="Controls\PaginationControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\PaginationControl.Designer.cs">
       <DependentUpon>PaginationControl.cs</DependentUpon>
@@ -361,9 +356,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Controls\PageNavigator.resx">
-      <DependentUpon>PageNavigator.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PDFViewer.resx">
       <DependentUpon>PDFViewer.cs</DependentUpon>
     </EmbeddedResource>

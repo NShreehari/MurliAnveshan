@@ -15,7 +15,7 @@ namespace MurliAnveshan.Classes
         #region Protected Fields
 
         protected const LuceneVersion luceneVersion = LuceneVersion.LUCENE_48;
-        protected Analyzer analyzer;
+        protected static Analyzer analyzer;
         protected IndexWriterConfig indexConfig;
         protected LuceneDirectory indexDir;
         protected string indexName;
@@ -49,7 +49,7 @@ namespace MurliAnveshan.Classes
 
         public abstract bool BuildIndex();
 
-        public abstract IEnumerable<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1, int pageSize = 10);
+        public abstract PagedResults<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1);
 
         #endregion Public Methods
     }

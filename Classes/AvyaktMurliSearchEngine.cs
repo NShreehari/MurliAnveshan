@@ -29,12 +29,16 @@ namespace MurliAnveshan.Classes
         private readonly string indexFolderPath;
         private readonly string hindiAVMurlisPath;
 
+        public readonly int pageSize;
+
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AvyaktMurliSearchEngine() : base()
+        public AvyaktMurliSearchEngine(int pageSize = 5) : base()
         {
+            this.pageSize = pageSize;
+
             //Create an analyzer to process the text
             analyzer = new HindiAnalyzer(luceneVersion);// StandardAnalyzer(luceneVersion);
             //Create an index writer
@@ -245,25 +249,25 @@ namespace MurliAnveshan.Classes
         }
         */
 
-        public override IEnumerable<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1, int pageSize = 10)
+        
+        public override PagedResults<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1)
         {
-            var murliDetailsList = new List<MurliDetailsBase>();
-
             using (var directoryReader = DirectoryReader.Open(indexDir))
             {
                 var indexSearcher = new IndexSearcher(directoryReader);
 
                 Query query = CreateQueryBasedOnSearchLocation(searchTerm, searchLocation);
 
-                // Set the start index based on current page
+                // Calculate the starting point for the page
                 int startIndex = (currentPage - 1) * pageSize;
 
-                // Perform the search and get TopDocs (fetch more results than pageSize to handle pagination smoothly)
+                // Execute the search to get enough results for pagination
                 TopDocs hits = indexSearcher.Search(query, startIndex + pageSize);
 
-                // Prepare a list to hold the results
+                // Create a list to hold the results
+                var murliDetailsList = new List<MurliDetailsBase>();
 
-                // Iterate over the ScoreDocs from the startIndex to retrieve the required number of results (page size)
+                // Fetch documents in the current page
                 for (int i = startIndex; i < Math.Min(hits.ScoreDocs.Length, startIndex + pageSize); i++)
                 {
                     // Fetch the document from the index
@@ -293,15 +297,21 @@ namespace MurliAnveshan.Classes
                     // Add the result to the list
                     murliDetailsList.Add(murliDetail);
                 }
-            }
-            return murliDetailsList;
-        }
 
+                // Return the paged results
+                return new PagedResults<MurliDetailsBase>
+                {
+                    CurrentPage = currentPage,
+                    TotalHits = hits.TotalHits,
+                    Results = murliDetailsList
+                };
+            }
+        }
         #endregion Public Methods
 
         #region Private Methods
 
-        private Query CreateQueryBasedOnSearchLocation(string searchTerm, SearchLocation searchLocation)
+        internal static Query CreateQueryBasedOnSearchLocation(string searchTerm, SearchLocation searchLocation)
         {
             QueryParser queryParser = null;
             Query query = null;

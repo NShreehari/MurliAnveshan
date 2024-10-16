@@ -32,17 +32,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ParentNavigationControl = new System.Windows.Forms.Panel();
             this.BottomNavigationControl = new System.Windows.Forms.FlowLayoutPanel();
-            this.mLogout = new System.Windows.Forms.Button();
             this.NavigationControl = new System.Windows.Forms.FlowLayoutPanel();
-            this.mBookmarks = new System.Windows.Forms.Button();
-            this.mAbout = new System.Windows.Forms.Button();
-            this.NavigationTransition = new System.Windows.Forms.Timer(this.components);
-            this.mSettings = new System.Windows.Forms.Button();
             this.mMenu = new System.Windows.Forms.Button();
             this.mHome = new System.Windows.Forms.Button();
             this.mFavorites = new System.Windows.Forms.Button();
+            this.mBookmarks = new System.Windows.Forms.Button();
             this.mHistory = new System.Windows.Forms.Button();
             this.mDocViewer = new System.Windows.Forms.Button();
+            this.mAbout = new System.Windows.Forms.Button();
+            this.NavigationTransition = new System.Windows.Forms.Timer(this.components);
+            this.mLogout = new System.Windows.Forms.Button();
+            this.mSettings = new System.Windows.Forms.Button();
             this.ParentNavigationControl.SuspendLayout();
             this.BottomNavigationControl.SuspendLayout();
             this.NavigationControl.SuspendLayout();
@@ -61,31 +61,14 @@
             // BottomNavigationControl
             // 
             this.BottomNavigationControl.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.BottomNavigationControl.Controls.Add(this.mSettings);
             this.BottomNavigationControl.Controls.Add(this.mLogout);
+            this.BottomNavigationControl.Controls.Add(this.mSettings);
             this.BottomNavigationControl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BottomNavigationControl.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.BottomNavigationControl.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
             this.BottomNavigationControl.Location = new System.Drawing.Point(0, 437);
             this.BottomNavigationControl.Name = "BottomNavigationControl";
             this.BottomNavigationControl.Size = new System.Drawing.Size(200, 100);
             this.BottomNavigationControl.TabIndex = 4;
-            // 
-            // mLogout
-            // 
-            this.mLogout.FlatAppearance.BorderSize = 0;
-            this.mLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mLogout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mLogout.Location = new System.Drawing.Point(3, 45);
-            this.mLogout.Name = "mLogout";
-            this.mLogout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mLogout.Size = new System.Drawing.Size(194, 36);
-            this.mLogout.TabIndex = 9;
-            this.mLogout.Text = "           LogOut";
-            this.mLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mLogout.UseVisualStyleBackColor = true;
-            this.mLogout.Visible = false;
             // 
             // NavigationControl
             // 
@@ -103,66 +86,6 @@
             this.NavigationControl.Name = "NavigationControl";
             this.NavigationControl.Size = new System.Drawing.Size(200, 537);
             this.NavigationControl.TabIndex = 3;
-            // 
-            // mBookmarks
-            // 
-            this.mBookmarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mBookmarks.FlatAppearance.BorderSize = 0;
-            this.mBookmarks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mBookmarks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mBookmarks.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mBookmarks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mBookmarks.Location = new System.Drawing.Point(3, 137);
-            this.mBookmarks.Name = "mBookmarks";
-            this.mBookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mBookmarks.Size = new System.Drawing.Size(194, 36);
-            this.mBookmarks.TabIndex = 2;
-            this.mBookmarks.Text = "           Bookmarks";
-            this.mBookmarks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mBookmarks.UseVisualStyleBackColor = true;
-            this.mBookmarks.Visible = false;
-            // 
-            // mAbout
-            // 
-            this.mAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mAbout.FlatAppearance.BorderSize = 0;
-            this.mAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mAbout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mAbout.Location = new System.Drawing.Point(3, 263);
-            this.mAbout.Name = "mAbout";
-            this.mAbout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mAbout.Size = new System.Drawing.Size(194, 36);
-            this.mAbout.TabIndex = 4;
-            this.mAbout.Text = "           About";
-            this.mAbout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mAbout.UseVisualStyleBackColor = true;
-            this.mAbout.Visible = false;
-            // 
-            // NavigationTransition
-            // 
-            this.NavigationTransition.Interval = 5;
-            this.NavigationTransition.Tick += new System.EventHandler(this.NavigationTransitionTimer_Tick);
-            // 
-            // mSettings
-            // 
-            this.mSettings.FlatAppearance.BorderSize = 0;
-            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mSettings.Image = global::MurliAnveshan.Properties.Resources.Settings;
-            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.Location = new System.Drawing.Point(3, 3);
-            this.mSettings.Name = "mSettings";
-            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mSettings.Size = new System.Drawing.Size(194, 36);
-            this.mSettings.TabIndex = 8;
-            this.mSettings.Text = "           Settings";
-            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.UseVisualStyleBackColor = true;
             // 
             // mMenu
             // 
@@ -220,6 +143,25 @@
             this.mFavorites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mFavorites.UseVisualStyleBackColor = true;
             // 
+            // mBookmarks
+            // 
+            this.mBookmarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mBookmarks.FlatAppearance.BorderSize = 0;
+            this.mBookmarks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mBookmarks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mBookmarks.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mBookmarks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mBookmarks.Location = new System.Drawing.Point(3, 137);
+            this.mBookmarks.Name = "mBookmarks";
+            this.mBookmarks.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mBookmarks.Size = new System.Drawing.Size(194, 36);
+            this.mBookmarks.TabIndex = 2;
+            this.mBookmarks.Text = "           Bookmarks";
+            this.mBookmarks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mBookmarks.UseVisualStyleBackColor = true;
+            this.mBookmarks.Visible = false;
+            // 
             // mHistory
             // 
             this.mHistory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -259,6 +201,66 @@
             this.mDocViewer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mDocViewer.UseVisualStyleBackColor = true;
             // 
+            // mAbout
+            // 
+            this.mAbout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mAbout.FlatAppearance.BorderSize = 0;
+            this.mAbout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mAbout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mAbout.Location = new System.Drawing.Point(3, 263);
+            this.mAbout.Name = "mAbout";
+            this.mAbout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mAbout.Size = new System.Drawing.Size(194, 36);
+            this.mAbout.TabIndex = 4;
+            this.mAbout.Text = "           About";
+            this.mAbout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mAbout.UseVisualStyleBackColor = true;
+            this.mAbout.Visible = false;
+            // 
+            // NavigationTransition
+            // 
+            this.NavigationTransition.Interval = 5;
+            this.NavigationTransition.Tick += new System.EventHandler(this.NavigationTransitionTimer_Tick);
+            // 
+            // mLogout
+            // 
+            this.mLogout.FlatAppearance.BorderSize = 0;
+            this.mLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mLogout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mLogout.Location = new System.Drawing.Point(3, 58);
+            this.mLogout.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mLogout.Name = "mLogout";
+            this.mLogout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mLogout.Size = new System.Drawing.Size(194, 36);
+            this.mLogout.TabIndex = 10;
+            this.mLogout.Text = "           LogOut";
+            this.mLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mLogout.UseVisualStyleBackColor = true;
+            this.mLogout.Visible = false;
+            // 
+            // mSettings
+            // 
+            this.mSettings.FlatAppearance.BorderSize = 0;
+            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mSettings.Image = global::MurliAnveshan.Properties.Resources.Settings;
+            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.Location = new System.Drawing.Point(3, 13);
+            this.mSettings.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mSettings.Name = "mSettings";
+            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mSettings.Size = new System.Drawing.Size(194, 36);
+            this.mSettings.TabIndex = 11;
+            this.mSettings.Text = "           Settings";
+            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,8 +283,6 @@
 
         private System.Windows.Forms.Panel ParentNavigationControl;
         private System.Windows.Forms.FlowLayoutPanel BottomNavigationControl;
-        private System.Windows.Forms.Button mSettings;
-        private System.Windows.Forms.Button mLogout;
         private System.Windows.Forms.FlowLayoutPanel NavigationControl;
         private System.Windows.Forms.Button mMenu;
         private System.Windows.Forms.Button mHome;
@@ -292,5 +292,7 @@
         private System.Windows.Forms.Button mDocViewer;
         private System.Windows.Forms.Button mAbout;
         private System.Windows.Forms.Timer NavigationTransition;
+        private System.Windows.Forms.Button mLogout;
+        private System.Windows.Forms.Button mSettings;
     }
 }
