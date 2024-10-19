@@ -300,12 +300,6 @@
     <Compile Include="Controls\PDFViewer.Designer.cs">
       <DependentUpon>PDFViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PDFViewerControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\PDFViewerControl.Designer.cs">
-      <DependentUpon>PDFViewerControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,9 +352,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\PDFViewer.resx">
       <DependentUpon>PDFViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PDFViewerControl.resx">
-      <DependentUpon>PDFViewerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmAbout.resx">
       <DependentUpon>FrmAbout.cs</DependentUpon>

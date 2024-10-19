@@ -18,10 +18,30 @@ namespace MurliAnveshan
 
         readonly MainForm mainFormInstance;
 
-        public FrmHome(MainForm mainFormInstance)
+        private readonly Panel pnlToShowMurliCardsInFullExpansion;
+
+        public FrmHome()
         {
             InitializeComponent();
 
+            flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
+            pnlToShowMurliCardsInFullExpansion = new Panel
+            {
+                Size = flowLayoutPanel1.Size,
+                Location = flowLayoutPanel1.Location
+            };
+
+            this.Controls.Add(pnlToShowMurliCardsInFullExpansion);
+        }
+
+        private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
+        {
+            pnlToShowMurliCardsInFullExpansion.Size = flowLayoutPanel1.Size;
+            pnlToShowMurliCardsInFullExpansion.Location = flowLayoutPanel1.Location;
+        }
+
+        public FrmHome(MainForm mainFormInstance):this()
+        {           
             this.mainFormInstance = mainFormInstance;
 
             rdbAvyakthMurlis.CheckedChanged += MurliSelection_Changed;
@@ -30,7 +50,6 @@ namespace MurliAnveshan
             engine = new AvyaktMurliSearchEngine();
 
             ShowGrbAvyakthMurliCategory();
-
 
             paginationControl.PreviousClicked += PaginationControl_PreviousClicked;
             paginationControl.NextClicked += PaginationControl_NextClicked;
@@ -110,21 +129,26 @@ namespace MurliAnveshan
         //    }
         //}
 
+
         private void AddResultsToCard(System.Collections.Generic.IEnumerable<MurliDetailsBase> results)
         {
-            SelfControls.Controls.ResultCard4 resultCard;
+            SelfControls.Controls.MurliCard2 murliCard;
 
             foreach (var item in results)
             {
-                resultCard = new SelfControls.Controls.ResultCard4
+                murliCard = new SelfControls.Controls.MurliCard2
                 {
-                    Width = flowLayoutPanel1.Width - 20,
+                    //Width = flowLayoutPanel1.Width - 20,
                     Left = 10,
-                    Title = item.MurliTitle,
-                    ContentDate = item.MurliDate,
-                    FileName = item.FileName
+                    MurliTitle = item.MurliTitle,
+                    MurliDate = item.MurliDate,
+                    FileName = item.FileName,
+                    TitleAlignment = System.Drawing.ContentAlignment.MiddleLeft,
+                    SearchTerm = this.searchTerm
                 };
-                resultCard.Click += new System.EventHandler(OnResultCardClick);
+
+                murliCard.FullExpansionStateChanged += MurliCard_FullExpansionStateChanged;
+                //murliCard.Click += new System.EventHandler(OnResultCardClick);
 
                 string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
 
@@ -133,7 +157,7 @@ namespace MurliAnveshan
                     // Add the combined string to the RichTextBox
 
                     //Removes starting "|"
-                    resultCard.Content = combinedMurliLines.Remove(combinedMurliLines.IndexOf('।'), 1);
+                    murliCard.MurliLines = combinedMurliLines.Remove(combinedMurliLines.IndexOf('।'), 1);
 
                     //Removes Last ">"
                     //combinedMurliLines.Remove(combinedMurliLines.LastIndexOf(">"), 1);
@@ -143,13 +167,15 @@ namespace MurliAnveshan
                     //.Split(new[] { ' ', '.', ',', ';', ':', '!', '?', '।' }, StringSplitOptions.RemoveEmptyEntries)
                     //.Count(w => w.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
 
-                    resultCard.ResultCardSize = ResultCardSizeEnum.Big;
+                    //resultCard.ResultCardSize = ResultCardSizeEnum.Big;
                 }
                 else
                 {
                     if (item.MurliTitle.Contains(searchTerm))
                     {
-                        resultCard.ResultCardSize = ResultCardSizeEnum.Small;
+                        //resultCard.ResultCardSize = ResultCardSizeEnum.Small;
+
+                        murliCard.IsTitleOnlySearch = true;
                     }
                     else
                     {
@@ -159,16 +185,42 @@ namespace MurliAnveshan
 
                 //resultCard.HighlightSearchTerm(searchTerm);
 
-                resultCard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-                resultCard.Width = this.flowLayoutPanel1.Width - 32;
+                //resultCard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+                //resultCard.Width = this.flowLayoutPanel1.Width - 32;
 
-                flowLayoutPanel1.Controls.Add(resultCard);
+                flowLayoutPanel1.Controls.Add(murliCard);
+            }
+        }
+
+        private void MurliCard_FullExpansionStateChanged(object sender, bool e)
+        {
+            MurliCard2 cardToHandle = (sender as MurliCard2);
+
+            if (e) //Expanded
+            {               
+                cardToHandle.Dock = DockStyle.Fill;
+
+                pnlToShowMurliCardsInFullExpansion.Controls.Add(cardToHandle);
+                
+                flowLayoutPanel1.Hide();
+                pnlToShowMurliCardsInFullExpansion.Show();
+                //pnlToShowMurliCardsInFullExpansion.BringToFront();
+            }
+            else //Collapsed
+            {
+                pnlToShowMurliCardsInFullExpansion.Controls.Remove(cardToHandle);
+                flowLayoutPanel1.Controls.Add(cardToHandle);
+
+                cardToHandle.Dock = DockStyle.None;
+
+                pnlToShowMurliCardsInFullExpansion.Hide();
+                flowLayoutPanel1.Show();
             }
         }
 
         private void OnResultCardClick(object sender, EventArgs e)
         {
-            ResultDetails resultDetails = (sender as ResultCard4).FetchResultDetails();
+            ResultDetails resultDetails = (sender as MurliCard2).FetchResultDetails();
 
             mainFormInstance.LoadDocViewer(mainFormInstance, resultDetails);
         }
