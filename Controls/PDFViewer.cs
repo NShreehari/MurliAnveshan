@@ -415,11 +415,5 @@ namespace MurliAnveshan.Controls
             return null;
         }
 
-        private void PDFShowerControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }
