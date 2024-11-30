@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 using MaterialSkin.Controls;
@@ -11,7 +12,6 @@ public class PaginationControl : Control
     // Property to allow users to select the FlowLayoutPanel for displaying the results
     //private Control _targetPanel;
 
-    private MaterialButton btnLast;
     private MaterialButton btnNext;
     private MaterialButton btnPrevious;
     private int currentPage = 1;
@@ -49,7 +49,7 @@ public class PaginationControl : Control
     public int CurrentPage { get => currentPage; set => currentPage = value; }
 
     public int PageSize { get; set; }
-    
+
     //[Browsable(true)]
     //[Category("Custom Properties")]
     //[Description("Control to display paginated content")]
@@ -94,34 +94,178 @@ public class PaginationControl : Control
         }
 
         panelPages.Controls.Clear();
-        for (int i = 1; i <= TotalPages; i++)  // Always show at least 5 buttons or as per total pages
+
+        if (TotalPages <= 1)
         {
-            MaterialButton pageButton = new MaterialButton { AutoSize = false, Text = i.ToString(), Width = 32, Height = 28, Margin = new Padding(10, 5, 10, 0) };
+            AddSinglePageButton();
+            AdjustWidth();
+            return;
+        }
+
+        const int maxVisibleButtons = 3;
+        int startPage, endPage;
+        CalculatePageRange(maxVisibleButtons, out startPage, out endPage);
+
+        AddFirstPageButton();
+        AddPreviousEllipsisButton(startPage, maxVisibleButtons);
+        AddVisiblePageButtons(startPage, endPage);
+        AddNextEllipsisButton(endPage, maxVisibleButtons);
+        AddLastPageButton();
+
+        AdjustWidth();
+    }
+
+    private void AddSinglePageButton()
+    {
+        MaterialButton singlePageButton = new MaterialButton
+        {
+            AutoSize = false,
+            Text = "1",
+            Width = 32,
+            Height = 28,
+            Margin = new Padding(10, 5, 10, 0),
+            Type = MaterialButton.MaterialButtonType.Contained
+        };
+        singlePageButton.Click += (s, e) =>
+        {
+            CurrentPage = 1;
+            PageClicked?.Invoke(this, CurrentPage);
+        };
+        panelPages.Controls.Add(singlePageButton);
+    }
+
+    private void CalculatePageRange(int maxVisibleButtons, out int startPage, out int endPage)
+    {
+        startPage = Math.Max(2, CurrentPage - (maxVisibleButtons / 2));
+        endPage = Math.Min(TotalPages - 1, startPage + maxVisibleButtons - 1);
+
+        if (endPage - startPage + 1 < maxVisibleButtons && TotalPages > maxVisibleButtons)
+        {
+            if (startPage == 2)
+                endPage = Math.Min(TotalPages - 1, maxVisibleButtons);
+            else
+                startPage = Math.Max(2, endPage - maxVisibleButtons + 1);
+        }
+    }
+
+    private void AddFirstPageButton()
+    {
+        MaterialButton firstButton = new MaterialButton
+        {
+            AutoSize = false,
+            Text = "1",
+            Width = 32,
+            Height = 28,
+            Margin = new Padding(10, 5, 10, 0),
+            Type = CurrentPage == 1 ? MaterialButton.MaterialButtonType.Contained : MaterialButton.MaterialButtonType.Outlined
+        };
+        firstButton.Click += (s, e) =>
+        {
+            CurrentPage = 1;
+            PageClicked?.Invoke(this, CurrentPage);
+            UpdatePagination();
+        };
+        panelPages.Controls.Add(firstButton);
+    }
+
+    private void AddPreviousEllipsisButton(int startPage, int maxVisibleButtons)
+    {
+        if (startPage > 2)
+        {
+            MaterialButton prevEllipsisButton = new MaterialButton
+            {
+                AutoSize = false,
+                Text = "...",
+                Width = 32,
+                Height = 28,
+                Margin = new Padding(10, 5, 10, 0),
+                Type = MaterialButton.MaterialButtonType.Outlined
+            };
+            prevEllipsisButton.Click += (s, e) =>
+            {
+                CurrentPage = Math.Max(1, startPage - maxVisibleButtons);
+                UpdatePagination();
+            };
+            panelPages.Controls.Add(prevEllipsisButton);
+        }
+    }
+
+    private void AddVisiblePageButtons(int startPage, int endPage)
+    {
+        for (int i = startPage; i <= endPage; i++)
+        {
+            MaterialButton pageButton = new MaterialButton
+            {
+                AutoSize = false,
+                Text = i.ToString(),
+                Width = 32,
+                Height = 28,
+                Margin = new Padding(10, 5, 10, 0),
+                Type = i == CurrentPage ? MaterialButton.MaterialButtonType.Contained : MaterialButton.MaterialButtonType.Outlined
+            };
             pageButton.Click += (s, e) =>
             {
                 CurrentPage = int.Parse(((Button)s).Text);
-
-                // Raise PageClicked event
                 PageClicked?.Invoke(this, CurrentPage);
+                UpdatePagination();
             };
             panelPages.Controls.Add(pageButton);
         }
-
-        panelPages.Width = (panelPages.Controls.Count * 54);
-
     }
+
+    private void AddNextEllipsisButton(int endPage, int maxVisibleButtons)
+    {
+        if (endPage < TotalPages - 1)
+        {
+            MaterialButton nextEllipsisButton = new MaterialButton
+            {
+                AutoSize = false,
+                Text = "...",
+                Width = 32,
+                Height = 28,
+                Margin = new Padding(10, 5, 10, 0),
+                Type = MaterialButton.MaterialButtonType.Outlined
+            };
+            nextEllipsisButton.Click += (s, e) =>
+            {
+                CurrentPage = Math.Min(TotalPages, endPage + 1);
+                UpdatePagination();
+            };
+            panelPages.Controls.Add(nextEllipsisButton);
+        }
+    }
+
+    private void AddLastPageButton()
+    {
+        MaterialButton lastButton = new MaterialButton
+        {
+            AutoSize = false,
+            Text = TotalPages.ToString(),
+            Width = 32,
+            Height = 28,
+            Margin = new Padding(10, 5, 10, 0),
+            Type = CurrentPage == TotalPages ? MaterialButton.MaterialButtonType.Contained : MaterialButton.MaterialButtonType.Outlined
+        };
+        lastButton.Click += (s, e) =>
+        {
+            CurrentPage = TotalPages;
+            PageClicked?.Invoke(this, CurrentPage);
+            UpdatePagination();
+        };
+        panelPages.Controls.Add(lastButton);
+    }
+
+    private void AdjustWidth()
+    {
+        // Adjust panel width dynamically
+        panelPages.Width = panelPages.Controls.Count * 54;
+        this.Width = panelPages.Width + (3 * 54) + 20;
+    }
+
 
     #endregion Public Methods
 
     #region Private Methods
-
-    private void BtnLast_Click(object sender, EventArgs e)
-    {
-        CurrentPage = TotalPages;
-
-        // Raise LastClicked event
-        LastClicked?.Invoke(this, CurrentPage);
-    }
 
     private void BtnNext_Click(object sender, EventArgs e)
     {
@@ -157,7 +301,8 @@ public class PaginationControl : Control
             Margin = new System.Windows.Forms.Padding(10, 8, 10, 0),
             Text = "<",
             Width = 32,
-            Height = 28
+            Height = 28,
+            Type = MaterialButton.MaterialButtonType.Outlined
         };
 
         btnNext = new MaterialButton
@@ -167,48 +312,34 @@ public class PaginationControl : Control
             Margin = new System.Windows.Forms.Padding(0, 8, 10, 0),
             Text = ">",
             Width = 32,
-            Height = 28
-        };
-
-        btnLast = new MaterialButton
-        {
-            AutoSize = false,
-            CharacterCasing = MaterialButton.CharacterCasingEnum.Title,
-            Margin = new System.Windows.Forms.Padding(10, 8, 10, 0),
-            Text = ">>",
-            Width = 32,
-            Height = 28
+            Height = 28,
+            Type = MaterialButton.MaterialButtonType.Outlined
         };
 
 
-        panelPages = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight};
+        panelPages = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight };
         //panelPages.BackColor = Color.Ivory;
 
         btnPrevious.Click += BtnPrevious_Click;
         btnNext.Click += BtnNext_Click;
-        btnLast.Click += BtnLast_Click;
 
-         
         //flowLayoutPanel.BackColor = Color.Red;
         this.Controls.Add(flowLayoutPanel);
         flowLayoutPanel.Controls.Add(btnPrevious);
         flowLayoutPanel.Controls.Add(panelPages);
         flowLayoutPanel.Controls.Add(btnNext);
-        flowLayoutPanel.Controls.Add(btnLast);
 
         //flowLayoutPanel.Height = 45;
 
         this.Height = 45;
         this.Width = 430;
-        
-        panelPages.Height = this.Height-10;
+
+        panelPages.Height = this.Height - 10;
         this.SetAutoSizeMode(AutoSizeMode.GrowAndShrink);
 
         flowLayoutPanel.Dock = DockStyle.Fill;
     }
 
     #endregion Private Methods
-
-
 
 }
