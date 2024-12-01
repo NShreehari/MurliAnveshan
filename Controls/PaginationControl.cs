@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 
 using MaterialSkin.Controls;
@@ -14,7 +12,6 @@ public class PaginationControl : Control
 
     private MaterialButton btnNext;
     private MaterialButton btnPrevious;
-    private int currentPage = 1;
     private FlowLayoutPanel flowLayoutPanel;
     private FlowLayoutPanel panelPages;
 
@@ -34,8 +31,6 @@ public class PaginationControl : Control
 
     // Exposed Events for Previous, Next, Page Clicks, and Last
 
-    public event EventHandler<int> LastClicked;
-
     public event EventHandler<int> NextClicked;
 
     public event EventHandler<int> PageClicked;
@@ -46,7 +41,7 @@ public class PaginationControl : Control
 
     #region Public Properties
 
-    public int CurrentPage { get => currentPage; set => currentPage = value; }
+    public int CurrentPage { get; set; } = 1;
 
     public int PageSize { get; set; }
 
@@ -103,16 +98,18 @@ public class PaginationControl : Control
         }
 
         const int maxVisibleButtons = 3;
-        int startPage, endPage;
-        CalculatePageRange(maxVisibleButtons, out startPage, out endPage);
+        CalculatePageRange(maxVisibleButtons, out int startPage, out int endPage);
 
         AddFirstPageButton();
         AddPreviousEllipsisButton(startPage, maxVisibleButtons);
         AddVisiblePageButtons(startPage, endPage);
-        AddNextEllipsisButton(endPage, maxVisibleButtons);
+        AddNextEllipsisButton(endPage);
         AddLastPageButton();
 
         AdjustWidth();
+
+        //EnablePreviousButton();
+        //EnableNextButton();
     }
 
     private void AddSinglePageButton()
@@ -132,6 +129,9 @@ public class PaginationControl : Control
             PageClicked?.Invoke(this, CurrentPage);
         };
         panelPages.Controls.Add(singlePageButton);
+
+        TogglePreviousButtonEnableState();
+        ToggleNextButtonEnableState();
     }
 
     private void CalculatePageRange(int maxVisibleButtons, out int startPage, out int endPage)
@@ -163,6 +163,7 @@ public class PaginationControl : Control
         {
             CurrentPage = 1;
             PageClicked?.Invoke(this, CurrentPage);
+            TogglePreviousButtonEnableState();
             UpdatePagination();
         };
         panelPages.Controls.Add(firstButton);
@@ -211,9 +212,12 @@ public class PaginationControl : Control
             };
             panelPages.Controls.Add(pageButton);
         }
+
+        TogglePreviousButtonEnableState();
+        ToggleNextButtonEnableState();
     }
 
-    private void AddNextEllipsisButton(int endPage, int maxVisibleButtons)
+    private void AddNextEllipsisButton(int endPage)
     {
         if (endPage < TotalPages - 1)
         {
@@ -251,6 +255,7 @@ public class PaginationControl : Control
             CurrentPage = TotalPages;
             PageClicked?.Invoke(this, CurrentPage);
             UpdatePagination();
+            ToggleNextButtonEnableState();
         };
         panelPages.Controls.Add(lastButton);
     }
@@ -261,7 +266,6 @@ public class PaginationControl : Control
         panelPages.Width = panelPages.Controls.Count * 54;
         this.Width = panelPages.Width + (3 * 54) + 20;
     }
-
 
     #endregion Public Methods
 
@@ -286,7 +290,19 @@ public class PaginationControl : Control
 
             // Raise PreviousClicked event
             PreviousClicked?.Invoke(this, CurrentPage);
+
+            TogglePreviousButtonEnableState();
         }
+    }
+
+    private void TogglePreviousButtonEnableState()
+    {
+        btnPrevious.Enabled = CurrentPage != 1;
+    }
+
+    private void ToggleNextButtonEnableState()
+    {
+        btnNext.Enabled = CurrentPage != TotalPages;
     }
 
     private void InitializeComponents()
@@ -315,7 +331,6 @@ public class PaginationControl : Control
             Height = 28,
             Type = MaterialButton.MaterialButtonType.Outlined
         };
-
 
         panelPages = new FlowLayoutPanel { FlowDirection = FlowDirection.LeftToRight };
         //panelPages.BackColor = Color.Ivory;

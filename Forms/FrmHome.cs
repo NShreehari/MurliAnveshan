@@ -7,6 +7,7 @@ using SelfControls.Controls;
 using MurliAnveshan.Classes;
 
 using static MurliAnveshan.Classes.Enums;
+using Panel = System.Windows.Forms.Panel;
 
 namespace MurliAnveshan
 {
@@ -40,8 +41,8 @@ namespace MurliAnveshan
             pnlToShowMurliCardsInFullExpansion.Location = flowLayoutPanel1.Location;
         }
 
-        public FrmHome(MainForm mainFormInstance):this()
-        {           
+        public FrmHome(MainForm mainFormInstance) : this()
+        {
             this.mainFormInstance = mainFormInstance;
 
             rdbAvyakthMurlis.CheckedChanged += MurliSelection_Changed;
@@ -54,7 +55,6 @@ namespace MurliAnveshan
             paginationControl.PreviousClicked += PaginationControl_PreviousClicked;
             paginationControl.NextClicked += PaginationControl_NextClicked;
             paginationControl.PageClicked += PaginationControl_PageClicked;
-            paginationControl.LastClicked += PaginationControl_LastClicked;
 
             // Optionally set the TargetPanel for pagination
             //paginationControl.TargetPanel = flowLayoutPanel1;
@@ -74,14 +74,18 @@ namespace MurliAnveshan
             }
         }
 
-
-        int pageSize = 10;
-
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             //Validate for NULL & Empty
 
             ExecuteSearch();
+
+            CenterAlighPaginationControl();
+        }
+
+        private void CenterAlighPaginationControl()
+        {
+            this.paginationControl.Left = (this.ClientSize.Width - paginationControl.Width) / 2;
         }
 
         private void ExecuteSearch(int currentPage = 1)
@@ -91,9 +95,9 @@ namespace MurliAnveshan
             var results = engine.SearchIndex(searchTerm, searchLocation, currentPage);
 
             this.paginationControl.PageSize = engine.pageSize;
-            this.paginationControl.UpdatePagination(results.Results.Count());
+            this.paginationControl.UpdatePagination(results.TotalHits);
 
-            if (results.Results.Count() > 0)
+            if (results.Results.Any())
             {
                 //AddResultsToRichTextBox(results);
 
@@ -101,10 +105,11 @@ namespace MurliAnveshan
 
                 //HighlightSearchTerm(richTextBox1, searchTerm);
             }
-
             else
             {
-                MessageBox.Show("Sorry the Word:" + "\"" + searchTerm + "\"" + "Not Found in Murlis.");
+                //MessageBox.Show("Sorry the Word:  \"" + searchTerm + "\"  Not Found in Murlis.");
+                //Messages.ErrorMessage("Sorry the Word:  \"" + searchTerm + "\"  Not Found in Murlis.");
+                SelfMessageBoxWrapper.ShowErrorMessage("Sorry, the Word:  \"" + searchTerm + "\"  Not Found in Murlis.", searchTerm);
             }
         }
 
@@ -129,7 +134,6 @@ namespace MurliAnveshan
         //    }
         //}
 
-
         private void AddResultsToCard(System.Collections.Generic.IEnumerable<MurliDetailsBase> results)
         {
             SelfControls.Controls.MurliCard2 murliCard;
@@ -148,7 +152,7 @@ namespace MurliAnveshan
                 };
 
                 murliCard.FullExpansionStateChanged += MurliCard_FullExpansionStateChanged;
-                //murliCard.Click += new System.EventHandler(OnResultCardClick);
+                murliCard.Click += OnResultCardClick;
 
                 string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
 
@@ -162,7 +166,6 @@ namespace MurliAnveshan
                     //Removes Last ">"
                     //combinedMurliLines.Remove(combinedMurliLines.LastIndexOf(">"), 1);
 
-
                     //    var wordCount = combinedMurliLines
                     //.Split(new[] { ' ', '.', ',', ';', ':', '!', '?', '।' }, StringSplitOptions.RemoveEmptyEntries)
                     //.Count(w => w.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
@@ -171,16 +174,16 @@ namespace MurliAnveshan
                 }
                 else
                 {
-                    if (item.MurliTitle.Contains(searchTerm))
+                    //if (item.MurliTitle.Contains(searchTerm))
                     {
                         //resultCard.ResultCardSize = ResultCardSizeEnum.Small;
 
                         murliCard.IsTitleOnlySearch = true;
                     }
-                    else
-                    {
-                        continue;
-                    }
+                    //else
+                    //{
+                    //    continue;
+                    //}
                 }
 
                 //resultCard.HighlightSearchTerm(searchTerm);
@@ -197,11 +200,11 @@ namespace MurliAnveshan
             MurliCard2 cardToHandle = (sender as MurliCard2);
 
             if (e) //Expanded
-            {               
+            {
                 cardToHandle.Dock = DockStyle.Fill;
 
                 pnlToShowMurliCardsInFullExpansion.Controls.Add(cardToHandle);
-                
+
                 flowLayoutPanel1.Hide();
                 pnlToShowMurliCardsInFullExpansion.Show();
                 //pnlToShowMurliCardsInFullExpansion.BringToFront();
@@ -224,8 +227,6 @@ namespace MurliAnveshan
 
             mainFormInstance.LoadDocViewer(mainFormInstance, resultDetails);
         }
-
-
 
         //public void HighlightSearchTerm(RichTextBox richTextBox, string searchTerm)
         //{
@@ -321,11 +322,5 @@ namespace MurliAnveshan
             ExecuteSearch(pageNumber);
         }
 
-        private void PaginationControl_LastClicked(object sender, int pageNumber)
-        {
-            flowLayoutPanel1.Controls.Clear();
-            ExecuteSearch(pageNumber);
-        }
     }
 }
-
