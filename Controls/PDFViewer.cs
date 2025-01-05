@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Printing;
+using System.Data;
 using System.IO;
 using System.Windows.Forms;
 
-using Syncfusion.Pdf.Graphics;
-using Syncfusion.Pdf.Parsing;
-using Syncfusion.Pdf;
+using Anotar.NLog;
+
+using MurliSearch.Classes;
+
 using Syncfusion.Windows.Forms.PdfViewer;
-using Syncfusion.Windows.PdfViewer;
-using System.Windows.Controls.Ribbon;
 
 namespace MurliAnveshan.Controls
 {
@@ -59,7 +57,6 @@ namespace MurliAnveshan.Controls
             EnglishVideoTsb.Click += EnglishVideoTsb_Click;
             EnglishPDFTsb.Click += EnglishPDFTsb_Click;
             EnglishHtmlTsb.Click += EnglishHtmlTsb_Click;
-
         }
 
         #region Home
@@ -104,13 +101,13 @@ namespace MurliAnveshan.Controls
                 //}
             }
 
-
             // Create and configure the PrintDialog
-            PrintDialog printDialog = new PrintDialog();
-            printDialog.AllowSomePages = true;
-            printDialog.AllowSelection = true;
-            printDialog.UseEXDialog = true;
-
+            PrintDialog printDialog = new PrintDialog
+            {
+                AllowSomePages = true,
+                AllowSelection = true,
+                UseEXDialog = true
+            };
 
             // Show the PrintDialog and wait for the user's selection
             if (printDialog.ShowDialog() == DialogResult.OK)
@@ -122,8 +119,6 @@ namespace MurliAnveshan.Controls
                 GetActivePdfViewer().Print(selectedPrinter);
             }
         }
-
-        
 
         //private void PrintDocument(PrinterSettings settings)
         //{
@@ -225,33 +220,24 @@ namespace MurliAnveshan.Controls
         //    m_cancel = false;
         //}
 
-
-
         #endregion Home
 
         #region View
 
         private void ZoomInToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GetActivePdfViewer() != null)
-            {
-                GetActivePdfViewer().ZoomTo(GetActivePdfViewer().ZoomPercentage + 10);
-            }
+            GetActivePdfViewer()?.ZoomTo(GetActivePdfViewer().ZoomPercentage + 10);
         }
 
         private void ZoomOutToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GetActivePdfViewer() != null)
-            {
-                GetActivePdfViewer().ZoomTo(GetActivePdfViewer().ZoomPercentage - 10);
-            }
+            GetActivePdfViewer()?.ZoomTo(GetActivePdfViewer().ZoomPercentage - 10);
         }
 
         private void ZoomLevelToolStripComboBox_Click(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
         }
-
 
         private void FitToPageToolStripButton_Click(object sender, EventArgs e)
         {
@@ -260,8 +246,6 @@ namespace MurliAnveshan.Controls
                 GetActivePdfViewer().ZoomMode = ZoomMode.FitPage;
             }
         }
-
-
         private void FitToWidthToolStripButton_Click(object sender, EventArgs e)
         {
             if (GetActivePdfViewer() != null)
@@ -270,17 +254,12 @@ namespace MurliAnveshan.Controls
             }
         }
 
-
         private void FullScreenToolStripButton_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-
-
-
         #endregion View
-
 
         #region QRCodes
 
@@ -314,8 +293,6 @@ namespace MurliAnveshan.Controls
         {
             throw new NotImplementedException();
         }
-
-
         private void HindiAudioTsb_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
@@ -333,8 +310,6 @@ namespace MurliAnveshan.Controls
         {
             throw new NotImplementedException();
         }
-
-
         private void EnglishAudioTsb_Click(object sender, EventArgs e)
         {
             throw new NotImplementedException();
@@ -355,16 +330,15 @@ namespace MurliAnveshan.Controls
             throw new NotImplementedException();
         }
 
-
-
-
         #endregion QRCodes
 
         public void LoadPdf(string filePath, string fileName)
         {
             // Create a new tab page
-            TabPage tabPage = new TabPage();
-            tabPage.Text = fileName;
+            TabPage tabPage = new TabPage
+            {
+                Text = fileName
+            };
 
             _loadedDocumentName = fileName;
 
@@ -381,12 +355,14 @@ namespace MurliAnveshan.Controls
             TabControl.TabPages.Add(tabPage);
         }
 
-
-        public void LoadPdf(string filePath, string fileName, string murliDate)
+        [LogToErrorOnException]
+        public void LoadPdf(string filePath, string fileName, string murliDate, string title)
         {
             // Create a new tab page
-            TabPage tabPage = new TabPage();
-            tabPage.Text = fileName;
+            TabPage tabPage = new TabPage
+            {
+                Text = fileName
+            };
 
             _loadedDocumentName = fileName;
 
@@ -396,24 +372,80 @@ namespace MurliAnveshan.Controls
             pdfViewer.Dock = DockStyle.Fill;
             pdfViewer.Load(filePath);
 
+            int pageNumber = GetPageNumber(title, murliDate);
+
             //pdfViewer.SearchText(murliDate);
-            pdfViewer.GoToPageAtIndex(74);
+            pdfViewer.GoToPageAtIndex(pageNumber);
 
             // Add PdfViewerControl to the tab page
             tabPage.Controls.Add(pdfViewer);
 
             // Add the tab page to the tab control
             TabControl.TabPages.Add(tabPage);
+
+            TabControl.SelectedIndex = TabControl.TabPages.IndexOf(tabPage);
+
+            
         }
 
+        private int GetPageNumber(string murliTitle, string murliDate)
+        {
+            string pageNumberQuery = "SELECT TblMurliTitles.MurliTitle, TblMurliTitles.MurliDate, TblFiles.FileName, TblFilePages.PageNo " +
+               "FROM TblFiles INNER JOIN TblFilePages ON TblFiles.FileID = TblFilePages.FileID " +
+               "INNER JOIN TblMurliTitles ON TblFilePages.MurliTitleID = TblMurliTitles.MurliTitleID " +
+               "WHERE TblMurliTitles.MurliTitle = N'" + murliTitle + "' " +
+               "AND TblMurliTitles.MurliDate = CONVERT(DATETIME, '" + murliDate + "', 105)";
+
+            DataTable dt = DBOperations.ExecuteSelectToGetPageNumber(pageNumberQuery, murliTitle, murliDate);
+
+            //return dt.Rows.Count;
+
+            if (dt.Rows.Count > 0)
+            {
+                const int pageNoColumn = 3;
+                return int.Parse(dt.Rows[0].ItemArray.GetValue(pageNoColumn).ToString());
+            }
+            else
+            {
+                return 0;
+            }
+
+            //using (var connection = DBOperations.GetSqlConnection())
+            //{
+            //    try
+            //    {
+            //        using (SqlCommand cmd = new SqlCommand(pageNumberQuery, connection))
+            //        {
+            //            cmd.Parameters.AddWithValue("@MurliTitle", murliTitle);
+            //            cmd.Parameters.AddWithValue("@MurliDate", murliDate); // Pass DD-MM-YYYY date format
+
+            //            bool gotPageNumber = (bool)cmd.ExecuteScalar();
+
+            //            if(gotPageNumber)
+            //            {
+
+            //            }
+
+            //            // Execute your query here
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine("Transaction rolled back due to error: " + ex.Message);
+            //        throw;
+            //    }
+            //}
+
+            //WHERE(TblMurliTitles.MurliTitle = N'“सम्पूर्ण स्टेज की निशानियाँ”') AND(TblMurliTitles.MurliDate = CONVERT(DATETIME, '+ murliDate +', 102))"
+
+        }
         private PdfDocumentView GetActivePdfViewer()
         {
-            if (TabControl.SelectedTab != null && TabControl.SelectedTab.Controls.Count > 0)
+            if (TabControl.SelectedTab?.Controls.Count > 0)
             {
                 return TabControl.SelectedTab.Controls[0] as PdfDocumentView;
             }
             return null;
         }
-
     }
 }
