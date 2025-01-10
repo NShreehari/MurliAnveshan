@@ -218,10 +218,9 @@ namespace MurliAnveshan.Forms
                                     //UnComment AddDetailsToIndexList() to Create a Index Word Doc.
                                     //AddDetailsToIndexList(murliIndex, murliDate, murliTitle, pageNumber);
 
-
                                     AddDateAndTitlestoDataTable(murliTitlesTable, murliDate, murliTitle);
 
-                                    AddPageNumberToDataTable(filePagesTable, initialPageNumber + pageNumber, fileName, murliTitle);
+                                    AddPageNumberToDataTable(filePagesTable, fileName, murliTitle, murliDate, initialPageNumber + pageNumber);
                                 }
                             }
                         }
@@ -414,13 +413,14 @@ namespace MurliAnveshan.Forms
             fileTable.Rows.Add(fileRow);
         }
 
-        private static void AddPageNumberToDataTable(DataTable filePagesTable, int pageNumber, string fileName, string murliTitle)
+        private static void AddPageNumberToDataTable(DataTable filePagesTable, string fileName, string murliTitle, string murliDate, int pageNumber)
         {
             // Leave the FileID and MurliTitleID for now
             DataRow filePagesRow = filePagesTable.NewRow();
             filePagesRow["PageNo"] = pageNumber;
             filePagesRow["fileName"] = fileName;
             filePagesRow["murliTitle"] = murliTitle;
+            filePagesRow["murliDate"] = murliDate;
             filePagesTable.Rows.Add(filePagesRow);
         }
 
@@ -451,100 +451,109 @@ namespace MurliAnveshan.Forms
 
             filePagesTable.Columns.Add("fileName", typeof(string));
             filePagesTable.Columns.Add("murliTitle", typeof(string));
+            filePagesTable.Columns.Add("murliDate", typeof(string));
         }
 
         private static void InsertDataToDatabase(DataTable fileTable, DataTable murliTitlesTable, DataTable filePagesTable)
         {
             using (var connection = DBOperations.GetSqlConnection())
+            using (SqlTransaction transaction = connection.BeginTransaction())
             {
-                using (SqlTransaction transaction = connection.BeginTransaction())
+                try
                 {
-                    try
+                    // 1. Create a dictionary to store FileName -> FileID mappings
+                    Dictionary<string, int> fileIDMap = new Dictionary<string, int>();
+
+                    // 2. Insert into TblFiles and store FileID in the dictionary
+                    foreach (DataRow fileRow in fileTable.Rows)
                     {
-                        // 1. Create dictionaries to store FileName -> FileID and MurliTitle -> MurliTitleID mappings
-                        Dictionary<string, int> fileIDMap = new Dictionary<string, int>();
-
-                        // 2. Insert into TblFiles and store FileID in the dictionary
-                        foreach (DataRow fileRow in fileTable.Rows)
+                        const string insertFileSql = "INSERT INTO TblFiles (FileName) OUTPUT INSERTED.FileID VALUES (@FileName)";
+                        using (SqlCommand cmd = new SqlCommand(insertFileSql, connection, transaction))
                         {
-                            const string insertFileSql = "INSERT INTO TblFiles (FileName) OUTPUT INSERTED.FileID VALUES (@FileName)";
-                            using (SqlCommand cmd = new SqlCommand(insertFileSql, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@FileName", fileRow["FileName"]);
-                                int fileID = (int)cmd.ExecuteScalar();
+                            cmd.Parameters.AddWithValue("@FileName", fileRow["FileName"]);
+                            int fileID = (int)cmd.ExecuteScalar();
 
-                                // Store FileID in the dictionary
-                                fileIDMap.Add(fileRow["FileName"].ToString(), fileID);
-                            }
+                            // Store FileID in the dictionary
+                            fileIDMap.Add(fileRow["FileName"].ToString(), fileID);
                         }
-
-                        Dictionary<string, int> murliTitleIDMap = new Dictionary<string, int>();
-
-                        // 3. Insert into TblMurliTitles and store MurliTitleID in the dictionary
-                        foreach (DataRow murliRow in murliTitlesTable.Rows)
-                        {
-                            const string insertMurliSql = "INSERT INTO TblMurliTitles (MurliDate, MurliTitle) OUTPUT INSERTED.MurliTitleID VALUES (@MurliDate, @MurliTitle)";
-                            using (SqlCommand cmd = new SqlCommand(insertMurliSql, connection, transaction))
-                            {
-                                DateTime murliDate;
-                                bool isValidDate = DateTime.TryParseExact(murliRow["MurliDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out murliDate);
-
-                                if (isValidDate)
-                                {
-                                    cmd.Parameters.AddWithValue("@MurliDate", murliDate);
-                                    Console.WriteLine("@MurliDate", murliDate);
-                                }
-                                else
-                                {
-                                    // TODO: Log invalid date and skip this row if necessary
-                                    Console.WriteLine("Invalid date format: " + murliRow["MurliDate"]);
-                                    continue; // Skip to next row if date is invalid
-                                }
-
-                                cmd.Parameters.AddWithValue("@MurliTitle", murliRow["MurliTitle"]);
-                                int murliTitleID = (int)cmd.ExecuteScalar();
-
-                                // Store MurliTitleID in the dictionary
-                                if (!murliTitleIDMap.TryAdd(murliRow["MurliTitle"].ToString(), murliTitleID))
-                                {
-                                    Console.WriteLine("Duplicate Title: " + murliTitleID);
-                                }
-                            }
-                        }
-
-                        // 4. Update filePagesTable with correct FileID and MurliTitleID from the dictionaries
-                        foreach (DataRow pageRow in filePagesTable.Rows)
-                        {
-                            string fileName = pageRow["FileName"].ToString(); // Assuming filePagesTable has a "FileName" column
-                            string murliTitle = pageRow["MurliTitle"].ToString(); // Assuming filePagesTable has a "MurliTitle" column
-
-                            // Look up FileID and MurliTitleID from the dictionaries
-                            pageRow["FileID"] = fileIDMap[fileName];
-                            pageRow["MurliTitleID"] = murliTitleIDMap[murliTitle];
-                        }
-
-                        // 5. Bulk insert into TblFilePages
-                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
-                        {
-                            bulkCopy.DestinationTableName = "TblFilePages";
-                            bulkCopy.ColumnMappings.Add("FileID", "FileID");
-                            bulkCopy.ColumnMappings.Add("MurliTitleID", "MurliTitleID");
-                            bulkCopy.ColumnMappings.Add("PageNo", "PageNo");
-                            bulkCopy.WriteToServer(filePagesTable);
-                        }
-
-                        // Commit the transaction if everything is successful
-                        transaction.Commit();
-
-                        Messages.InfoMessage("Successfully Inserted Data to DB.");
                     }
-                    catch (Exception ex)
+
+                    // 3. Insert into TblMurliTitles and store results for use in TblFilePages
+                    DataTable murliTitlesMappingTable = new DataTable();
+                    murliTitlesMappingTable.Columns.Add("MurliTitle", typeof(string));
+                    murliTitlesMappingTable.Columns.Add("MurliDate", typeof(string)); // Keep date as string in dd-MM-yyyy format
+                    murliTitlesMappingTable.Columns.Add("MurliTitleID", typeof(int));
+
+                    foreach (DataRow murliRow in murliTitlesTable.Rows)
                     {
-                        // Rollback the transaction in case of error
-                        transaction.Commit();
-                        Console.WriteLine("Transaction rolled back due to error: " + ex.Message);
-                        throw;
+                        const string insertMurliSql = "INSERT INTO TblMurliTitles (MurliDate, MurliTitle) OUTPUT INSERTED.MurliTitleID VALUES (@MurliDate, @MurliTitle)";
+                        using (SqlCommand cmd = new SqlCommand(insertMurliSql, connection, transaction))
+                        {
+                            DateTime murliDate;
+                            bool isValidDate = DateTime.TryParseExact(murliRow["MurliDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out murliDate);
+
+                            if (isValidDate)
+                            {
+                                cmd.Parameters.AddWithValue("@MurliDate", murliDate);
+                                Console.WriteLine("@MurliDate", murliDate);
+                            }
+                            else
+                            {
+                                // TODO: Log invalid date and skip this row if necessary
+                                Console.WriteLine("Invalid date format: " + murliRow["MurliDate"]);
+                                continue; // Skip to next row if date is invalid
+                            }
+                            cmd.Parameters.AddWithValue("@MurliTitle", murliRow["MurliTitle"]);
+                            int murliTitleID = (int)cmd.ExecuteScalar();
+
+                            // Update the mapping table with the inserted ID
+                            murliTitlesMappingTable.Rows.Add(murliRow["MurliTitle"], murliDate, murliTitleID);
+                        }
                     }
+
+                    // 4. Update filePagesTable with correct FileID and MurliTitleID
+                    foreach (DataRow pageRow in filePagesTable.Rows)
+                    {
+                        string fileName = pageRow["FileName"].ToString();
+                        string murliTitle = pageRow["MurliTitle"].ToString();
+                        string murliDate = pageRow["MurliDate"].ToString(); // Use string for date comparison
+
+                        // Lookup FileID
+                        pageRow["FileID"] = fileIDMap[fileName];
+
+                        // Lookup MurliTitleID from mapping table
+                        DataRow[] matchingRows = murliTitlesMappingTable.Select($"MurliTitle = '{murliTitle.Replace("'", "''")}' AND MurliDate LIKE '{murliDate}*'");
+                        //string partialDate = "01-01"; // Match any date starting with "01-01"
+                        //DataRow[] matchingRows = murliTitlesMappingTable.Select($"MurliTitle = '{murliTitle.Replace("'", "''")}' AND MurliDate LIKE '{partialDate}*'");
+
+
+                        if (matchingRows.Length > 0)
+                        {
+                            pageRow["MurliTitleID"] = matchingRows[0]["MurliTitleID"];
+                        }
+                    }
+
+                    // 5. Bulk insert into TblFilePages
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
+                    {
+                        bulkCopy.DestinationTableName = "TblFilePages";
+                        bulkCopy.ColumnMappings.Add("FileID", "FileID");
+                        bulkCopy.ColumnMappings.Add("MurliTitleID", "MurliTitleID");
+                        bulkCopy.ColumnMappings.Add("PageNo", "PageNo");
+                        bulkCopy.WriteToServer(filePagesTable);
+                    }
+
+                    // Commit the transaction if everything is successful
+                    transaction.Commit();
+
+                    Messages.InfoMessage("Successfully Inserted Data to DB.");
+                }
+                catch (Exception ex)
+                {
+                    // Rollback the transaction in case of error
+                    transaction.Rollback();
+                    Console.WriteLine("Transaction rolled back due to error: " + ex.Message);
+                    throw;
                 }
             }
         }
