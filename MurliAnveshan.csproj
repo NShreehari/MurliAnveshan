@@ -4,6 +4,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppConfigFile>App.Debug.config</AppConfigFile>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ACC73800-2410-44BF-AF1A-189E1A3F3974}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -17,7 +18,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>C:\Users\Shreehari\source\repos\2026\MurliAnveshan\Releases\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -27,10 +28,17 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ProductName>Murli Anveshan</ProductName>
+    <PublisherName>Brahma Kumaris Davangere</PublisherName>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <AppConfigFile>App.Release.config</AppConfigFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +58,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E11F33C01C804AE47F6F17CE2EED5D5D25199E63</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MurliAnveshan_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Brahma-Kumari-Official-Logo-Red-42.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Anotar.NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
@@ -322,6 +345,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\WindowsAPICodePack.8.0.6\lib\net48\System.Windows.Forms.dll</HintPath>
@@ -460,11 +484,63 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Indexes\Hindi\Avyakt Murli Index\segments.gen" />
-    <None Include="Indexes\Hindi\Avyakt Murli Index\segments_4" />
-    <None Include="Indexes\Hindi\Avyakt Murli Index\_1.cfe" />
-    <None Include="Indexes\Hindi\Avyakt Murli Index\_1.cfs" />
-    <None Include="Indexes\Hindi\Avyakt Murli Index\_1.si" />
+    <None Include="App.Debug.config" />
+    <None Include="App.Release.config" />
+    <Content Include="Indexes\Hindi\Avyakt Murli Index\segments.gen">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="MurliAnveshan_TemporaryKey.pfx" />
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1969.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1970.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1971.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1972.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1973.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1974.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1975.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1976.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1977.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1978.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1979.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1980.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1981.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1982.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1983.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1984.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1985.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -482,14 +558,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="packages\Lucene.Net.4.8.0-beta00016\analyzers\dotnet\cs\Lucene.Net.CodeAnalysis.CSharp.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controls\MaterialSkin.dll" />
-    <Content Include="Controls\SelfControls.dll" />
+    <Content Include="Brahma-Kumari-Official-Logo-Red-32.ico" />
+    <Content Include="Brahma-Kumari-Official-Logo-Red-42.ico" />
+    <None Include="Controls\MaterialSkin.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Controls\SelfControls.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Database\MurliAnveshanDB.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -508,7 +592,8 @@
     <Content Include="Resources\Images\FilledStar.png" />
     <Content Include="Resources\Images\History.png" />
     <Content Include="Resources\Images\House.png" />
-    <Content Include="Resources\Murli Documents\Word Macros.vb" />
+    <Content Include="Shivbaba-Logo-48.ico" />
+    <Content Include="Shivbaba-Logo2.ico" />
     <None Include="Resources\Images\Icons\House-04.png" />
     <None Include="Resources\Images\Icons\Star.png" />
     <None Include="Resources\Images\Icons\Tab-History.png" />
@@ -551,11 +636,19 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SqlServer.SqlLocalDB.15.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2019 Express LocalDB</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Murlis\Hindi Murlis\Avyakt Murlis\" />
+    <Folder Include="Resources\Murli Documents\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="$(AppConfigFile)" DestinationFiles="App.config" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
