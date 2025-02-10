@@ -1,0 +1,77 @@
+CREATE TABLE TblFiles (
+    FileID INT IDENTITY(1,1) PRIMARY KEY,  -- Unique identifier for each file
+    FileName NVARCHAR(255) NOT NULL,       -- File name (in English)
+);
+
+
+CREATE TABLE TblMurliTitles (
+    MurliTitleID INT IDENTITY(1,1) PRIMARY KEY, -- Unique identifier for each Murli title
+    MurliTitle NVARCHAR(MAX) NOT NULL,          -- Stores the Murli title (in Hindi)
+    MurliDate DATE NOT NULL                    -- Date associated with the Murli title
+);
+
+
+CREATE TABLE TblFilePages (
+    FilePageID INT IDENTITY(1,1) PRIMARY KEY, -- Unique identifier for each record
+    FileID INT NOT NULL,                       -- Foreign key referencing Files table
+    MurliTitleID INT NOT NULL,                 -- Foreign key referencing MurliTitles table
+    PageNo INT NOT NULL,                       -- Page number where the Murli title appears
+    FOREIGN KEY (FileID) REFERENCES TblFiles(FileID),
+    FOREIGN KEY (MurliTitleID) REFERENCES TblMurliTitles(MurliTitleID)
+);
+
+
+To Truncate & Resetting IDENTITY to 0:
+
+
+DELETE FROM TblFilePages
+DBCC CHECKIDENT ('TblFilePages', RESEED, 0)
+
+DELETE FROM TblMurliTitles
+DBCC CHECKIDENT ('TblMurliTitles', RESEED, 0)
+
+DELETE FROM TblFiles
+DBCC CHECKIDENT ('TblFiles', RESEED, 0)
+
+
+
+SELECT TblMurliTitles.MurliTitle, TblMurliTitles.MurliDate, TblFiles.FileName, TblFilePages.PageNo 
+FROM TblFiles INNER JOIN TblFilePages ON TblFiles.FileID = TblFilePages.FileID 
+INNER JOIN TblMurliTitles ON TblFilePages.MurliTitleID = TblMurliTitles.MurliTitleID 
+WHERE TblMurliTitles.MurliTitle = N'अव्यक्त स्थिति बनाने की युक्तियाँ' 
+
+SELECT TOP (1000) [MurliTitleID]
+      ,[MurliTitle]
+      ,[MurliDate]
+  FROM [MurliAnveshanDB].[dbo].[TblMurliTitles]
+  Where [MurliTitle] Like N'%मिलन%'  
+
+  SELECT TblMurliTitles.MurliTitle, TblMurliTitles.MurliDate, TblFiles.FileName, TblFilePages.PageNo 
+FROM TblFiles INNER JOIN TblFilePages ON TblFiles.FileID = TblFilePages.FileID 
+INNER JOIN TblMurliTitles ON TblFilePages.MurliTitleID = TblMurliTitles.MurliTitleID 
+WHERE TblMurliTitles.MurliTitle Like N'%मिलन%'
+
+
+
+--AND TblMurliTitles.MurliDate = CONVERT(DATETIME, '17-07-1969', 105)
+
+
+SELECT TblMurliTitles.MurliTitle, TblMurliTitles.MurliDate, TblFiles.FileName, TblFilePages.PageNo FROM TblFiles INNER JOIN TblFilePages ON TblFiles.FileID = TblFilePages.FileID INNER JOIN TblMurliTitles ON TblFilePages.MurliTitleID = TblMurliTitles.MurliTitleID WHERE TblMurliTitles.MurliTitle = N'“अव्यक्त स्थिति बनाने की युक्तियाँ”' AND TblMurliTitles.MurliDate = CONVERT(DATETIME, '17-07-1969', 105)
+
+
+Conversion for Input/Output:
+
+If you need to display dates in the DD-MM-YYYY format (e.g., in reports or user interfaces), you can format them when retrieving data using the FORMAT function or CONVERT function:
+sql
+
+SELECT CONVERT(VARCHAR(10), YourDateColumn, 105) AS FormattedDate FROM YourTable;
+
+
+
+Input Handling:
+
+When inserting or updating dates, use parameterized queries or convert the date format explicitly within your application code to ensure that dates are stored correctly: Typically in "YYYY-MM-DD"
+sql
+
+INSERT INTO YourTable (YourDateColumn) VALUES (CONVERT(DATE, '18-09-2023', 105));
+
