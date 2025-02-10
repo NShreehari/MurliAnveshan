@@ -241,14 +241,18 @@ namespace MurliAnveshan.Controls
 
         private void FitToPageToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GetActivePdfViewer() != null)
+            var activePdfViewer = GetActivePdfViewer();
+
+            if ((activePdfViewer != null) && (activePdfViewer.ZoomMode != ZoomMode.FitPage))
             {
                 GetActivePdfViewer().ZoomMode = ZoomMode.FitPage;
             }
         }
         private void FitToWidthToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GetActivePdfViewer() != null)
+            var activePdfViewer = GetActivePdfViewer();
+
+            if ((activePdfViewer != null) && (activePdfViewer.ZoomMode != ZoomMode.FitWidth))
             {
                 GetActivePdfViewer().ZoomMode = ZoomMode.FitWidth;
             }
