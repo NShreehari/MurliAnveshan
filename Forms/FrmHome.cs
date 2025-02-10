@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using SelfControls.Controls;
-
 using MurliAnveshan.Classes;
 
+using SelfControls.Controls;
+
+using Syncfusion.DocIO;
+using Syncfusion.DocIO.DLS;
+
 using static MurliAnveshan.Classes.Enums;
+
 using Panel = System.Windows.Forms.Panel;
 
 namespace MurliAnveshan
@@ -33,6 +40,281 @@ namespace MurliAnveshan
             };
 
             this.Controls.Add(pnlToShowMurliCardsInFullExpansion);
+
+            //cmbLanguages.SelectedIndex = 0;
+            //cmbLanguages.SelectedIndexChanged += CmbLanguages_SelectedIndexChanged;
+
+            btnBuildIndex.DrawShadows = false;
+
+            btnExport.Click += BtnExport_Click;
+
+            ToHindiInput();
+        }
+
+        #region Export Related Methods
+        private void BtnExport_Click(object sender, EventArgs e)
+        {
+            //List<AvyaktMurliDetails> murliDetails = new List<AvyaktMurliDetails>();
+
+            SearchLocation searchLocation = rdbAvyakthAll.Checked ? SearchLocation.All : SearchLocation.TitleOnly;
+
+            List<MurliDetailsBase> details = engine.SearchAllIndex(searchTerm, searchLocation);
+
+            //foreach (MurliCard2 card in flowLayoutPanel1.Controls)
+            //{
+            //    details = new AvyaktMurliDetails
+            //    {
+            //        MurliTitle = card.MurliTitle,
+            //        MurliDate = card.MurliDate,
+            //        MurliLines = new[] { card.MurliLines }.ToList<string>(),
+            //        FileName = card.FileName,
+            //        SearchTerm = card.SearchTerm
+            //    };
+
+            //    murliDetails.Add(details);
+            //}
+
+            ExportDocument(details, searchTerm);
+        }
+
+        private void ExportDocument(List<MurliDetailsBase> murliIndex, string searchTerm)
+        {
+            WordDocument doc = CreateAWordDocument(searchTerm);
+            AddMurliDetailsToExportDoc(ref doc, murliIndex);
+
+            // Step 7: Save the document
+            string fileName = "Export_" + searchTerm + ".docx";
+            doc.Save(fileName, FormatType.Docx);
+
+            //SelfMessageBoxWrapper.ShowInfoMessage("Successfully Created Export File: " + fileName + ".", fileName);
+
+            MessageBox.Show("Successfully Created the Export File: " + fileName + ".");
+
+            OpenExportedFile(fileName);
+        }
+
+        private void OpenExportedFile(string fileName)
+        {
+            string filePath = @"C:\Program Files\MurliAnveshan\" + fileName;
+
+            // Check if the file exists before opening
+            if (System.IO.File.Exists(filePath))
+            {
+                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+            }
+            else
+            {
+                Console.WriteLine("File does not exist.");
+            }
+        }
+
+        private static WordDocument CreateAWordDocument(string searchTerm)
+        {
+            WordDocument document = new WordDocument();
+            {
+                // Step 2: Add a section to the document
+                IWSection TitleSection = document.AddSection();
+
+                SetMargin(TitleSection);
+
+                AddSearchTermAsPrimaryTitle(searchTerm, TitleSection);
+            }
+            return document;
+        }
+
+        private static void AddSearchTermAsPrimaryTitle(string searchTerm, IWSection TitleSection)
+        {
+            // Step 3: Add a paragraph to the section
+            IWParagraph paragraph = TitleSection.AddParagraph();
+            IWTextRange fileTitleText = paragraph.AppendText(searchTerm); //.ApplyCharacterFormat(new WCharacterFormat()
+
+            fileTitleText.CharacterFormat.FontName = "Noto Sans Devanagari";
+            fileTitleText.CharacterFormat.FontSize = 18;
+            fileTitleText.CharacterFormat.TextColor = Color.FromArgb(47, 85, 151);
+
+            //{
+            //    Bold = true,
+            //    FontSize = 16
+            //});
+
+            // Add some spacing after the title
+            paragraph.ParagraphFormat.BeforeSpacing = 12;
+            paragraph.ParagraphFormat.AfterSpacing = 12;
+
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+
+            paragraph.AppendText("\n");
+        }
+
+        private static void SetMargin(IWSection TitleSection)
+        {
+            //2.54 cm = 1 inch 
+            //1 centimeter = 28.35 points.
+            // Set the margins using centimeters (2 cm = 2 * 28.35 points).
+
+            // Set the section's margins to "moderate" (1 inch = 72 points).
+            TitleSection.PageSetup.Margins.Top = (float)(2.54 * 28.35);
+            TitleSection.PageSetup.Margins.Bottom = (float)(2.54 * 28.35);
+            TitleSection.PageSetup.Margins.Left = (float)(1.91 * 28.35);
+            TitleSection.PageSetup.Margins.Right = (float)(1.91 * 28.35);
+        }
+
+        private static void AddMurliDetailsToExportDoc(ref WordDocument document, List<MurliDetailsBase> murliIndex)
+        {
+            IWSection section = document.Sections[0];
+
+            for (int i = 0; i < murliIndex.Count; i++)
+            {
+                MurliDetailsBase item = murliIndex[i];
+
+                AddMurliTitleToExportDocument(section, i, item);
+
+                AddMurliDateToExportDocument(section, item);
+
+                AddMurliLinesToExportDocument(section, item);
+            }
+        }
+
+        private static void AddMurliLinesToExportDocument(IWSection section, MurliDetailsBase item)
+        {
+            //IWSection murliLinesSection = document.AddSection();
+            IWParagraph murliLinesParagraph = section.AddParagraph();
+
+            string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
+
+            string murliLines = string.Empty;
+
+            if (combinedMurliLines.Length > 0)
+            {
+                //Removes starting "|"
+                murliLines = combinedMurliLines.Remove(combinedMurliLines.IndexOf('।'), 1);
+            }
+
+            IWTextRange murliLinesText = murliLinesParagraph.AppendText(murliLines);
+            FormatMurliLines(murliLinesParagraph, murliLinesText);
+
+            if (murliLinesText.Text.Length > 0)
+                murliLinesParagraph.AppendText("\n");
+        }
+
+        private static void FormatMurliLines(IWParagraph murliLinesParagraph, IWTextRange murliLinesText)
+        {
+            murliLinesText.CharacterFormat.FontName = "Noto Sans Devanagari";
+            murliLinesText.CharacterFormat.FontSize = 11;
+
+            //murliLinesParagraph.ParagraphFormat.LineSpacingRule = Syncfusion.DocIO.LineSpacingRule.Multiple;
+            murliLinesParagraph.ParagraphFormat.LineSpacing = 15f;
+            murliLinesParagraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Justify;
+
+            murliLinesParagraph.ParagraphFormat.BeforeSpacing = 6;
+            murliLinesParagraph.ParagraphFormat.AfterSpacing = 6;
+        }
+
+        private static void AddMurliDateToExportDocument(IWSection section, MurliDetailsBase item)
+        {
+            //IWSection murliDateSection = document.AddSection();
+            IWParagraph murliDateParagraph = section.AddParagraph();
+
+            IWTextRange murliDateText = murliDateParagraph.AppendText(item.MurliDate);
+            murliDateText.CharacterFormat.FontName = "Bookman Old Style";
+            murliDateText.CharacterFormat.FontSize = 10;
+            murliDateText.CharacterFormat.TextColor = Color.FromArgb(91, 155, 213);
+
+            //murliDateParagraph.ParagraphFormat.LineSpacingRule = Syncfusion.DocIO.LineSpacingRule.Exactly;
+            murliDateParagraph.ParagraphFormat.LineSpacing = 12f;
+
+            murliDateParagraph.AppendText("\n");
+        }
+
+        private static void AddMurliTitleToExportDocument(IWSection section, int i, MurliDetailsBase item)
+        {
+            IWParagraph murliTitleParagraph = section.AddParagraph();
+            murliTitleParagraph.AppendText((i + 1).ToString() + ") ");
+            IWTextRange murliTitleText = murliTitleParagraph.AppendText(item.MurliTitle);
+            murliTitleText.CharacterFormat.FontName = "Noto Sans Devanagari";
+            murliTitleText.CharacterFormat.FontSize = 13;
+            murliTitleText.CharacterFormat.TextColor = Color.FromArgb(47, 85, 151);
+
+            //murliTitleParagraph.ParagraphFormat.LineSpacingRule = Syncfusion.DocIO.LineSpacingRule.Exactly;
+            murliTitleParagraph.ParagraphFormat.LineSpacing = 12f;
+            murliTitleParagraph.ParagraphFormat.BeforeSpacing = 12;
+            murliTitleParagraph.ParagraphFormat.AfterSpacing = 6;
+        }
+
+        #endregion Export Related Methods
+
+        //private void CmbLanguages_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (cmbLanguages.SelectedIndex == 0)
+        //    {
+        //        txtSearch.Font = new Font("Bookman Old Style", 12);
+        //        ToEnglishInput();
+        //    }
+        //    else if (cmbLanguages.SelectedIndex == 1)
+        //    {
+        //        txtSearch.ImeMode = ImeMode.On;
+
+        //        //txtSearch.Font = new Font("Tiro Devanagari Hindi", 13);
+        //        txtSearch.Font = new Font("Mangal", 13);
+        //        ToHindiInput();
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //}
+
+        ~FrmHome()
+        {
+            ToEnglishInput();
+        }
+
+        public void ToEnglishInput()
+        {
+            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            {
+                string CName = lang.Culture.EnglishName;
+                if (CName.StartsWith("English"))
+                {
+                    InputLanguage.CurrentInputLanguage = lang;
+                }
+            }
+        }
+
+        public void ToHindiInput()
+        {
+            //foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            //{
+            //    string CName = lang.Culture.EnglishName;
+            //    var l = lang.LayoutName;
+
+            //    if (CName.StartsWith("Hindi"))
+            //    {
+            //        InputLanguage.CurrentInputLanguage = lang;
+            //    }
+            //}
+
+            //var phoneticKeyboard = InputLanguage.InstalledInputLanguages
+            //.Cast<InputLanguage>()
+            //.FirstOrDefault(lang =>
+            //    lang.Culture.KeyboardLayoutId == 1081 &&
+            //lang.Culture.TwoLetterISOLanguageName == "hi"); 
+
+            var phoneticKeyboard = InputLanguage.InstalledInputLanguages
+            .Cast<InputLanguage>()
+            .FirstOrDefault(lang =>
+                lang.LayoutName == "Google Input Tools" && lang.Culture.Name == "hi-IN");
+
+            if (phoneticKeyboard != null)
+            {
+                // Set Hindi Phonetic Keyboard as the current input language
+                InputLanguage.CurrentInputLanguage = phoneticKeyboard;
+                //MessageBox.Show($"Switched to: {phoneticKeyboard.LayoutName}");
+            }
+            else
+            {
+                MessageBox.Show("Hindi Phonetic Keyboard is not installed. Please add it in Windows settings.");
+            }
         }
 
         private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
@@ -66,11 +348,14 @@ namespace MurliAnveshan
         {
             if (engine.BuildIndex())
             {
-                MessageBox.Show("Successfully Created Index.");
+                SelfMessageBoxWrapper.ShowInfoMessage("Successfully Created Index.");
+                //MessageBox.Show("Successfully Created Index.");
             }
             else
             {
-                MessageBox.Show("Sorry!! Index Creation Failed.");
+                SelfMessageBoxWrapper.ShowInfoMessage("Sorry!! Index Creation Failed.");
+
+                //MessageBox.Show("Sorry!! Index Creation Failed.");
             }
         }
 
@@ -80,10 +365,10 @@ namespace MurliAnveshan
 
             ExecuteSearch();
 
-            CenterAlighPaginationControl();
+            CenterAlignPaginationControl();
         }
 
-        private void CenterAlighPaginationControl()
+        private void CenterAlignPaginationControl()
         {
             this.paginationControl.Left = (this.ClientSize.Width - paginationControl.Width) / 2;
         }
@@ -152,7 +437,7 @@ namespace MurliAnveshan
                 };
 
                 murliCard.FullExpansionStateChanged += MurliCard_FullExpansionStateChanged;
-                murliCard.Click += OnResultCardClick;
+                murliCard.ControlClicked += OnResultCardClick;
 
                 string combinedMurliLines = string.Join("।", item.MurliLines); // Join lines with newline
 
@@ -186,7 +471,7 @@ namespace MurliAnveshan
                     //}
                 }
 
-                //resultCard.HighlightSearchTerm(searchTerm);
+                //murliCard.HighlightSearchTerm(searchTerm);
 
                 //resultCard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
                 //resultCard.Width = this.flowLayoutPanel1.Width - 32;
@@ -321,6 +606,5 @@ namespace MurliAnveshan
 
             ExecuteSearch(pageNumber);
         }
-
     }
 }
