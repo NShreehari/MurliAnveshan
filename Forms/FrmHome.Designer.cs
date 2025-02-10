@@ -38,7 +38,6 @@ namespace MurliAnveshan
             this.rdbSakarTitles = new MaterialSkin.Controls.MaterialRadioButton();
             this.rdbDharnaPoints = new MaterialSkin.Controls.MaterialRadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.txtSearch = new SelfControls.Controls.SelfTextBox3();
             this.btnSearch = new MaterialSkin.Controls.MaterialButton();
             this.btnClear = new MaterialSkin.Controls.MaterialButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,9 +45,12 @@ namespace MurliAnveshan
             this.rdbAvyakthMurlis = new MaterialSkin.Controls.MaterialRadioButton();
             this.grbAvyakthMurliCategory = new System.Windows.Forms.GroupBox();
             this.rdbAvyakthAll = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rdbAvyakthDrills = new MaterialSkin.Controls.MaterialRadioButton();
             this.rdbAvyakthTitles = new MaterialSkin.Controls.MaterialRadioButton();
             this.btnBuildIndex = new MaterialSkin.Controls.MaterialButton();
+            this.cmbLanguages = new System.Windows.Forms.ComboBox();
+            this.txtSearch = new SelfControls.Controls.SelfTextBox3();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnExport = new MaterialSkin.Controls.MaterialButton();
             this.paginationControl = new PaginationControl();
             this.grbSakarMurliCategory.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -154,44 +156,6 @@ namespace MurliAnveshan
             this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 308);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.txtSearch.AnimateReadOnly = false;
-            this.txtSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.txtSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.txtSearch.BackgroundColor = System.Drawing.Color.White;
-            this.txtSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.txtSearch.BorderRadius = 4;
-            this.txtSearch.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.txtSearch.Font = new System.Drawing.Font("Tiro Devanagari Hindi", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.ForegroundColor = System.Drawing.Color.Navy;
-            this.txtSearch.HideSelection = true;
-            this.txtSearch.LeadingIcon = null;
-            this.txtSearch.Location = new System.Drawing.Point(297, 17);
-            this.txtSearch.MaximumSize = new System.Drawing.Size(500, 50);
-            this.txtSearch.MaxLength = 32767;
-            this.txtSearch.MinimumSize = new System.Drawing.Size(100, 40);
-            this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PasswordChar = '\0';
-            this.txtSearch.PlaceholderForegroundColor = System.Drawing.Color.Blue;
-            this.txtSearch.PlaceHolderText = "Search Term";
-            this.txtSearch.PrefixSuffixText = null;
-            this.txtSearch.ReadOnly = false;
-            this.txtSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtSearch.SelectedText = "";
-            this.txtSearch.SelectionLength = 0;
-            this.txtSearch.SelectionStart = 0;
-            this.txtSearch.ShortcutsEnabled = true;
-            this.txtSearch.Size = new System.Drawing.Size(350, 40);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TabStop = false;
-            this.txtSearch.Text = "युक्तियाँ";
-            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtSearch.TrailingIcon = null;
-            this.txtSearch.UseSystemPasswordChar = false;
-            // 
             // btnSearch
             // 
             this.btnSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -201,7 +165,7 @@ namespace MurliAnveshan
             this.btnSearch.Depth = 0;
             this.btnSearch.HighEmphasis = true;
             this.btnSearch.Icon = null;
-            this.btnSearch.Location = new System.Drawing.Point(669, 27);
+            this.btnSearch.Location = new System.Drawing.Point(676, 27);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSearch.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSearch.Name = "btnSearch";
@@ -253,6 +217,7 @@ namespace MurliAnveshan
             // rdbSakarMurlis
             // 
             this.rdbSakarMurlis.Depth = 0;
+            this.rdbSakarMurlis.Enabled = false;
             this.rdbSakarMurlis.Font = new System.Drawing.Font("Bookman Old Style", 6.25F);
             this.rdbSakarMurlis.Location = new System.Drawing.Point(199, 18);
             this.rdbSakarMurlis.Margin = new System.Windows.Forms.Padding(0);
@@ -287,7 +252,6 @@ namespace MurliAnveshan
             // 
             this.grbAvyakthMurliCategory.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthAll);
-            this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthDrills);
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthTitles);
             this.grbAvyakthMurliCategory.Location = new System.Drawing.Point(289, 130);
             this.grbAvyakthMurliCategory.Name = "grbAvyakthMurliCategory";
@@ -299,7 +263,7 @@ namespace MurliAnveshan
             // rdbAvyakthAll
             // 
             this.rdbAvyakthAll.Depth = 0;
-            this.rdbAvyakthAll.Location = new System.Drawing.Point(265, 17);
+            this.rdbAvyakthAll.Location = new System.Drawing.Point(228, 17);
             this.rdbAvyakthAll.Margin = new System.Windows.Forms.Padding(0);
             this.rdbAvyakthAll.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rdbAvyakthAll.MouseState = MaterialSkin.MouseState.HOVER;
@@ -311,26 +275,11 @@ namespace MurliAnveshan
             this.rdbAvyakthAll.Text = "All";
             this.rdbAvyakthAll.UseVisualStyleBackColor = true;
             // 
-            // rdbAvyakthDrills
-            // 
-            this.rdbAvyakthDrills.Depth = 0;
-            this.rdbAvyakthDrills.Location = new System.Drawing.Point(147, 17);
-            this.rdbAvyakthDrills.Margin = new System.Windows.Forms.Padding(0);
-            this.rdbAvyakthDrills.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rdbAvyakthDrills.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rdbAvyakthDrills.Name = "rdbAvyakthDrills";
-            this.rdbAvyakthDrills.Ripple = true;
-            this.rdbAvyakthDrills.Size = new System.Drawing.Size(80, 22);
-            this.rdbAvyakthDrills.TabIndex = 1;
-            this.rdbAvyakthDrills.TabStop = true;
-            this.rdbAvyakthDrills.Text = "Drills";
-            this.rdbAvyakthDrills.UseVisualStyleBackColor = true;
-            // 
             // rdbAvyakthTitles
             // 
             this.rdbAvyakthTitles.Checked = true;
             this.rdbAvyakthTitles.Depth = 0;
-            this.rdbAvyakthTitles.Location = new System.Drawing.Point(29, 17);
+            this.rdbAvyakthTitles.Location = new System.Drawing.Point(82, 17);
             this.rdbAvyakthTitles.Margin = new System.Windows.Forms.Padding(0);
             this.rdbAvyakthTitles.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rdbAvyakthTitles.MouseState = MaterialSkin.MouseState.HOVER;
@@ -352,7 +301,7 @@ namespace MurliAnveshan
             this.btnBuildIndex.Depth = 0;
             this.btnBuildIndex.HighEmphasis = true;
             this.btnBuildIndex.Icon = null;
-            this.btnBuildIndex.Location = new System.Drawing.Point(813, 87);
+            this.btnBuildIndex.Location = new System.Drawing.Point(813, 27);
             this.btnBuildIndex.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnBuildIndex.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnBuildIndex.Name = "btnBuildIndex";
@@ -362,18 +311,105 @@ namespace MurliAnveshan
             this.btnBuildIndex.Text = "Build Index";
             this.btnBuildIndex.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnBuildIndex.UseAccentColor = false;
-            this.btnBuildIndex.UseVisualStyleBackColor = true;
+            this.btnBuildIndex.UseVisualStyleBackColor = false;
             this.btnBuildIndex.Click += new System.EventHandler(this.BtnBuildIndex_Click);
+            // 
+            // cmbLanguages
+            // 
+            this.cmbLanguages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbLanguages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.cmbLanguages.FormattingEnabled = true;
+            this.cmbLanguages.Items.AddRange(new object[] {
+            "English",
+            "Hindi",
+            "Kannada"});
+            this.cmbLanguages.Location = new System.Drawing.Point(659, 31);
+            this.cmbLanguages.Name = "cmbLanguages";
+            this.cmbLanguages.Size = new System.Drawing.Size(121, 24);
+            this.cmbLanguages.TabIndex = 17;
+            this.cmbLanguages.Visible = false;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txtSearch.AnimateReadOnly = false;
+            this.txtSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.txtSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.txtSearch.BackgroundColor = System.Drawing.Color.White;
+            this.txtSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.txtSearch.BorderRadius = 4;
+            this.txtSearch.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.txtSearch.Font = new System.Drawing.Font("Tiro Devanagari Hindi", 13.8F);
+            this.txtSearch.ForegroundColor = System.Drawing.Color.Navy;
+            this.txtSearch.HideSelection = true;
+            this.txtSearch.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.txtSearch.LeadingIcon = null;
+            this.txtSearch.Location = new System.Drawing.Point(289, 17);
+            this.txtSearch.MaximumSize = new System.Drawing.Size(500, 50);
+            this.txtSearch.MaxLength = 32767;
+            this.txtSearch.MinimumSize = new System.Drawing.Size(100, 40);
+            this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PasswordChar = '\0';
+            this.txtSearch.PlaceholderForegroundColor = System.Drawing.Color.Blue;
+            this.txtSearch.PlaceHolderText = "";
+            this.txtSearch.PrefixSuffixText = null;
+            this.txtSearch.ReadOnly = false;
+            this.txtSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtSearch.SelectedText = "";
+            this.txtSearch.SelectionLength = 0;
+            this.txtSearch.SelectionStart = 0;
+            this.txtSearch.ShortcutsEnabled = true;
+            this.txtSearch.Size = new System.Drawing.Size(366, 40);
+            this.txtSearch.TabIndex = 0;
+            this.txtSearch.TabStop = false;
+            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtSearch.TrailingIcon = null;
+            this.txtSearch.UseSystemPasswordChar = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Noto Sans", 11F);
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.textBox1.Location = new System.Drawing.Point(661, 77);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(145, 27);
+            this.textBox1.TabIndex = 18;
+            this.textBox1.Visible = false;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.AutoSize = false;
+            this.btnExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnExport.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Title;
+            this.btnExport.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnExport.Depth = 0;
+            this.btnExport.HighEmphasis = true;
+            this.btnExport.Icon = null;
+            this.btnExport.Location = new System.Drawing.Point(832, 97);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnExport.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnExport.Size = new System.Drawing.Size(100, 30);
+            this.btnExport.TabIndex = 19;
+            this.btnExport.Text = "Export";
+            this.btnExport.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnExport.UseAccentColor = false;
+            this.btnExport.UseVisualStyleBackColor = false;
             // 
             // paginationControl
             // 
             this.paginationControl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.paginationControl.CurrentPage = 1;
             this.paginationControl.Location = new System.Drawing.Point(307, 512);
             this.paginationControl.Name = "paginationControl";
+            this.paginationControl.PageSize = 0;
             this.paginationControl.Size = new System.Drawing.Size(443, 45);
             this.paginationControl.TabIndex = 16;
-            //this.paginationControl.TargetPanel = this.flowLayoutPanel1;
             this.paginationControl.Text = "R";
+            this.paginationControl.TotalPages = 0;
             // 
             // FrmHome
             // 
@@ -382,12 +418,15 @@ namespace MurliAnveshan
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClear;
             this.ClientSize = new System.Drawing.Size(945, 559);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cmbLanguages);
             this.Controls.Add(this.paginationControl);
             this.Controls.Add(this.btnBuildIndex);
             this.Controls.Add(this.grbAvyakthMurliCategory);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.grbSakarMurliCategory);
@@ -402,6 +441,7 @@ namespace MurliAnveshan
             this.groupBox1.ResumeLayout(false);
             this.grbAvyakthMurliCategory.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -421,10 +461,12 @@ namespace MurliAnveshan
         private MaterialSkin.Controls.MaterialRadioButton rdbSakarMurlis;
         private System.Windows.Forms.GroupBox grbAvyakthMurliCategory;
         private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthAll;
-        private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthDrills;
         private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthTitles;
         private MaterialSkin.Controls.MaterialButton btnBuildIndex;
         private PaginationControl paginationControl;
+        private System.Windows.Forms.ComboBox cmbLanguages;
+        private System.Windows.Forms.TextBox textBox1;
+        private MaterialSkin.Controls.MaterialButton btnExport;
     }
 }
 

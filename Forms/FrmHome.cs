@@ -48,7 +48,7 @@ namespace MurliAnveshan
 
             btnExport.Click += BtnExport_Click;
 
-            ToHindiInput();
+            ChangeLangToHindiInput();
         }
 
         #region Export Related Methods
@@ -266,10 +266,10 @@ namespace MurliAnveshan
 
         ~FrmHome()
         {
-            ToEnglishInput();
+            ChangeLangToEnglishInput();
         }
 
-        public void ToEnglishInput()
+        public void ChangeLangToEnglishInput()
         {
             foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
             {
@@ -281,7 +281,7 @@ namespace MurliAnveshan
             }
         }
 
-        public void ToHindiInput()
+        public void ChangeLangToHindiInput()
         {
             //foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
             //{
