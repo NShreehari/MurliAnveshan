@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+
+using Anotar.NLog;
 
 using Lucene.Net.Analysis.Hi;
 using Lucene.Net.Documents;
@@ -16,6 +20,7 @@ using Lucene.Net.Store;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 using static MurliAnveshan.Classes.Enums;
 
 using Document = Lucene.Net.Documents.Document;
@@ -35,9 +40,9 @@ namespace MurliAnveshan.Classes
 
         #region Public Constructors
 
-        public AvyaktMurliSearchEngine(int pageSize = 5) : base()
+        public AvyaktMurliSearchEngine() : base()
         {
-            this.pageSize = pageSize;
+            this.pageSize = Convert.ToInt16(ConfigurationManager.AppSettings.Get("PageSize"));
 
             //Create an analyzer to process the text
             analyzer = new HindiAnalyzer(luceneVersion);// StandardAnalyzer(luceneVersion);
@@ -65,9 +70,13 @@ namespace MurliAnveshan.Classes
                 indexConfig.OpenMode = OpenMode.CREATE;  // Create a new index
             }
 
-            indxWriter = new IndexWriter(indexDir, indexConfig);
+            IndxWriter = new IndexWriter(indexDir, indexConfig);
+
 
             hindiAVMurlisPath = ConfigurationManager.ConnectionStrings["HindiAVMurlisPath"].ConnectionString;
+
+            //InitializeIndexSearcher();
+
         }
 
         #endregion Public Constructors
@@ -82,7 +91,7 @@ namespace MurliAnveshan.Classes
                 {
                     var document = new Document
                     {
-                        new TextField(nameof(AvyaktMurliDetails.MurliDate), _murliDetails.MurliDate, Field.Store.YES),
+                        new StringField(nameof(AvyaktMurliDetails.MurliDate), _murliDetails.MurliDate, Field.Store.YES),
                         new TextField(nameof(AvyaktMurliDetails.MurliTitle), _murliDetails.MurliTitle, Field.Store.YES),
                         new TextField(nameof(AvyaktMurliDetails.FileName), _murliDetails.FileName, Field.Store.YES)
                     };
@@ -95,14 +104,13 @@ namespace MurliAnveshan.Classes
 
                     //document.Add(new TextField(nameof(MurliDetails.MurliLines), string.Join(" ", _murliDetails.MurliLines), Field.Store.YES));
 
-                    indxWriter.AddDocument(document);
+                    IndxWriter.AddDocument(document);
                 }
-                indxWriter.Commit();
-                indxWriter.Dispose();
+                IndxWriter.Commit();
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
                 throw;
@@ -111,18 +119,37 @@ namespace MurliAnveshan.Classes
 
         public override bool BuildIndex()
         {
-            string fileName = "1969.docx";
+            //string fileName = "1969.docm";
 
-            List<AvyaktMurliDetails> murliDetailsList = ExtractDetailsFromDocx(Path.Combine(hindiAVMurlisPath, fileName));
+            var AVMurliFolderPath = ConfigurationManager.ConnectionStrings["HindiAVMurlisPath"].ConnectionString;
 
-            if (AddMurliDetailsToIndex(murliDetailsList))
+            if (!System.IO.Directory.Exists(AVMurliFolderPath)) return false;
+
+            var dirFile = new DirectoryInfo(AVMurliFolderPath);
+
+            foreach (var file in dirFile.GetFiles("*.doc*"))
             {
-                return true;
+                try
+                {
+                    //TODO Read All .doc/.Docx files from a selected Folder.
+                    List<AvyaktMurliDetails> murliDetailsList = ExtractDetailsFromDocx(Path.Combine(hindiAVMurlisPath, file.Name));
+
+                    if (murliDetailsList == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        AddMurliDetailsToIndex(murliDetailsList);
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                    throw;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return true;
         }
 
         public List<AvyaktMurliDetails> ExtractDetailsFromDocx(string docxPath)
@@ -131,12 +158,22 @@ namespace MurliAnveshan.Classes
             AvyaktMurliDetails currentChapter = null;
             StringBuilder fullParagraphText = new StringBuilder();
 
+            bool sectionBreakFound = false;
+
             try
             {
                 using (WordDocument document = new WordDocument(docxPath, FormatType.Docx))
                 {
                     foreach (IWSection section in document.Sections)
                     {
+                        // Check if we have encountered the first section break
+                        if (!sectionBreakFound)
+                        {
+                            sectionBreakFound = true; // Mark the first section as found
+                            continue; // Skip processing the first section
+                        }
+
+                        // Process sections after the first section break
                         foreach (IWParagraph paragraph in section.Body.Paragraphs)
                         {
                             // Clear the StringBuilder to accumulate the full line
@@ -164,16 +201,16 @@ namespace MurliAnveshan.Classes
                                 currentChapter = new AvyaktMurliDetails
                                 {
                                     FileName = Path.GetFileName(docxPath),
-                                    MurliDate = fullParagraph.Split(' ')[0]
+                                    MurliDate = fullParagraph.Split(' ', '\t')[0]
                                 };
                             }
                             // Check for Title (Noto Sans, Size 16, Double quoted)
-                            else if (IsTitle(format))
+                            else if (IsTitle(format) && (currentChapter != null))
                             {
-                                if (currentChapter != null)
-                                {
-                                    currentChapter.MurliTitle = fullParagraph;
-                                }
+                                char[] charsToTrim = { '"', '“', '”' };
+                                currentChapter.MurliTitle = fullParagraph.Trim(charsToTrim);
+
+                                //currentChapter.MurliTitle = fullParagraph;
                             }
                             // Body (Tiro Devanagari Hindi, Size 13)
                             else if (IsBodyText(format))
@@ -188,8 +225,16 @@ namespace MurliAnveshan.Classes
                         murliDetails.Add(currentChapter);
                 }
             }
-            catch (Exception)
+            catch (IOException ioe) when (ioe.Message.Contains("used by another process"))
             {
+                string errorMessage = $"The file '{docxPath}' is being used by another process. Please close any apps using the file and try again.";
+                LogTo.ErrorException(errorMessage, ioe);
+                SelfMessageBoxWrapper.ShowErrorMessage(errorMessage, docxPath);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                LogTo.ErrorException($"An unexpected error occurred while processing '{docxPath}'", ex);
                 throw;
             }
 
@@ -249,7 +294,17 @@ namespace MurliAnveshan.Classes
         }
         */
 
-        
+        //IndexSearcher indexSearcher;
+
+        //private void InitializeIndexSearcher()
+        //{
+        //    using (var directoryReader = DirectoryReader.Open(indexDir))
+        //    {
+        //        indexSearcher = new IndexSearcher(directoryReader);
+        //    }
+        //}
+
+
         public override PagedResults<MurliDetailsBase> SearchIndex(string searchTerm, SearchLocation searchLocation, int currentPage = 1)
         {
             using (var directoryReader = DirectoryReader.Open(indexDir))
@@ -261,18 +316,99 @@ namespace MurliAnveshan.Classes
                 // Calculate the starting point for the page
                 int startIndex = (currentPage - 1) * pageSize;
 
+                /*
+                // Create a filter query, e.g., exclude documents with a score below 0.1
+                Query filterQuery = NumericRangeQuery.NewDoubleRange("score", 0.1, double.MaxValue, true, true);
+                Filter filter = new QueryWrapperFilter(filterQuery);
+
+
                 // Execute the search to get enough results for pagination
-                TopDocs hits = indexSearcher.Search(query, startIndex + pageSize);
+                TopDocs topDocs = indexSearcher.Search(query, filter, startIndex + pageSize);
+                */
+
+                TopDocs topDocs = indexSearcher.Search(query, startIndex + pageSize);
+
+                //var filteredResults = topDocs.ScoreDocs
+                //    .Where(sd => sd.Score >= 0.1) // Filter out scores below 0.1
+                //    .Select(sd => indexSearcher.Doc(sd.Doc))
+                //    .ToList();
 
                 // Create a list to hold the results
                 var murliDetailsList = new List<MurliDetailsBase>();
 
                 // Fetch documents in the current page
-                for (int i = startIndex; i < Math.Min(hits.ScoreDocs.Length, startIndex + pageSize); i++)
+                for (int i = startIndex; i < Math.Min(topDocs.ScoreDocs.Length, startIndex + pageSize); i++)
                 {
                     // Fetch the document from the index
-                    var doc = indexSearcher.Doc(hits.ScoreDocs[i].Doc);
+                    var doc = indexSearcher.Doc(topDocs.ScoreDocs[i].Doc);
 
+                    //var doc = filteredResults[i];
+                    //float score = topDocs.ScoreDocs[i].Score;
+
+                    //float scoreThreshold = 0.1f;
+                    //// Check if the score meets the threshold
+                    //if (score < scoreThreshold)
+                    //{
+                    //    continue; // Skip this result if the score is below the threshold
+                    //}
+
+                    //Explanation explanation = indexSearcher.Explain(query, topDocs.ScoreDocs[i].Doc);
+
+                    //Console.WriteLine($"Document ID: {topDocs.ScoreDocs[i].Doc}");
+                    //Console.WriteLine($"Explanation: {explanation}");
+
+                    // Create a MurliDetails object and populate it with the relevant fields from the document
+                    var murliDetail = new AvyaktMurliDetails
+                    {
+                        MurliDate = doc.Get(nameof(MurliDetailsBase.MurliDate)),
+                        MurliTitle = doc.Get(nameof(MurliDetailsBase.MurliTitle)),
+                        SearchTerm = doc.Get(nameof(MurliDetailsBase.SearchTerm)),
+                        FileName = doc.Get(nameof(MurliDetailsBase.FileName))
+                    };
+
+                    // If searching within the body text, retrieve surrounding sentences
+                    if (searchLocation == SearchLocation.All)
+                    {
+                        var murliLines = doc.GetValues(nameof(MurliDetailsBase.MurliLines))?.ToList();
+                        if (murliLines?.Count > 0)
+                        {
+                            // Extract relevant sentences that match the search term
+                            var relevantSentences = GetSurroundingSentences(murliLines, searchTerm);
+                            murliDetail.MurliLines.AddRange(relevantSentences);
+                        }
+                    }
+
+                    // Add the result to the list
+                    murliDetailsList.Add(murliDetail);
+                }
+
+                // Return the paged results
+                return new PagedResults<MurliDetailsBase>
+                {
+                    CurrentPage = currentPage,
+                    TotalHits = topDocs.TotalHits,
+                    Results = murliDetailsList
+                };
+            }
+        }
+
+        //this Method is used when User wish to export the search results to a file.
+        //In that scenario we need to fetch all the results at once instead of pagewise hence the Method.
+        public List<MurliDetailsBase> SearchAllIndex(string searchTerm, SearchLocation searchLocation)
+        {
+            var murliDetailsList = new List<MurliDetailsBase>();
+
+            using (var directoryReader = DirectoryReader.Open(indexDir))
+            {
+                var indexSearcher = new IndexSearcher(directoryReader);
+
+                Query query = CreateQueryBasedOnSearchLocation(searchTerm, searchLocation);
+
+                TopDocs topDocs = indexSearcher.Search(query, int.MaxValue);
+
+                foreach (var scoreDoc in topDocs.ScoreDocs)
+                {
+                    var doc = indexSearcher.Doc(scoreDoc.Doc);
                     // Create a MurliDetails object and populate it with the relevant fields from the document
                     var murliDetail = new AvyaktMurliDetails
                     {
@@ -297,65 +433,129 @@ namespace MurliAnveshan.Classes
                     // Add the result to the list
                     murliDetailsList.Add(murliDetail);
                 }
-
-                // Return the paged results
-                return new PagedResults<MurliDetailsBase>
-                {
-                    CurrentPage = currentPage,
-                    TotalHits = hits.TotalHits,
-                    Results = murliDetailsList
-                };
             }
+            return murliDetailsList;
         }
+
+
+        //public List<string> SearchWordsForSuggestion(string prefix)
+        //{
+        //    //using var reader = DirectoryReader.Open(luceneIndex);
+        //    //var searcher = new IndexSearcher(reader);
+        //    var query = new PrefixQuery(new Term("word", prefix));
+        //    var hits = indexSearcher.Search(query, 10).ScoreDocs;
+
+        //    return hits.Select(hit => indexSearcher.Doc(hit.Doc).Get("word")).ToList();
+        //}
+
+
         #endregion Public Methods
 
         #region Private Methods
 
         internal static Query CreateQueryBasedOnSearchLocation(string searchTerm, SearchLocation searchLocation)
         {
-            QueryParser queryParser = null;
             Query query = null;
 
-            if (searchLocation == SearchLocation.All)
-            {
-                string[] fields = { nameof(MurliDetailsBase.MurliDate), nameof(MurliDetailsBase.MurliTitle), nameof(MurliDetailsBase.MurliLines) }; //"FileName", "SearchTerm" };
-                queryParser = new MultiFieldQueryParser(luceneVersion, fields, analyzer);
-            }
-            else if (searchLocation == SearchLocation.TitleOnly)
-            {
-                //string[] fields = { "MurliDate", "MurliTitle", "MurliLines", "PageNumber" }; //"FileName", "SearchTerm" };
-                queryParser = new QueryParser(luceneVersion, nameof(MurliDetailsBase.MurliTitle), analyzer);
-            }
-            //else if (searchLocation == SearchLocation.ContentOnly)
-            //{
-            //    queryParser = new QueryParser(luceneVersion, nameof(MurliDetails.MurliLines), _standardAnalyzer);
-            //    //query2 = new TermQuery(new Term("MurliLines", searchTerm));
-            //    //var hits2 = indexSearcher.Search(query2, 10).ScoreDocs;
-            //}
             try
             {
-                return query = queryParser?.Parse(searchTerm);
+                if (searchLocation == SearchLocation.All)
+                {
+                    if (IsDate(searchTerm))
+                    {
+                        //var DatequeryParser = new QueryParser(luceneVersion, nameof(MurliDetailsBase.MurliDate), analyzer);
+                        //query = DatequeryParser.Parse(QueryParser.Escape(searchTerm));
+
+                        // Create an exact match for the date using TermQuery
+                        query = new TermQuery(new Term(nameof(AvyaktMurliDetails.MurliDate), searchTerm));
+                    }
+                    else
+                    {
+                        string[] fields = { nameof(AvyaktMurliDetails.MurliTitle), nameof(AvyaktMurliDetails.MurliLines) }; //"FileName", "SearchTerm" };
+                        var multiFieldQueryParser = new MultiFieldQueryParser(luceneVersion, fields, analyzer);
+                        query = multiFieldQueryParser.Parse(MultiFieldQueryParser.Escape(searchTerm));
+
+                        /*
+                        // For multi-field search, use PhraseQuery for exact matches
+                        var fields = new[] { nameof(MurliDetailsBase.MurliTitle), nameof(MurliDetailsBase.MurliLines) };
+                        var booleanQuery = new BooleanQuery();
+
+                        // Create PhraseQuery for each field to ensure terms are together
+                        foreach (var field in fields)
+                        {
+                            var phraseQuery = new PhraseQuery();
+                            var terms = searchTerm.Split(' '); // Split the search term into individual words
+
+                            foreach (var term in terms)
+                            {
+                                phraseQuery.Add(new Term(field, term));
+                            }
+
+                            // Add the phrase query to the boolean query
+                            booleanQuery.Add(phraseQuery, Occur.SHOULD);
+                        }
+
+                        query = booleanQuery;
+                        */
+                    }
+                }
+                else if (searchLocation == SearchLocation.TitleOnly)
+                {
+                    //string[] fields = { "MurliDate", "MurliTitle", "MurliLines"}; // "PageNumber" }; "FileName", "SearchTerm" };
+                    var titleQueryParser = new QueryParser(luceneVersion, nameof(AvyaktMurliDetails.MurliTitle), analyzer);
+                    query = titleQueryParser.Parse(QueryParser.Escape(searchTerm));
+                }
             }
-            catch (Lucene.Net.QueryParsers.Classic.ParseException e)
+            catch (Lucene.Net.QueryParsers.Classic.ParseException ex)
             {
-                // Handle parsing exception
-                return query;
+                // Log and handle parsing exceptions (e.g., return a default query or log for debugging)
+                Console.WriteLine($"Query parsing exception: {ex.Message}");
+                // Use a query that matches no documents
+                query = new BooleanQuery
+                {
+                    { new TermQuery(new Term("nonexistentfield", "value")), Occur.MUST }
+                };
             }
+            return query;
+        }
+
+        private static bool IsDate(string searchTerm)
+        {
+            const string pattern = @"^\d{2}-\d{2}-\d{4}$";
+
+            if (Regex.IsMatch(searchTerm, pattern))
+            {
+                // Try to parse the date using the exact format
+                if (DateTime.TryParseExact(searchTerm, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private IEnumerable<string> GetSurroundingSentences(List<string> content, string searchTerm, int contextSize = 2)
         {
-            var result = new List<string>();
+            if (string.IsNullOrWhiteSpace(searchTerm) || content == null || content.Count == 0)
+                yield break;
+
+            //var result = new List<string>();
             bool contentAdded = false;
+            string lastYielded = null; // Track last yielded value
 
             foreach (var item in content)
             {
                 var sentences = item.Split(new[] { "।", "|" }, StringSplitOptions.RemoveEmptyEntries);
 
+                var searchTermWithOneCharLess = searchTerm.Length > 1 ? searchTerm.Remove(searchTerm.Length - 2) : searchTerm;
+
+
                 // Iterate through each sentence to find occurrences of the search term
                 for (int i = 0; i < sentences.Length; i++)
                 {
-                    if (sentences[i].IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if ((sentences[i].IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0) || 
+                        (sentences[i].IndexOf(searchTermWithOneCharLess, StringComparison.OrdinalIgnoreCase) >= 0))
                     {
                         // Get the start and end index for the surrounding sentences
                         int start = Math.Max(0, i - contextSize);
@@ -364,46 +564,43 @@ namespace MurliAnveshan.Classes
                         // Add the indicator and surrounding sentences
                         if (!contentAdded)
                         {
-                            result.Add("\t >   ");
+                            yield return "\t >   ";
+                            lastYielded = "\t >   ";
                             contentAdded = true;
                         }
 
                         for (int n = start; n <= end; n++)
                         {
-                            // Add sentence if not already in the result
-                            if (!result.Contains(sentences[n]))
-                            {
-                                result.Add(sentences[n]);
-                            }
+                            yield return sentences[n];
+                            lastYielded = sentences[n];
                         }
 
-                        result.Add("\n\t>   ");
+                        yield return "\n\t>   ";
+                        lastYielded = "\n\t>   ";
                     }
                 }
             }
 
-            // Remove the trailing indicator if it's the last entry and no content was added after it
-            if (result.Count > 0 && result[result.Count - 1].Trim() == ">")
+            // Remove trailing indicator if it's the last yielded value
+            if (lastYielded == "\n\t>   ")
             {
-                result.RemoveAt(result.Count - 1);
+                yield return "\b"; // Backspace or some no-op replacement, or just ignore this case
             }
-
-            return result;
         }
 
-        private bool IsBodyText(WCharacterFormat format)
+        private static bool IsBodyText(WCharacterFormat format)
         {
-            return format.FontName == "Tiro Devanagari Hindi" || format.FontName == "Noto Sans" && format.FontSize == 13;
+            return (format.FontSize == 13 && format.FontName == "Noto Sans Devanagari") || format.FontName == "Noto Sans";
         }
 
-        private bool IsDate(WCharacterFormat format)
+        private static bool IsDate(WCharacterFormat format)
         {
             return format.FontName == "Noto Sans" && format.FontSize == 14 && format.Bold && format.TextColor == Color.FromArgb(255, 255, 0, 0);
         }
 
-        private bool IsTitle(WCharacterFormat format)
+        private static bool IsTitle(WCharacterFormat format)
         {
-            return format.FontName == "Noto Sans" && format.FontSize == 16 && format.Bold; // && text.StartsWith("\"") && text.EndsWith("\"");
+            return format.FontName == "Noto Sans Devanagari" && format.FontSize == 16 && format.Bold; // && text.StartsWith("\"") && text.EndsWith("\"");
         }
 
         #endregion Private Methods

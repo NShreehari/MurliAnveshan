@@ -20,7 +20,7 @@ namespace MurliAnveshan.Classes
         protected LuceneDirectory indexDir;
         protected string indexName;
         protected string indexPath;
-        protected IndexWriter indxWriter;
+        private IndexWriter indxWriter;
 
         #endregion Protected Fields
 
@@ -36,10 +36,12 @@ namespace MurliAnveshan.Classes
 
         ~MurliSearchEngineBase()
         {
-            indxWriter?.Dispose();
+            IndxWriter?.Dispose();
             indexDir?.Dispose();
             analyzer?.Dispose();
         }
+
+        protected IndexWriter IndxWriter { get => indxWriter; set => indxWriter = value; }
 
         #endregion Private Destructors
 
