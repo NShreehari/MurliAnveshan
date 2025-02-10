@@ -157,14 +157,10 @@ namespace MurliAnveshan.Forms
             return cell.Paragraphs[0].ChildEntities[0] is WField field && field.FieldType == Syncfusion.DocIO.FieldType.FieldHyperlink;
         }
 
+        List<string> murliIndex = new List<string>();
+
         private void BtnExtract_Click(object sender, EventArgs e)
         {
-            const byte murliDateCellNumber = 2;
-            const byte murliTitleCellNumber = 3;
-            const byte pageNumberCellNumber = 4;
-
-            List<string> murliIndex = new List<string>();
-
             if (!Directory.Exists(folderPath)) return;
 
             //DataTable murliTitlesTable, filePagesTable;
@@ -176,57 +172,7 @@ namespace MurliAnveshan.Forms
             {
                 try
                 {
-                    FileInfo fileInfo = new FileInfo(file.FullName);
-
-                    using (WordDocument document = new WordDocument(file.FullName))
-                    {
-                        int initialPageNumber = GetInitialPageNumber(document);
-
-                        string fileName = file.Name;
-                        string murliDate = string.Empty;
-                        string murliTitle = string.Empty;
-                        int pageNumber = 0;
-
-                        foreach (IWSection section in document.Sections)
-                        {
-                            foreach (WTable table in section.Tables)
-                            {
-                                foreach (WTableRow row in table.Rows)
-                                {
-                                    byte cellNumber = 0;
-
-                                    foreach (WTableCell cell in row.Cells)
-                                    {
-                                        cellNumber++;
-
-                                        switch (cellNumber)
-                                        {
-                                            case murliDateCellNumber:
-                                                murliDate = cell.Paragraphs[0].Text;
-                                                break;
-                                            case murliTitleCellNumber:
-                                                murliTitle = GetVisibleMurliTitle(cell);
-                                                break;
-                                            case pageNumberCellNumber:
-                                                pageNumber = Convert.ToInt32(cell.Paragraphs[0].Text);
-                                                break;
-                                            default:
-                                                continue;
-                                        }
-                                    }
-
-                                    //UnComment AddDetailsToIndexList() to Create a Index Word Doc.
-                                    //AddDetailsToIndexList(murliIndex, murliDate, murliTitle, pageNumber);
-
-                                    AddDateAndTitlestoDataTable(murliTitlesTable, murliDate, murliTitle);
-
-                                    AddPageNumberToDataTable(filePagesTable, fileName, murliTitle, murliDate, initialPageNumber + pageNumber);
-                                }
-                            }
-                        }
-
-                        AddFileNameToDataTable(fileTable, fileName);
-                    }
+                    ProcessFile(file, fileTable, murliTitlesTable, filePagesTable);
                 }
                 catch (Exception ex)
                 {
@@ -237,118 +183,168 @@ namespace MurliAnveshan.Forms
             //UnComment CreateIndexedDoc() to Create a Index Word Doc.
             //CreateIndexedDoc(murliIndex);
 
-            // Insert into the database in three steps
             InsertDataToDatabase(fileTable, murliTitlesTable, filePagesTable);
 
             Messages.InfoMessage("Successfully Added Details to DataBase.");
         }
 
+        private void ProcessFile(FileInfo file, DataTable fileTable, DataTable murliTitlesTable, DataTable filePagesTable)
+        {
+            using (WordDocument document = new WordDocument(file.FullName))
+            {
+                int initialPageNumber = GetInitialPageNumber(document);
+
+                string fileName = file.Name;
+                string murliDate = string.Empty;
+                string murliTitle = string.Empty;
+                int pageNumber = 0;
+
+                foreach (IWSection section in document.Sections)
+                {
+                    foreach (WTable table in section.Tables)
+                    {
+                        foreach (WTableRow row in table.Rows)
+                        {
+                            ProcessRow(row, ref murliDate, ref murliTitle, ref pageNumber);
+
+                            //UnComment AddDetailsToIndexList() to Create a Index Word Doc.
+                            AddDetailsToIndexList(murliIndex, murliDate, murliTitle, pageNumber);
+
+                            AddDateAndTitlestoDataTable(murliTitlesTable, murliDate, murliTitle);
+                            AddPageNumberToDataTable(filePagesTable, fileName, murliTitle, murliDate, initialPageNumber + pageNumber);
+                        }
+                    }
+                }
+
+                AddFileNameToDataTable(fileTable, fileName);
+            }
+        }
+
+        private void ProcessRow(WTableRow row, ref string murliDate, ref string murliTitle, ref int pageNumber)
+        {
+            const byte murliDateCellNumber = 2;
+            const byte murliTitleCellNumber = 3;
+            const byte pageNumberCellNumber = 4;
+
+            byte cellNumber = 0;
+
+            foreach (WTableCell cell in row.Cells)
+            {
+                cellNumber++;
+
+                switch (cellNumber)
+                {
+                    case murliDateCellNumber:
+                        murliDate = cell.Paragraphs[0].Text;
+                        break;
+                    case murliTitleCellNumber:
+                        murliTitle = GetVisibleMurliTitle(cell);
+                        break;
+                    case pageNumberCellNumber:
+                        pageNumber = Convert.ToInt32(cell.Paragraphs[0].Text);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
 
 
-        /* IndexTable Document Creation Methods
+        //IndexTable Document Creation Methods
 
-     private static void AddDetailsToIndexList(List<string> murliIndex, string murliDate, string murliTitle, int pageNumber)
-     {
-         var indexRow = string.Format(murliDate + "\t" + murliTitle + "\t" + pageNumber);
+        private static void AddDetailsToIndexList(List<string> murliIndex, string murliDate, string murliTitle, int pageNumber)
+        {
+            var indexRow = string.Format(murliDate + "\t" + murliTitle + "\t" + pageNumber);
 
-         murliIndex.Add(indexRow);
+            murliIndex.Add(indexRow);
 
-         indexRow = string.Empty;
-     }
+            indexRow = string.Empty;
+        }
 
-     private void CreateIndexedDoc(List<string> murliIndex)
-     {
-         WordDocument doc = CreateAWordDocument();
+        private void CreateIndexedDoc(List<string> murliIndex)
+        {
+            WordDocument doc = CreateAWordDocument();
 
-         IWTable table = CreateTable(doc, murliIndex);
+            IWTable table = CreateTable(doc, murliIndex);
 
-         AddDataToTable(table, murliIndex);
+            AddDataToTable(table, murliIndex);
 
+            // Step 7: Save the document
+            string fileName = "IndexTable.docx";
+            doc.Save(fileName);
 
-         // Step 7: Save the document
-         string fileName = "IndexTable.docx";
-         doc.Save(fileName);
+            Console.WriteLine($"Document saved successfully as {fileName}");
+        }
 
-         Console.WriteLine($"Document saved successfully as {fileName}");
+        private static WordDocument CreateAWordDocument()
+        {
+            WordDocument document;
 
-         //Word.Table newTable = CreateATable(doc, numberOfrows: 10, numberOfcols: 3);
-
-
-         //AddDataToTable(newTable, murliIndex);
-     }
-
-     private static WordDocument CreateAWordDocument()
-     {
-         WordDocument document;
-
-         // Step 1: Create a new Word document
-         using (document = new WordDocument())
-         {
-             // Step 2: Add a section to the document
+            // Step 1: Create a new Word document
+            using (document = new WordDocument())
+            {
+                // Step 2: Add a section to the document
 
 
-             // Step 3: Add a paragraph to the section
-             //IWParagraph paragraph = section.AddParagraph();
-             //paragraph.AppendText("3-Column Table Example").ApplyCharacterFormat(new WCharacterFormat()
-             //{
-             //    Bold = true,
-             //    FontSize = 16
-             //});
+                // Step 3: Add a paragraph to the section
+                //IWParagraph paragraph = section.AddParagraph();
+                //paragraph.AppendText("3-Column Table Example").ApplyCharacterFormat(new WCharacterFormat()
+                //{
+                //    Bold = true,
+                //    FontSize = 16
+                //});
 
-             // Add some spacing after the title
-             //paragraph.ParagraphFormat.AfterSpacing = 10;
+                // Add some spacing after the title
+                //paragraph.ParagraphFormat.AfterSpacing = 10;
 
 
 
-         }
+            }
 
-         return document;
-     }
+            return document;
+        }
 
-     private static IWTable CreateTable(WordDocument document, List<string> murliIndex)
-     {
-         IWSection section = document.AddSection();
-         // Step 4: Add a table to the section
-         IWTable table = section.AddTable();
+        private static IWTable CreateTable(WordDocument document, List<string> murliIndex)
+        {
+            IWSection section = document.AddSection();
+            // Step 4: Add a table to the section
+            IWTable table = section.AddTable();
 
-         // Step 5: Initialize the table with rows and columns
-         table.ResetCells(murliIndex.Count + 2, 4);
+            // Step 5: Initialize the table with rows and columns
+            table.ResetCells(murliIndex.Count + 2, 4);
 
+            // Optional: Format the table (e.g., add borders)
+            table.TableFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
+            table.TableFormat.Borders.LineWidth = 1.0F;
 
+            return table;
+        }
 
-         // Optional: Format the table (e.g., add borders)
-         table.TableFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
-         table.TableFormat.Borders.LineWidth = 1.0F;
+        private static void AddDataToTable(IWTable table, List<string> murliIndex)
+        {
+            // Step 6: Add data to the table cells
+            for (int row = 0; row < murliIndex.Count; row++)
+            {
+                string[] currentRow = murliIndex[row].Split('\t');
 
-         return table;
-     }
+                // Add serial number to the first column
+                IWParagraph serialNumberParagraph = table.Rows[row].Cells[0].AddParagraph();
+                serialNumberParagraph.AppendText((row + 1).ToString()); // Serial number starts from 1
 
-     private static void AddDataToTable(IWTable table, List<string> murliIndex)
-     {
-         // Step 6: Add data to the table cells
-         for (int row = 0; row < murliIndex.Count; row++)
-         {
-             string[] currentRow = murliIndex[row].Split('\t');
+                // Optional: Center align the text in the cell
+                serialNumberParagraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
 
-             // Add serial number to the first column
-             IWParagraph serialNumberParagraph = table.Rows[row].Cells[0].AddParagraph();
-             serialNumberParagraph.AppendText((row + 1).ToString()); // Serial number starts from 1
+                for (int col = 1; col < 4; col++)
+                {
+                    IWParagraph cellParagraph = table.Rows[row].Cells[col].AddParagraph();
+                    cellParagraph.AppendText(currentRow[col - 1]);
 
-             // Optional: Center align the text in the cell
-             serialNumberParagraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-
-
-             for (int col = 1; col < 4; col++)
-             {
-                 IWParagraph cellParagraph = table.Rows[row].Cells[col].AddParagraph();
-                 cellParagraph.AppendText(currentRow[col - 1]);
-
-                 // Optional: Center align the text in the cell
-                 cellParagraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-             }
-         }
-     }
-     */ //IndexTable Document Creation Methods
+                    // Optional: Center align the text in the cell
+                    cellParagraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                }
+            }
+        }
+        //IndexTable Document Creation Methods
 
         private int GetInitialPageNumber(WordDocument document)
         {
@@ -435,23 +431,36 @@ namespace MurliAnveshan.Forms
 
         private static void InitializeDataTables(out DataTable fileTable, out DataTable murliTitlesTable, out DataTable filePagesTable)
         {
-            // Create DataTables for bulk insert
-            fileTable = new DataTable();
-            fileTable.Columns.Add("FileName", typeof(string));
+            fileTable = CreateFileTable();
+            murliTitlesTable = CreateMurliTitlesTable();
+            filePagesTable = CreateFilePagesTable();
+        }
 
-            murliTitlesTable = new DataTable();
+        private static DataTable CreateFileTable()
+        {
+            var fileTable = new DataTable();
+            fileTable.Columns.Add("FileName", typeof(string));
+            return fileTable;
+        }
+
+        private static DataTable CreateMurliTitlesTable()
+        {
+            var murliTitlesTable = new DataTable();
             murliTitlesTable.Columns.Add("MurliDate", typeof(string));
             murliTitlesTable.Columns.Add("MurliTitle", typeof(string));
+            return murliTitlesTable;
+        }
 
-            filePagesTable = new DataTable();
+        private static DataTable CreateFilePagesTable()
+        {
+            var filePagesTable = new DataTable();
             filePagesTable.Columns.Add("FileID", typeof(int));
             filePagesTable.Columns.Add("MurliTitleID", typeof(int));
-
             filePagesTable.Columns.Add("PageNo", typeof(int));
-
             filePagesTable.Columns.Add("fileName", typeof(string));
             filePagesTable.Columns.Add("murliTitle", typeof(string));
             filePagesTable.Columns.Add("murliDate", typeof(string));
+            return filePagesTable;
         }
 
         private static void InsertDataToDatabase(DataTable fileTable, DataTable murliTitlesTable, DataTable filePagesTable)
@@ -462,88 +471,17 @@ namespace MurliAnveshan.Forms
                 try
                 {
                     // 1. Create a dictionary to store FileName -> FileID mappings
-                    Dictionary<string, int> fileIDMap = new Dictionary<string, int>();
-
-                    // 2. Insert into TblFiles and store FileID in the dictionary
-                    foreach (DataRow fileRow in fileTable.Rows)
-                    {
-                        const string insertFileSql = "INSERT INTO TblFiles (FileName) OUTPUT INSERTED.FileID VALUES (@FileName)";
-                        using (SqlCommand cmd = new SqlCommand(insertFileSql, connection, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@FileName", fileRow["FileName"]);
-                            int fileID = (int)cmd.ExecuteScalar();
-
-                            // Store FileID in the dictionary
-                            fileIDMap.Add(fileRow["FileName"].ToString(), fileID);
-                        }
-                    }
+                    Dictionary<string, int> fileIDMap = InsertFiles(fileTable, connection, transaction);
 
                     // 3. Insert into TblMurliTitles and store results for use in TblFilePages
-                    DataTable murliTitlesMappingTable = new DataTable();
-                    murliTitlesMappingTable.Columns.Add("MurliTitle", typeof(string));
-                    murliTitlesMappingTable.Columns.Add("MurliDate", typeof(string)); // Keep date as string in dd-MM-yyyy format
-                    murliTitlesMappingTable.Columns.Add("MurliTitleID", typeof(int));
-
-                    foreach (DataRow murliRow in murliTitlesTable.Rows)
-                    {
-                        const string insertMurliSql = "INSERT INTO TblMurliTitles (MurliDate, MurliTitle) OUTPUT INSERTED.MurliTitleID VALUES (@MurliDate, @MurliTitle)";
-                        using (SqlCommand cmd = new SqlCommand(insertMurliSql, connection, transaction))
-                        {
-                            DateTime murliDate;
-                            bool isValidDate = DateTime.TryParseExact(murliRow["MurliDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out murliDate);
-
-                            if (isValidDate)
-                            {
-                                cmd.Parameters.AddWithValue("@MurliDate", murliDate);
-                                Console.WriteLine("@MurliDate", murliDate);
-                            }
-                            else
-                            {
-                                // TODO: Log invalid date and skip this row if necessary
-                                Console.WriteLine("Invalid date format: " + murliRow["MurliDate"]);
-                                continue; // Skip to next row if date is invalid
-                            }
-                            cmd.Parameters.AddWithValue("@MurliTitle", murliRow["MurliTitle"]);
-                            int murliTitleID = (int)cmd.ExecuteScalar();
-
-                            // Update the mapping table with the inserted ID
-                            murliTitlesMappingTable.Rows.Add(murliRow["MurliTitle"], murliDate, murliTitleID);
-                        }
-                    }
+                    DataTable murliTitlesMappingTable = InsertMurliTitles(murliTitlesTable, connection, transaction);
 
                     // 4. Update filePagesTable with correct FileID and MurliTitleID
-                    foreach (DataRow pageRow in filePagesTable.Rows)
-                    {
-                        string fileName = pageRow["FileName"].ToString();
-                        string murliTitle = pageRow["MurliTitle"].ToString();
-                        string murliDate = pageRow["MurliDate"].ToString(); // Use string for date comparison
-
-                        // Lookup FileID
-                        pageRow["FileID"] = fileIDMap[fileName];
-
-                        // Lookup MurliTitleID from mapping table
-                        DataRow[] matchingRows = murliTitlesMappingTable.Select($"MurliTitle = '{murliTitle.Replace("'", "''")}' AND MurliDate LIKE '{murliDate}*'");
-                        //string partialDate = "01-01"; // Match any date starting with "01-01"
-                        //DataRow[] matchingRows = murliTitlesMappingTable.Select($"MurliTitle = '{murliTitle.Replace("'", "''")}' AND MurliDate LIKE '{partialDate}*'");
-
-
-                        if (matchingRows.Length > 0)
-                        {
-                            pageRow["MurliTitleID"] = matchingRows[0]["MurliTitleID"];
-                        }
-                    }
+                    UpdateFilePagesTable(filePagesTable, fileIDMap, murliTitlesMappingTable);
 
                     // 5. Bulk insert into TblFilePages
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
-                    {
-                        bulkCopy.DestinationTableName = "TblFilePages";
-                        bulkCopy.ColumnMappings.Add("FileID", "FileID");
-                        bulkCopy.ColumnMappings.Add("MurliTitleID", "MurliTitleID");
-                        bulkCopy.ColumnMappings.Add("PageNo", "PageNo");
-                        bulkCopy.WriteToServer(filePagesTable);
-                    }
+                    BulkInsertFilePages(filePagesTable, connection, transaction);
 
-                    // Commit the transaction if everything is successful
                     transaction.Commit();
 
                     Messages.InfoMessage("Successfully Inserted Data to DB.");
@@ -557,6 +495,97 @@ namespace MurliAnveshan.Forms
                 }
             }
         }
+
+        private static DataTable InsertMurliTitles(DataTable murliTitlesTable, SqlConnection connection, SqlTransaction transaction)
+        {
+            DataTable murliTitlesMappingTable = new DataTable();
+            murliTitlesMappingTable.Columns.Add("MurliTitle", typeof(string));
+            murliTitlesMappingTable.Columns.Add("MurliDate", typeof(string)); // Keep date as string in dd-MM-yyyy format
+            murliTitlesMappingTable.Columns.Add("MurliTitleID", typeof(int));
+
+            foreach (DataRow murliRow in murliTitlesTable.Rows)
+            {
+                const string insertMurliSql = "INSERT INTO TblMurliTitles (MurliDate, MurliTitle) OUTPUT INSERTED.MurliTitleID VALUES (@MurliDate, @MurliTitle)";
+                using (SqlCommand cmd = new SqlCommand(insertMurliSql, connection, transaction))
+                {
+                    DateTime murliDate;
+                    bool isValidDate = DateTime.TryParseExact(murliRow["MurliDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out murliDate);
+
+                    if (isValidDate)
+                    {
+                        cmd.Parameters.AddWithValue("@MurliDate", murliDate);
+                        Console.WriteLine("@MurliDate", murliDate);
+                    }
+                    else
+                    {
+                        // TODO: Log invalid date and skip this row if necessary
+                        Console.WriteLine("Invalid date format: " + murliRow["MurliDate"]);
+                        continue; // Skip to next row if date is invalid
+                    }
+                    cmd.Parameters.AddWithValue("@MurliTitle", murliRow["MurliTitle"]);
+                    int murliTitleID = (int)cmd.ExecuteScalar();
+
+                    // Update the mapping table with the inserted ID
+                    murliTitlesMappingTable.Rows.Add(murliRow["MurliTitle"], murliDate, murliTitleID);
+                }
+            }
+
+            return murliTitlesMappingTable;
+        }
+
+        private static Dictionary<string, int> InsertFiles(DataTable fileTable, SqlConnection connection, SqlTransaction transaction)
+        {
+            var fileIDMap = new Dictionary<string, int>();
+
+            foreach (DataRow fileRow in fileTable.Rows)
+            {
+                const string insertFileSql = "INSERT INTO TblFiles (FileName) OUTPUT INSERTED.FileID VALUES (@FileName)";
+                using (var cmd = new SqlCommand(insertFileSql, connection, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@FileName", fileRow["FileName"]);
+                    int fileID = (int)cmd.ExecuteScalar();
+
+                    // Store FileID in the dictionary
+                    fileIDMap.Add(fileRow["FileName"].ToString(), fileID);
+                }
+            }
+
+            return fileIDMap;
+        }
+
+        private static void BulkInsertFilePages(DataTable filePagesTable, SqlConnection connection, SqlTransaction transaction)
+        {
+            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transaction))
+            {
+                bulkCopy.DestinationTableName = "TblFilePages";
+                bulkCopy.ColumnMappings.Add("FileID", "FileID");
+                bulkCopy.ColumnMappings.Add("MurliTitleID", "MurliTitleID");
+                bulkCopy.ColumnMappings.Add("PageNo", "PageNo");
+                bulkCopy.WriteToServer(filePagesTable);
+            }
+        }
+
+        private static void UpdateFilePagesTable(DataTable filePagesTable, Dictionary<string, int> fileIDMap, DataTable murliTitlesMappingTable)
+        {
+            foreach (DataRow pageRow in filePagesTable.Rows)
+            {
+                string fileName = pageRow["FileName"].ToString();
+                string murliTitle = pageRow["MurliTitle"].ToString();
+                string murliDate = pageRow["MurliDate"].ToString(); // Use string for date comparison
+
+                // Lookup FileID
+                pageRow["FileID"] = fileIDMap[fileName];
+
+                // Lookup MurliTitleID from mapping table
+                DataRow[] matchingRows = murliTitlesMappingTable.Select($"MurliTitle = '{murliTitle.Replace("'", "''")}' AND MurliDate LIKE '{murliDate}*'");
+
+                if (matchingRows.Length > 0)
+                {
+                    pageRow["MurliTitleID"] = matchingRows[0]["MurliTitleID"];
+                }
+            }
+        }
+
 
         private void BtnSelect_Click(object sender, EventArgs e)
         {
