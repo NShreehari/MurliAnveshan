@@ -49,6 +49,7 @@ namespace MurliAnveshan
             btnExport.Click += BtnExport_Click;
 
             ChangeLangToHindiInput();
+
         }
 
         #region Export Related Methods
@@ -553,6 +554,9 @@ namespace MurliAnveshan
         private void BtnClear_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.Controls.Clear();
+
+            this.paginationControl.UpdatePagination(1);
+            CenterAlignPaginationControl();
         }
 
         private void MurliSelection_Changed(object sender, EventArgs e)
