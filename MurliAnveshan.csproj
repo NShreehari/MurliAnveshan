@@ -541,6 +541,102 @@
     <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1985.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1986.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1987.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1988.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1989.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1990-1991.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1990.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1991-1992.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1992-1993.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1993-1994.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1994-1995.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1995-1996.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1996-1997.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1997-1998.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1998-1999.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\1999-2000.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2000-2001.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2001-2002.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2002-2003.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2003-2004.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2004-2005.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2005-2006.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2006-2007.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2007-2008.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2008-2009.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2009-2010.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2010-2011.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2011-2012.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2012-2013.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2013-2014.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2014-2015.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2015-2016.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Murlis\Hindi Murlis\Avyakt Murlis\PDF Murlis\2016-2017.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -643,6 +739,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fonts\" />
     <Folder Include="Resources\Murli Documents\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -659,10 +756,14 @@
     <Error Condition="!Exists('packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
     <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
     <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+    <Error Condition="!Exists('packages\WixToolset.Netfx.wixext.5.0.2\build\WixToolset.Netfx.wixext.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\WixToolset.Netfx.wixext.5.0.2\build\WixToolset.Netfx.wixext.targets'))" />
+    <Error Condition="!Exists('packages\WixToolset.Util.wixext.5.0.2\build\WixToolset.Util.wixext.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\WixToolset.Util.wixext.5.0.2\build\WixToolset.Util.wixext.targets'))" />
   </Target>
   <Import Project="packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets" Condition="Exists('packages\Syncfusion.PdfToImageConverter.WinForms.26.2.14\build\net462\Syncfusion.PdfToImageConverter.WinForms.targets')" />
   <Import Project="packages\Fody.6.6.0\build\Fody.targets" Condition="Exists('packages\Fody.6.6.0\build\Fody.targets')" />
   <Import Project="packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.8\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
   <Import Project="packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.8\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
+  <Import Project="packages\WixToolset.Netfx.wixext.5.0.2\build\WixToolset.Netfx.wixext.targets" Condition="Exists('packages\WixToolset.Netfx.wixext.5.0.2\build\WixToolset.Netfx.wixext.targets')" />
+  <Import Project="packages\WixToolset.Util.wixext.5.0.2\build\WixToolset.Util.wixext.targets" Condition="Exists('packages\WixToolset.Util.wixext.5.0.2\build\WixToolset.Util.wixext.targets')" />
 </Project>

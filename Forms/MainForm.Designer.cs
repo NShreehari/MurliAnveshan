@@ -1,4 +1,6 @@
-﻿namespace MurliAnveshan
+﻿using System.Windows.Forms;
+
+namespace MurliAnveshan
 {
     partial class MainForm
     {
@@ -32,17 +34,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ParentNavigationControl = new System.Windows.Forms.Panel();
             this.BottomNavigationControl = new System.Windows.Forms.FlowLayoutPanel();
+            this.mLogout = new System.Windows.Forms.Button();
+            this.mSettings = new System.Windows.Forms.Button();
             this.NavigationControl = new System.Windows.Forms.FlowLayoutPanel();
             this.mMenu = new System.Windows.Forms.Button();
             this.mHome = new System.Windows.Forms.Button();
             this.mFavorites = new System.Windows.Forms.Button();
             this.mBookmarks = new System.Windows.Forms.Button();
             this.mHistory = new System.Windows.Forms.Button();
-            this.mDocViewer = new System.Windows.Forms.Button();
+            this.MDocViewer = new System.Windows.Forms.Button();
             this.mAbout = new System.Windows.Forms.Button();
             this.NavigationTransition = new System.Windows.Forms.Timer(this.components);
-            this.mLogout = new System.Windows.Forms.Button();
-            this.mSettings = new System.Windows.Forms.Button();
             this.ParentNavigationControl.SuspendLayout();
             this.BottomNavigationControl.SuspendLayout();
             this.NavigationControl.SuspendLayout();
@@ -52,10 +54,9 @@
             // 
             this.ParentNavigationControl.Controls.Add(this.BottomNavigationControl);
             this.ParentNavigationControl.Controls.Add(this.NavigationControl);
-            this.ParentNavigationControl.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ParentNavigationControl.Location = new System.Drawing.Point(0, 0);
+            this.ParentNavigationControl.Location = new System.Drawing.Point(0, 50);
             this.ParentNavigationControl.Name = "ParentNavigationControl";
-            this.ParentNavigationControl.Size = new System.Drawing.Size(200, 537);
+            this.ParentNavigationControl.Size = new System.Drawing.Size(200, 487);
             this.ParentNavigationControl.TabIndex = 4;
             // 
             // BottomNavigationControl
@@ -65,10 +66,46 @@
             this.BottomNavigationControl.Controls.Add(this.mSettings);
             this.BottomNavigationControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BottomNavigationControl.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
-            this.BottomNavigationControl.Location = new System.Drawing.Point(0, 437);
+            this.BottomNavigationControl.Location = new System.Drawing.Point(0, 387);
             this.BottomNavigationControl.Name = "BottomNavigationControl";
             this.BottomNavigationControl.Size = new System.Drawing.Size(200, 100);
             this.BottomNavigationControl.TabIndex = 4;
+            // 
+            // mLogout
+            // 
+            this.mLogout.FlatAppearance.BorderSize = 0;
+            this.mLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mLogout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mLogout.Location = new System.Drawing.Point(3, 58);
+            this.mLogout.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mLogout.Name = "mLogout";
+            this.mLogout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mLogout.Size = new System.Drawing.Size(194, 36);
+            this.mLogout.TabIndex = 10;
+            this.mLogout.Text = "           LogOut";
+            this.mLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mLogout.UseVisualStyleBackColor = true;
+            this.mLogout.Visible = false;
+            // 
+            // mSettings
+            // 
+            this.mSettings.FlatAppearance.BorderSize = 0;
+            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mSettings.Image = global::MurliAnveshan.Properties.Resources.Settings;
+            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.Location = new System.Drawing.Point(3, 13);
+            this.mSettings.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mSettings.Name = "mSettings";
+            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.mSettings.Size = new System.Drawing.Size(194, 36);
+            this.mSettings.TabIndex = 11;
+            this.mSettings.Text = "           Settings";
+            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.mSettings.UseVisualStyleBackColor = true;
             // 
             // NavigationControl
             // 
@@ -78,9 +115,8 @@
             this.NavigationControl.Controls.Add(this.mFavorites);
             this.NavigationControl.Controls.Add(this.mBookmarks);
             this.NavigationControl.Controls.Add(this.mHistory);
-            this.NavigationControl.Controls.Add(this.mDocViewer);
+            this.NavigationControl.Controls.Add(this.MDocViewer);
             this.NavigationControl.Controls.Add(this.mAbout);
-            this.NavigationControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NavigationControl.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.NavigationControl.Location = new System.Drawing.Point(0, 0);
             this.NavigationControl.Name = "NavigationControl";
@@ -182,24 +218,24 @@
             this.mHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mHistory.UseVisualStyleBackColor = true;
             // 
-            // mDocViewer
+            // MDocViewer
             // 
-            this.mDocViewer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.MDocViewer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mDocViewer.FlatAppearance.BorderSize = 0;
-            this.mDocViewer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mDocViewer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mDocViewer.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mDocViewer.Image = global::MurliAnveshan.Properties.Resources.File_Format_PDF;
-            this.mDocViewer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mDocViewer.Location = new System.Drawing.Point(3, 221);
-            this.mDocViewer.Name = "mDocViewer";
-            this.mDocViewer.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mDocViewer.Size = new System.Drawing.Size(194, 36);
-            this.mDocViewer.TabIndex = 3;
-            this.mDocViewer.Text = "           Doc Viewer";
-            this.mDocViewer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mDocViewer.UseVisualStyleBackColor = true;
+            this.MDocViewer.FlatAppearance.BorderSize = 0;
+            this.MDocViewer.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.MDocViewer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MDocViewer.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MDocViewer.Image = global::MurliAnveshan.Properties.Resources.File_Format_PDF;
+            this.MDocViewer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MDocViewer.Location = new System.Drawing.Point(3, 221);
+            this.MDocViewer.Name = "MDocViewer";
+            this.MDocViewer.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.MDocViewer.Size = new System.Drawing.Size(194, 36);
+            this.MDocViewer.TabIndex = 3;
+            this.MDocViewer.Text = "           Doc Viewer";
+            this.MDocViewer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MDocViewer.UseVisualStyleBackColor = true;
             // 
             // mAbout
             // 
@@ -225,53 +261,23 @@
             this.NavigationTransition.Interval = 5;
             this.NavigationTransition.Tick += new System.EventHandler(this.NavigationTransitionTimer_Tick);
             // 
-            // mLogout
-            // 
-            this.mLogout.FlatAppearance.BorderSize = 0;
-            this.mLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mLogout.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mLogout.Location = new System.Drawing.Point(3, 58);
-            this.mLogout.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            this.mLogout.Name = "mLogout";
-            this.mLogout.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mLogout.Size = new System.Drawing.Size(194, 36);
-            this.mLogout.TabIndex = 10;
-            this.mLogout.Text = "           LogOut";
-            this.mLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mLogout.UseVisualStyleBackColor = true;
-            this.mLogout.Visible = false;
-            // 
-            // mSettings
-            // 
-            this.mSettings.FlatAppearance.BorderSize = 0;
-            this.mSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.mSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.mSettings.Font = new System.Drawing.Font("Roboto", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mSettings.Image = global::MurliAnveshan.Properties.Resources.Settings;
-            this.mSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.Location = new System.Drawing.Point(3, 13);
-            this.mSettings.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            this.mSettings.Name = "mSettings";
-            this.mSettings.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.mSettings.Size = new System.Drawing.Size(194, 36);
-            this.mSettings.TabIndex = 11;
-            this.mSettings.Text = "           Settings";
-            this.mSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mSettings.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 537);
+            this.ControlBoxBackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.ParentNavigationControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "MainForm";
+            this.SearchBarFont = new System.Drawing.Font("Tiro Devanagari Hindi", 13.8F);
+            this.ShowSearchBarOnTitleBar = true;
             this.Text = "Murli Anveshan";
+            this.TitleBarBackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm2_Load);
+            this.Controls.SetChildIndex(this.ParentNavigationControl, 0);
             this.ParentNavigationControl.ResumeLayout(false);
             this.BottomNavigationControl.ResumeLayout(false);
             this.NavigationControl.ResumeLayout(false);
@@ -281,7 +287,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel ParentNavigationControl;
+        public System.Windows.Forms.Panel ParentNavigationControl;
         private System.Windows.Forms.FlowLayoutPanel BottomNavigationControl;
         private System.Windows.Forms.FlowLayoutPanel NavigationControl;
         private System.Windows.Forms.Button mMenu;
@@ -289,10 +295,12 @@
         private System.Windows.Forms.Button mFavorites;
         private System.Windows.Forms.Button mBookmarks;
         private System.Windows.Forms.Button mHistory;
-        private System.Windows.Forms.Button mDocViewer;
+        private System.Windows.Forms.Button MDocViewer;
         private System.Windows.Forms.Button mAbout;
         private System.Windows.Forms.Timer NavigationTransition;
         private System.Windows.Forms.Button mLogout;
         private System.Windows.Forms.Button mSettings;
+
+        //public Button MDocViewer { get => mDocViewer; set => mDocViewer = value; }
     }
 }

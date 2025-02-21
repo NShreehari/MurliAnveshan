@@ -8,40 +8,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Anotar.NLog;
+
 using MurliAnveshan.Classes;
 
 using SelfControls.Controls;
 
 namespace MurliAnveshan
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm2
     {
         #region Private Fields
 
-        private const int _navigationControlMaxWidth = 200;
-        private const int _navigationControlMinimumWidth = 60;
+        public const int _navigationControlMaxWidth = 200;
+        public const int _navigationControlMinimumWidth = 60;
 
         private bool _isNavigationControlExpanded;
 
-        System.Windows.Forms.Button activeMenu;
+        private System.Windows.Forms.Button activeMenu;
 
-        MainForm mainFormInstance;
+        readonly MainForm mainFormInstance;
 
         FrmHome frmHome;
 
         FrmFavorites frmFavorites;
 
-        FrmBookmarks frmBookmarks;
+        readonly FrmBookmarks frmBookmarks;
 
-        FrmHistry frmHistry;
+        readonly FrmHistry frmHistry;
 
         FrmDocViewer frmDocViewer;
 
-        FrmSettings frmSettings;
+        readonly FrmSettings frmSettings;
 
-        FrmAbout frmAbout;
+        readonly FrmAbout frmAbout;
 
-        System.Windows.Forms.Button previouslyActiveMenu;
+        private System.Windows.Forms.Button previouslyActiveMenu;
 
         #endregion Private Fields
 
@@ -53,8 +55,17 @@ namespace MurliAnveshan
             set { _isNavigationControlExpanded = value; }
         }
 
+        public Button ActiveMenu { get => activeMenu; set => activeMenu = value; }
+        public Button PreviouslyActiveMenu { get => previouslyActiveMenu; set => previouslyActiveMenu = value; }
+        //public Button PreviouslyActiveForm { get => previouslyActiveMenu; set => previouslyActiveMenu = value; }
+
         #endregion Public Properties
 
+        [LogToErrorOnException]
+
+        //[LogToWarnOnException]
+        //[LogToDebugOnException]
+        //[LogToTraceOnException]
 
         public MainForm()
         {
@@ -65,23 +76,51 @@ namespace MurliAnveshan
             mFavorites.Click += OnFavorites_Click;
             mBookmarks.Click += OnBookmarks_Click;
             mHistory.Click += OnHistory_Click;
-            mDocViewer.Click += OnDocViewer_Click;
+            MDocViewer.Click += OnDocViewer_Click;
             mAbout.Click += OnAbout_Click;
             mSettings.Click += OnSettings_Click;
 
             _isNavigationControlExpanded = true;
 
-            mdiProp();
+            MdiProp();
 
             mainFormInstance = this;
 
+            SizeChanged += OnSizeChanged;
+            Resize += OnSizeChanged;
         }
 
+        private void OnSizeChanged(object sender, EventArgs e)
+        {
+            ParentNavigationControl.Height = this.Height - this.TitleBarSize.Height - 2;
+            NavigationControl.Height = ParentNavigationControl.Height - BottomNavigationControl.Height;
+        }
 
         private void OnMenu_Click(object sender, EventArgs e)
         {
             NavigationTransition.Start();
+            AdjustChildForms();
+
+            LogTo.Debug("Menu Clicked");
         }
+
+        private void AdjustChildForms()
+        {
+            foreach (Form child in this.MdiChildren)
+            {
+                if (child is FrmHome customChild)
+                {
+                    if (IsNavigationControlExpanded) //Shrinking
+                        customChild.AdjustBounds(_navigationControlMinimumWidth);
+                    else //Expanding
+                    {
+                        customChild.AdjustBounds(_navigationControlMaxWidth);
+
+                    }
+                }
+            }
+        }
+
 
         private void OnHomeMenu_Click(object sender, EventArgs e)
         {
@@ -110,14 +149,16 @@ namespace MurliAnveshan
 
         public void LoadDocViewer(MainForm mainFormInstance)
         {
-            previouslyActiveMenu = activeMenu;
-            activeMenu = mDocViewer;
+            PreviouslyActiveMenu = ActiveMenu;
+            ActiveMenu = MDocViewer;
 
             if (frmDocViewer == null)
             {
-                frmDocViewer = new FrmDocViewer(mainFormInstance);
-                frmDocViewer.MdiParent = this;
-                frmDocViewer.Dock = DockStyle.Fill;
+                frmDocViewer = new FrmDocViewer(mainFormInstance)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
 
                 frmDocViewer.Show();
             }
@@ -129,14 +170,16 @@ namespace MurliAnveshan
 
         public void LoadDocViewer(MainForm mainFormInstance, ResultDetails resultDetails)
         {
-            previouslyActiveMenu = activeMenu;
-            activeMenu = mDocViewer;
+            PreviouslyActiveMenu = ActiveMenu;
+            ActiveMenu = MDocViewer;
 
             if (frmDocViewer == null)
             {
-                frmDocViewer = new FrmDocViewer(mainFormInstance, resultDetails);
-                frmDocViewer.MdiParent = this;
-                frmDocViewer.Dock = DockStyle.Fill;
+                frmDocViewer = new FrmDocViewer(mainFormInstance, resultDetails)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
 
                 frmDocViewer.Show();
             }
@@ -150,14 +193,16 @@ namespace MurliAnveshan
 
         private void LoadFaviorites()
         {
-            previouslyActiveMenu = activeMenu;
-            activeMenu = mFavorites;
+            PreviouslyActiveMenu = ActiveMenu;
+            ActiveMenu = mFavorites;
 
             if (frmFavorites == null)
             {
-                frmFavorites = new FrmFavorites();
-                frmFavorites.MdiParent = this;
-                frmFavorites.Dock = DockStyle.Fill;
+                frmFavorites = new FrmFavorites
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
 
                 frmFavorites.Show();
             }
@@ -170,12 +215,12 @@ namespace MurliAnveshan
 
         private void OnHistory_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void OnSettings_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void OnAbout_Click(object sender, EventArgs e)
@@ -191,7 +236,7 @@ namespace MurliAnveshan
                 mFavorites.Enabled = false;
                 mBookmarks.Enabled = false;
                 mHistory.Enabled = false;
-                mDocViewer.Enabled = false;
+                MDocViewer.Enabled = false;
                 mAbout.Enabled = false;
                 mSettings.Enabled = false;
                 mLogout.Enabled = false;
@@ -202,7 +247,7 @@ namespace MurliAnveshan
                 mFavorites.Enabled = true;
                 mBookmarks.Enabled = true;
                 mHistory.Enabled = true;
-                mDocViewer.Enabled = true;
+                MDocViewer.Enabled = true;
                 mAbout.Enabled = true;
                 //mSettings.Enabled = true;
                 mLogout.Enabled = true;
@@ -237,7 +282,6 @@ namespace MurliAnveshan
             }
         }
 
-
         private void SetMenusWidth()
         {
             NavigationTransition.Stop();
@@ -246,7 +290,7 @@ namespace MurliAnveshan
             //mMenu.Width = NavigationControl.Width;
             mFavorites.Width = NavigationControl.Width;
             mBookmarks.Width = NavigationControl.Width;
-            mDocViewer.Width = NavigationControl.Width;
+            MDocViewer.Width = NavigationControl.Width;
             mAbout.Width = NavigationControl.Width;
             mSettings.Width = NavigationControl.Width;
             mLogout.Width = NavigationControl.Width;
@@ -254,16 +298,38 @@ namespace MurliAnveshan
 
         private void SelectHome()
         {
-            previouslyActiveMenu = activeMenu;
-            activeMenu = mHome;
+            PreviouslyActiveMenu = ActiveMenu;
+            ActiveMenu = mHome;
 
             if (frmHome == null)
             {
-                frmHome = new FrmHome(mainFormInstance);
-                frmHome.MdiParent = this;
-                frmHome.Dock = DockStyle.Fill;
+                frmHome = new FrmHome(mainFormInstance)
+                {
+                    //Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+                    MdiParent = this,
+                    StartPosition = FormStartPosition.Manual,
+                    //Width = this.Width - this.ParentNavigationControl.Width,
+                    //Height = this.Height // Adjust as needed
+                    //Dock = DockStyle.Fill
+                };
 
                 frmHome.Show();
+
+                if (IsNavigationControlExpanded) //Shrinking
+                {
+                    if (frmHome.IsAccessible)
+                    {
+                        frmHome.AdjustBounds(_navigationControlMinimumWidth);
+                    }
+                    else
+                    {
+                        frmHome.AdjustBounds(_navigationControlMaxWidth);
+                    }
+                }
+                else //Expanding
+                {
+                    frmHome.AdjustBounds(_navigationControlMaxWidth);
+                }
             }
             else
             {
@@ -275,26 +341,28 @@ namespace MurliAnveshan
 
         private void ToggleMenuHighilightion()
         {
-            activeMenu.BackColor = Color.RoyalBlue;
-            activeMenu.ForeColor = Color.White;
+            ActiveMenu.BackColor = Color.RoyalBlue;
+            ActiveMenu.ForeColor = Color.White;
 
-            if (previouslyActiveMenu != null)
+            if (PreviouslyActiveMenu != null)
             {
-                previouslyActiveMenu.BackColor = Color.FromKnownColor(KnownColor.ControlLight);
-                previouslyActiveMenu.ForeColor = Color.Black;
+                PreviouslyActiveMenu.BackColor = Color.FromKnownColor(KnownColor.ControlLight);
+                PreviouslyActiveMenu.ForeColor = Color.Black;
             }
         }
 
         private void MainForm2_Load(object sender, EventArgs e)
         {
             SelectHome();
+            ParentNavigationControl.Height = this.Height - this.TitleBarSize.Height - 2;
+            ParentNavigationControl.Top = TitleBarSize.Height + 1;
+            ParentNavigationControl.Left = 2;
         }
 
-        private void mdiProp()
+        private void MdiProp()
         {
             this.SetBevel(false);
             Controls.OfType<MdiClient>().FirstOrDefault().BackColor = Color.White;
         }
-
     }
 }

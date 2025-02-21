@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel.Dispatcher;
 using System.Windows.Forms;
+
+using MaterialSkin.Controls;
 
 using MurliAnveshan.Classes;
 
@@ -46,11 +49,48 @@ namespace MurliAnveshan
 
             btnBuildIndex.DrawShadows = false;
 
+            rdbAvyakthMurlis.CheckedChanged += MurliSelection_Changed;
+            rdbSakarMurlis.CheckedChanged += MurliSelection_Changed;
+
+            engine = new AvyaktMurliSearchEngine();
+
+            ShowGrbAvyakthMurliCategory();
+
+            paginationControl.PreviousClicked += PaginationControl_PreviousClicked;
+            paginationControl.NextClicked += PaginationControl_NextClicked;
+            paginationControl.PageClicked += PaginationControl_PageClicked;
+
+            // Optionally set the TargetPanel for pagination
+            //paginationControl.TargetPanel = flowLayoutPanel1;
+
+            txtSearch.Focus();
+
             btnExport.Click += BtnExport_Click;
 
             ChangeLangToHindiInput();
 
+            
+
         }
+
+        private void OnSearchInitiated(object sender, EventArgs e)
+        {
+            //Validate for NULL & Empty
+
+            searchTerm = (sender as BaseTextBox).Text;
+            ExecuteSearch();
+
+            CenterAlignPaginationControl();
+        }
+
+        public FrmHome(MainForm mainFormInstance) : this()
+        {
+            this.mainFormInstance = mainFormInstance;
+
+            mainFormInstance.SearchInitiated += OnSearchInitiated;
+        }
+
+
 
         #region Export Related Methods
         private void BtnExport_Click(object sender, EventArgs e)
@@ -324,26 +364,6 @@ namespace MurliAnveshan
             pnlToShowMurliCardsInFullExpansion.Location = flowLayoutPanel1.Location;
         }
 
-        public FrmHome(MainForm mainFormInstance) : this()
-        {
-            this.mainFormInstance = mainFormInstance;
-
-            rdbAvyakthMurlis.CheckedChanged += MurliSelection_Changed;
-            rdbSakarMurlis.CheckedChanged += MurliSelection_Changed;
-
-            engine = new AvyaktMurliSearchEngine();
-
-            ShowGrbAvyakthMurliCategory();
-
-            paginationControl.PreviousClicked += PaginationControl_PreviousClicked;
-            paginationControl.NextClicked += PaginationControl_NextClicked;
-            paginationControl.PageClicked += PaginationControl_PageClicked;
-
-            // Optionally set the TargetPanel for pagination
-            //paginationControl.TargetPanel = flowLayoutPanel1;
-
-            txtSearch.Focus();
-        }
 
         private void BtnBuildIndex_Click(object sender, EventArgs e)
         {
@@ -362,22 +382,22 @@ namespace MurliAnveshan
 
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            //Validate for NULL & Empty
+            ////Validate for NULL & Empty
 
-            ExecuteSearch();
+            //ExecuteSearch();
 
-            CenterAlignPaginationControl();
+            //CenterAlignPaginationControl();
         }
 
         private void CenterAlignPaginationControl()
         {
-            this.paginationControl.Left = (this.ClientSize.Width - paginationControl.Width) / 2;
+            this.paginationControl.Left = ((this.ClientSize.Width + sideMenuWidth) - paginationControl.Width) / 2;
         }
 
         private void ExecuteSearch(int currentPage = 1)
         {
             SearchLocation searchLocation = rdbAvyakthAll.Checked ? SearchLocation.All : SearchLocation.TitleOnly;
-            searchTerm = txtSearch.Text;
+            //searchTerm = txtSearch.Text;
             var results = engine.SearchIndex(searchTerm, searchLocation, currentPage);
 
             this.paginationControl.PageSize = engine.pageSize;
@@ -609,6 +629,49 @@ namespace MurliAnveshan
             flowLayoutPanel1.Controls.Clear();
 
             ExecuteSearch(pageNumber);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (this.MdiParent != null)
+            {
+                //if (((MainForm)this.MdiParent).IsNavigationControlExpanded && this.Acti)
+                //    AdjustBounds(MainForm._navigationControlMinimumWidth);
+                //else
+                //    AdjustBounds(MainForm._navigationControlMaxWidth);
+
+                //CenterAlignPaginationControl();
+            }
+        }
+
+        int sideMenuWidth;
+
+        public void AdjustBounds(int sideMenuWidth)
+        {
+            this.sideMenuWidth = sideMenuWidth;
+            // Adjust Location and Size based on Side Menu's Width
+            int newLeft = sideMenuWidth - 1;
+            int newWidth = this.MdiParent.ClientSize.Width - newLeft - 5;
+
+            this.Location = new Point(newLeft, 0);
+            this.Size = new Size(newWidth, this.MdiParent.ClientSize.Height - 55);
+        }
+
+        //protected override void OnActivated(EventArgs e)
+        //{
+        //    base.OnActivated(e);
+
+
+        //}
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            AdjustBounds(200);
+
+            mainFormInstance.AutoFocusToSearchBar = true;
         }
     }
 }

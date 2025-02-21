@@ -47,10 +47,9 @@ namespace MurliAnveshan
             this.rdbAvyakthAll = new MaterialSkin.Controls.MaterialRadioButton();
             this.rdbAvyakthTitles = new MaterialSkin.Controls.MaterialRadioButton();
             this.btnBuildIndex = new MaterialSkin.Controls.MaterialButton();
-            this.cmbLanguages = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new SelfControls.Controls.SelfTextBox3();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnExport = new MaterialSkin.Controls.MaterialButton();
+            this.txtSearch = new SelfControls.Controls.SelfTextBox3();
             this.paginationControl = new PaginationControl();
             this.grbSakarMurliCategory.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,7 +64,7 @@ namespace MurliAnveshan
             this.grbSakarMurliCategory.Controls.Add(this.rdbSakarQuestionAnswers);
             this.grbSakarMurliCategory.Controls.Add(this.rdbSakarTitles);
             this.grbSakarMurliCategory.Controls.Add(this.rdbDharnaPoints);
-            this.grbSakarMurliCategory.Location = new System.Drawing.Point(145, 130);
+            this.grbSakarMurliCategory.Location = new System.Drawing.Point(145, 70);
             this.grbSakarMurliCategory.Name = "grbSakarMurliCategory";
             this.grbSakarMurliCategory.Size = new System.Drawing.Size(655, 45);
             this.grbSakarMurliCategory.TabIndex = 4;
@@ -151,7 +150,7 @@ namespace MurliAnveshan
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 197);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 137);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(920, 308);
             this.flowLayoutPanel1.TabIndex = 5;
@@ -163,6 +162,7 @@ namespace MurliAnveshan
             this.btnSearch.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSearch.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnSearch.Depth = 0;
+            this.btnSearch.DrawShadows = false;
             this.btnSearch.HighEmphasis = true;
             this.btnSearch.Icon = null;
             this.btnSearch.Location = new System.Drawing.Point(676, 27);
@@ -176,6 +176,7 @@ namespace MurliAnveshan
             this.btnSearch.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnSearch.UseAccentColor = false;
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Visible = false;
             this.btnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // btnClear
@@ -189,7 +190,7 @@ namespace MurliAnveshan
             this.btnClear.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClear.HighEmphasis = true;
             this.btnClear.Icon = null;
-            this.btnClear.Location = new System.Drawing.Point(832, 145);
+            this.btnClear.Location = new System.Drawing.Point(832, 97);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnClear.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnClear.Name = "btnClear";
@@ -207,7 +208,7 @@ namespace MurliAnveshan
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.rdbSakarMurlis);
             this.groupBox1.Controls.Add(this.rdbAvyakthMurlis);
-            this.groupBox1.Location = new System.Drawing.Point(289, 77);
+            this.groupBox1.Location = new System.Drawing.Point(289, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(366, 50);
             this.groupBox1.TabIndex = 2;
@@ -253,7 +254,7 @@ namespace MurliAnveshan
             this.grbAvyakthMurliCategory.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthAll);
             this.grbAvyakthMurliCategory.Controls.Add(this.rdbAvyakthTitles);
-            this.grbAvyakthMurliCategory.Location = new System.Drawing.Point(289, 130);
+            this.grbAvyakthMurliCategory.Location = new System.Drawing.Point(289, 70);
             this.grbAvyakthMurliCategory.Name = "grbAvyakthMurliCategory";
             this.grbAvyakthMurliCategory.Size = new System.Drawing.Size(366, 45);
             this.grbAvyakthMurliCategory.TabIndex = 3;
@@ -314,20 +315,37 @@ namespace MurliAnveshan
             this.btnBuildIndex.UseVisualStyleBackColor = false;
             this.btnBuildIndex.Click += new System.EventHandler(this.BtnBuildIndex_Click);
             // 
-            // cmbLanguages
+            // textBox1
             // 
-            this.cmbLanguages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbLanguages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.cmbLanguages.FormattingEnabled = true;
-            this.cmbLanguages.Items.AddRange(new object[] {
-            "English",
-            "Hindi",
-            "Kannada"});
-            this.cmbLanguages.Location = new System.Drawing.Point(659, 31);
-            this.cmbLanguages.Name = "cmbLanguages";
-            this.cmbLanguages.Size = new System.Drawing.Size(121, 24);
-            this.cmbLanguages.TabIndex = 17;
-            this.cmbLanguages.Visible = false;
+            this.textBox1.Font = new System.Drawing.Font("Noto Sans", 11F);
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.textBox1.Location = new System.Drawing.Point(661, 17);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(145, 27);
+            this.textBox1.TabIndex = 18;
+            this.textBox1.Visible = false;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.AutoSize = false;
+            this.btnExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnExport.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Title;
+            this.btnExport.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnExport.Depth = 0;
+            this.btnExport.HighEmphasis = true;
+            this.btnExport.Icon = null;
+            this.btnExport.Location = new System.Drawing.Point(706, 97);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnExport.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnExport.Size = new System.Drawing.Size(100, 30);
+            this.btnExport.TabIndex = 19;
+            this.btnExport.Text = "Export";
+            this.btnExport.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnExport.UseAccentColor = false;
+            this.btnExport.UseVisualStyleBackColor = false;
             // 
             // txtSearch
             // 
@@ -366,47 +384,16 @@ namespace MurliAnveshan
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtSearch.TrailingIcon = null;
             this.txtSearch.UseSystemPasswordChar = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Noto Sans", 11F);
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.textBox1.Location = new System.Drawing.Point(661, 77);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(145, 27);
-            this.textBox1.TabIndex = 18;
-            this.textBox1.Visible = false;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExport.AutoSize = false;
-            this.btnExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnExport.CharacterCasing = MaterialSkin.Controls.MaterialButton.CharacterCasingEnum.Title;
-            this.btnExport.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnExport.Depth = 0;
-            this.btnExport.HighEmphasis = true;
-            this.btnExport.Icon = null;
-            this.btnExport.Location = new System.Drawing.Point(832, 97);
-            this.btnExport.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnExport.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnExport.Name = "btnExport";
-            this.btnExport.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnExport.Size = new System.Drawing.Size(100, 30);
-            this.btnExport.TabIndex = 19;
-            this.btnExport.Text = "Export";
-            this.btnExport.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnExport.UseAccentColor = false;
-            this.btnExport.UseVisualStyleBackColor = false;
+            this.txtSearch.Visible = false;
             // 
             // paginationControl
             // 
             this.paginationControl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.paginationControl.CurrentPage = 1;
-            this.paginationControl.Location = new System.Drawing.Point(307, 512);
+            this.paginationControl.Location = new System.Drawing.Point(392, 452);
             this.paginationControl.Name = "paginationControl";
             this.paginationControl.PageSize = 0;
-            this.paginationControl.Size = new System.Drawing.Size(443, 45);
+            this.paginationControl.Size = new System.Drawing.Size(160, 45);
             this.paginationControl.TabIndex = 16;
             this.paginationControl.Text = "R";
             this.paginationControl.TotalPages = 0;
@@ -417,11 +404,10 @@ namespace MurliAnveshan
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClear;
-            this.ClientSize = new System.Drawing.Size(945, 559);
+            this.ClientSize = new System.Drawing.Size(945, 518);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.cmbLanguages);
             this.Controls.Add(this.paginationControl);
             this.Controls.Add(this.btnBuildIndex);
             this.Controls.Add(this.grbAvyakthMurliCategory);
@@ -464,7 +450,6 @@ namespace MurliAnveshan
         private MaterialSkin.Controls.MaterialRadioButton rdbAvyakthTitles;
         private MaterialSkin.Controls.MaterialButton btnBuildIndex;
         private PaginationControl paginationControl;
-        private System.Windows.Forms.ComboBox cmbLanguages;
         private System.Windows.Forms.TextBox textBox1;
         private MaterialSkin.Controls.MaterialButton btnExport;
     }
